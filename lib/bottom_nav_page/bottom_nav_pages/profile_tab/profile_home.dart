@@ -5,7 +5,10 @@ import 'package:realestate/Classes/custom_text.dart';
 import 'package:realestate/Constants/constants.dart';
 import 'package:realestate/Widgets/bed_item.dart';
 import 'package:realestate/Widgets/rounded_app_bar.dart';
+import 'package:realestate/bottom_nav_page/bottom_nav_pages/profile_tab/edit_profile_page.dart';
 import 'package:realestate/bottom_nav_page/bottom_nav_pages/profile_tab/my_ads_page.dart';
+
+import '../../../auth/sign_in.dart';
 
 class ProfileHomePage extends StatefulWidget {
   const ProfileHomePage({Key key}) : super(key: key);
@@ -65,10 +68,19 @@ class _ProfileHomePageState extends State<ProfileHomePage> {
                             SizedBox(
                               height: 7,
                             ),
-                            SvgPicture.asset(
-                              "Assets/editp.svg",
-                              height: 30,
-                              color: Colors.black.withOpacity(0.4),
+                            InkWell(
+                              onTap: (){
+
+                                Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditProfilePage()));
+                              },
+                              child: SvgPicture.asset(
+                                "Assets/editp.svg",
+                                height: 30,
+                                color: Colors.black.withOpacity(0.4),
+                              ),
                             )
                           ],
                         )
@@ -95,23 +107,29 @@ class _ProfileHomePageState extends State<ProfileHomePage> {
                     SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal:8.0),
-                          child: SvgPicture.asset(
-                            "Assets/logoutl.svg",
-                            color: Colors.redAccent,
-                            height: MediaQuery.of(context).size.height / 36,
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (_) => SignInPage()));
+                      },
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal:8.0),
+                            child: SvgPicture.asset(
+                              "Assets/logoutl.svg",
+                              color: Colors.redAccent,
+                              height: MediaQuery.of(context).size.height / 36,
+                            ),
                           ),
-                        ),
-                        CustomText(
-                          text:"Logout",
-                          fontWeight: FontWeight.w500,
-                          size: 16,
-                          color: Colors.redAccent,
-                        ),
-                      ],
+                          CustomText(
+                            text:"Logout",
+                            fontWeight: FontWeight.w500,
+                            size: 16,
+                            color: Colors.redAccent,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:realestate/Classes/custom_text.dart';
 import 'package:realestate/Constants/constants.dart';
 import 'package:realestate/Widgets/bed_item.dart';
+import 'package:realestate/bottom_nav_page/Filter/filter_page.dart';
 import 'package:realestate/bottom_nav_page/bottom_nav_pages/property_detail_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -98,26 +99,35 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                   ],
                                 ),
-                                Container(
-                                  height: 40,
-                                  width:
-                                      MediaQuery.of(context).size.width / 4.2,
-                                  decoration: BoxDecoration(
-                                      color: Constant.blueColor,
-                                      borderRadius: BorderRadius.circular(100)),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      CustomText(
-                                        text: "Filter  ",
-                                        size: 12,
-                                        color: Colors.white,
-                                      ),
-                                      SvgPicture.asset(
-                                        "Assets/filter.svg",
-                                        height: 15,
-                                      ),
-                                    ],
+                                GestureDetector(
+                                 onTap: (){
+
+                                   Navigator.of(context).push(
+                                       MaterialPageRoute(
+                                           builder: (context) =>
+                                               FilterPage()));
+                                 },
+                                  child: Container(
+                                    height: 40,
+                                    width:
+                                        MediaQuery.of(context).size.width / 4.2,
+                                    decoration: BoxDecoration(
+                                        color: Constant.blueColor,
+                                        borderRadius: BorderRadius.circular(100)),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        CustomText(
+                                          text: "Filter  ",
+                                          size: 12,
+                                          color: Colors.white,
+                                        ),
+                                        SvgPicture.asset(
+                                          "Assets/filter.svg",
+                                          height: 15,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 )
                               ],
@@ -510,9 +520,9 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   Row(
                                     children: [
-                                      SvgPicture.asset(""),
+                                      Image.asset("Assets/priceTag.png",height: 20,),
                                       CustomText(
-                                        text: " 450 KWD",
+                                        text: "  450 KWD",
                                         color: Constant.blueColor,
                                         size: 20,
                                         fontWeight: FontWeight.w500,
@@ -690,7 +700,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Row(
                                 children: [
-                                  SvgPicture.asset(""),
+                                  Image.asset("Assets/priceTag.png",height: 12,),
                                   CustomText(
                                     text: " 450 KWD",
                                     color: Constant.blueColor,

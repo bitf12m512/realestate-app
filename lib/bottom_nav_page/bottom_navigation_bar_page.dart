@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:realestate/Constants/constants.dart';
 import 'package:realestate/bottom_nav_page/bottom_nav_pages/contact_us_page.dart';
+import 'package:realestate/bottom_nav_page/bottom_nav_pages/create_property_page.dart';
 import 'package:realestate/bottom_nav_page/bottom_nav_pages/favourites.dart';
 import 'package:realestate/bottom_nav_page/bottom_nav_pages/home_page.dart';
 import 'package:realestate/bottom_nav_page/bottom_nav_pages/profile_tab/profile_home.dart';
@@ -32,6 +33,7 @@ class _BottomNavPageState extends State<BottomNavPage> {
                 children: [
                   HomePage(),
                   FavouritesPage(),
+                  CreatePropertyPage(),
                   ContactUsPage(),
                   ProfileHomePage(),
                 ],
@@ -65,7 +67,7 @@ class _BottomNavPageState extends State<BottomNavPage> {
                                   MainAxisAlignment.spaceBetween,
                               children: [
                                 bottomItem("Assets/homeFilled.svg",
-                                    "Assets/homeLiner.svg", selected, 0, () {
+                                    "Assets/HOUT.svg", selected, 0, () {
                                   setState(() {
                                     selected = 0;
                                   });
@@ -78,18 +80,18 @@ class _BottomNavPageState extends State<BottomNavPage> {
                                 }),
                                 Container(),
                                 bottomItem("Assets/messagecallfilled.svg",
-                                    "Assets/mailLiner.svg", selected, 2, () {
+                                    "Assets/mailLiner.svg", selected, 3, () {
                                   setState(() {
-                                    selected = 2;
+                                    selected = 3;
                                   });
                                 }),
                                 bottomItem(
                                     "Assets/personfilled.svg",
                                     "Assets/personLiner.svg",
                                     selected,
-                                    3, () {
+                                    4, () {
                                   setState(() {
-                                    selected = 3;
+                                    selected = 4;
                                   });
                                 }),
                               ],
@@ -103,7 +105,9 @@ class _BottomNavPageState extends State<BottomNavPage> {
                        child:
                        GestureDetector(
                          onTap: (){
-
+                           setState(() {
+                             selected=2;
+                           });
                          },
                          child: Container(
                            height: 55,

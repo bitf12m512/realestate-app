@@ -76,14 +76,14 @@ class _SplashScreenState extends State<SplashScreen> {
     // User user =  FirebaseAuth.instance.currentUser;
     // if(user==null){
 
-      // Future.delayed(Duration(seconds: 2)).then((val) {
-      //   Navigator.of(context).pushReplacement(MaterialPageRoute(
-      //       builder: (_) => SignInPage()));
-      // });
       Future.delayed(Duration(seconds: 2)).then((val) {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (_) => BottomNavPage()));
+            builder: (_) => SignInPage()));
       });
+      // Future.delayed(Duration(seconds: 2)).then((val) {
+      //   Navigator.of(context).pushReplacement(MaterialPageRoute(
+      //       builder: (_) => BottomNavPage()));
+      // });
     // }
     // else{
     //   await FirebaseDatabase.instance

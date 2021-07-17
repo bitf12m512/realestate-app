@@ -7,6 +7,8 @@ import 'package:realestate/Widgets/big_button.dart';
 import 'package:realestate/Widgets/password_withOut_prefix.dart';
 import 'package:realestate/Widgets/text_field_without_prefix.dart';
 
+import '../bottom_nav_page/bottom_navigation_bar_page.dart';
+
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key key}) : super(key: key);
 
@@ -88,39 +90,6 @@ class _SignUpPageState extends State<SignUpPage> {
                           height: 10,
                         ),
                         GestureDetector(
-                         // onTap: (){
-    //                        //   showCountryPicker(
-    //                        //     context: context,
-    //                        //     countryListTheme: CountryListThemeData(
-    //                        //       flagSize: 25,
-    //                        //       backgroundColor: Colors.white,
-    //                        //       textStyle: TextStyle(fontSize: 16, color: Colors.blueGrey),
-    //                        //       //Optional. Sets the border radius for the bottomsheet.
-    //                        //       borderRadius: BorderRadius.only(
-    //                        //         topLeft: Radius.circular(20.0),
-    //                        //         topRight: Radius.circular(20.0),
-    //                        //       ),
-    //                        //       //Optional. Styles the search field.
-    //                        //       inputDecoration: InputDecoration(
-    //                        //         labelText: 'Search',
-    //                        //         hintText: 'Start typing to search',
-    //                        //         prefixIcon: const Icon(Icons.search),
-    //                        //         border: OutlineInputBorder(
-    //                        //           borderSide: BorderSide(
-    //                        //             color: const Color(0xFF8C98A8).withOpacity(0.2),
-    //                        //           ),
-    //                        //         ),
-    //                        //       ),
-    //                        //     ),
-    //                        //     onSelect: (Country country) {
-    //                        //       setState(() {
-    //                        //         print(country);
-    //                        //         prefixText="+${country.phoneCode}";
-    //                        //         countryc=country.toString();
-    //                        //       });
-    //                        //     },
-    //                        //   );
-    //                    },
                           child: Container(
                             // height:MediaQuery.of(context).size.height/18,
                             width: MediaQuery.of(context).size.width,
@@ -153,18 +122,6 @@ class _SignUpPageState extends State<SignUpPage> {
                               ),
                             ),
                           ),
-                        // IntlPhoneField(
-                        //   decoration: InputDecoration(
-                        //     labelText: 'Phone Number',
-                        //     border: OutlineInputBorder(
-                        //       borderSide: BorderSide(),
-                        //     ),
-                        //   ),
-                        //   initialCountryCode: 'IN',
-                        //   onChanged: (phone) {
-                        //     print(phone.completeNumber);
-                        //   },
-                        // ),
                         SizedBox(
                           height: 10,
                         ),
@@ -248,7 +205,12 @@ class _SignUpPageState extends State<SignUpPage> {
                         SizedBox(
                           height: 10,
                         ),
-                        bigButton(context, "Register", () {}),
+                        bigButton(context, "Register", () {
+                          Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      BottomNavPage()));
+                        }),
                         SizedBox(
                           height: 30,
                         ),

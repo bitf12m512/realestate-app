@@ -47,7 +47,7 @@ roundedAppBarwithBack(BuildContext context,String s) {
     ),
     child: SafeArea(
       child: Container(
-        height: 57,
+        height: 60,
         child: Stack(
           children: [
             Column(
