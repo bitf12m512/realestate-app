@@ -61,11 +61,11 @@ sendButton(BuildContext context)
     ),
   );
 }
-saveButton(BuildContext context,String text)
+saveButton(BuildContext context,String text,Function ontap)
 {
   return   Center(
     child: GestureDetector(
-      onTap: () {},
+      onTap:ontap,
       child: Container(
         height: MediaQuery.of(context)
             .size

@@ -35,14 +35,28 @@ class _FilterPageState extends State<FilterPage> {
   RangeValues _currentRangeValues = const RangeValues(10, 80);
   RangeValues _currentAreaValues = const RangeValues(10, 800);
   List<bool> moreValues = [false, false, false, false];
-  List cats = ["Apartments", "Studio", "Flats", "House"];
-  List subCats = ["All", "House", "Flats", "Room", "Hotel"];
+  List cats = [
+    "Apartments",
+    "Condos",
+    "Studio Apartments",
+    "Farms",
+    "Offices",
+    "Storage",
+    "Recreational",
+    "Houses"
+  ];
   List catsImages = [
     "Assets/appartment.svg",
     "Assets/studio.svg",
     "Assets/flats.svg",
-    "Assets/homeicon.svg"
+    "Assets/homeicon.svg",
+    "Assets/appartment.svg",
+    "Assets/studio.svg",
+    "Assets/flats.svg",
+    "Assets/homeicon.svg",
   ];
+  List subCats = ["All", "House", "Flats", "Room", "Hotel"];
+
   List subCatsImages = [
     "Assets/S1.svg",
     "Assets/S2.svg",
@@ -129,6 +143,12 @@ class _FilterPageState extends State<FilterPage> {
                                     mainType == "rent" ? true : false, () {
                                   setState(() {
                                     mainType = "rent";
+                                  });
+                                })
+                                ,filterMainType(context, "Exchange",
+                                    mainType == "exchange" ? true : false, () {
+                                  setState(() {
+                                    mainType = "exchange";
                                   });
                                 }),
                               ],
@@ -346,7 +366,9 @@ class _FilterPageState extends State<FilterPage> {
                                 size: 17,
                                 color: Colors.black.withOpacity(0.3),
                               ),
-                              saveButton(context, "Search")
+                              saveButton(context, "Search",(){
+
+                              })
                             ],
                           ),
                           SizedBox(

@@ -12,7 +12,7 @@ filterMainType(BuildContext context,String title,bool val,Function ontap) {
           text: title,
           color: val==true?Colors.white:Colors.white.withOpacity(0.6),
           fontWeight: FontWeight.w600,
-          size: 26,
+          size: 22,
         ),
         Container(
           height: 4,

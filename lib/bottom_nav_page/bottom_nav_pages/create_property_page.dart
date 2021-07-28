@@ -1,13 +1,17 @@
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:country_state_city_picker/country_state_city_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:realestate/Classes/custom_text.dart';
 import 'package:realestate/Constants/constants.dart';
 import 'package:realestate/Widgets/bed_item.dart';
 import 'package:realestate/Widgets/check_boxes.dart';
 import 'package:realestate/Widgets/send_button.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
+import 'package:csv/csv.dart';
 import '../../Classes/custom_text.dart';
 import '../../Constants/constants.dart';
 import '../../Widgets/text_field_without_prefix.dart';
@@ -42,7 +46,32 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   List<bool> moreValues = [false, false, false, false];
   List<bool> checks = [false, false, false];
   int selectedtype = 0;
+  String country;
   TextEditingController description=new TextEditingController();
+  List _dataCountries = [];
+  List _dataStates = [];
+  List currentCountry=[];
+  List currentState=[];
+  List<PopupMenuEntry<dynamic>> _popupItemSubCategories1 = [];
+  List<PopupMenuEntry<dynamic>> _popupItemSubCategories2 = [];
+  // This function is triggered when the floating button is pressed
+  void _loadCSV() async {
+    final _rawData = await rootBundle.loadString("Assets/countries.csv");
+    List<List<dynamic>> _listData = CsvToListConverter().convert(_rawData, eol: '\n');
+    final _rawData2 = await rootBundle.loadString("Assets/states.csv");
+    List<List<dynamic>> _listData2 = CsvToListConverter().convert(_rawData, eol: '\n');
+    setState(() {
+      _dataCountries = _listData;
+      _dataStates=_listData2;
+    });
+    _basicContent();
+  }
+@override
+  void initState() {
+    // TODO: implement initState
+  _loadCSV();
+  super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,11 +193,101 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              CustomText(
-                                text: "House in Jabriya Block 6",
-                                // color: Colors.white,
-                                size: 20,
-                                fontWeight: FontWeight.w600,
+                              // CustomText(
+                              //   text: "House in Jabriya Block 6",
+                              //   // color: Colors.white,
+                              //   size: 20,
+                              //   fontWeight: FontWeight.w600,
+                              // ),
+                              Expanded(
+                                child: TextFormField(
+                                  // controller: controller,
+                                  style: TextStyle( fontSize: 20,
+                                    fontWeight: FontWeight.w600,),
+                                  validator: (String value) {
+                                    if (value.isEmpty) {
+                                      // ignore: missing_return
+                                      return 'Field cannot be blank.';
+                                    }
+                                  },
+                                  textAlignVertical: TextAlignVertical.center,
+                                  maxLines: 1,
+                                  keyboardType: TextInputType.text,
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(30),
+                                  ],
+
+                                  decoration: InputDecoration(
+                                    prefixIconConstraints: BoxConstraints(
+                                        minHeight: 24,
+                                        minWidth: 24
+                                    ),
+                                    contentPadding:
+                                    EdgeInsets.symmetric(
+
+                                        vertical:
+                                        // hinttext.toLowerCase()=="Description".toLowerCase()?10:
+                                        12,
+                                        horizontal:
+                                        // hinttext.toLowerCase()=="Description".toLowerCase()?20:
+                                        10),
+                                    hintStyle: TextStyle( fontSize: 20,
+                                        fontWeight: FontWeight.w600,),
+                                    hintText: "Add property Name",
+                                    // labelText: "Property",
+                                    filled: true,
+                                    isDense: true,
+                                    enabled: true,
+                                    fillColor: Constant.appColor,
+                                    border: new OutlineInputBorder(
+                                      borderRadius: new BorderRadius.circular(1.0),
+                                      borderSide: new BorderSide(color:Colors.transparent,width: 1.3),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(1)),
+                                      borderSide: new BorderSide(color:Colors.transparent,width: 1.3),      ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(1)),
+                                      borderSide: new BorderSide(color:Colors.transparent,width: 1.3),      ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(1)),
+                                      borderSide: new BorderSide(color:Colors.transparent,width: 1.3),      ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(1)),
+                                      borderSide: BorderSide(width: 1,color:Colors.transparent),
+                                    ),
+                                    // focusedBorder: InputBorder.none,
+                                    // enabledBorder: InputBorder.none,
+                                    // errorBorder: InputBorder.none,
+                                    // disabledBorder: InputBorder.none,
+                                  ),
+                                  // decoration: InputDecoration(
+                                  //   hintStyle: TextStyle(
+                                  //       color: Colors.black.withOpacity(0.3)
+                                  //   ),
+                                  //   hintText:hinttext,
+                                  //   border: new OutlineInputBorder(
+                                  //     borderRadius: new BorderRadius.circular(20.0),
+                                  //     // borderSide: new BorderSide(color:Colors.black.withOpacity(0.3)),
+                                  //     // borderSide: BorderSide(
+                                  //     //   color: Colors.green,
+                                  //     // ),
+                                  //   ),
+                                  //   focusedBorder: OutlineInputBorder(
+                                  //     borderSide: BorderSide(color: Colors.white),
+                                  //     borderRadius: BorderRadius.circular(20.7),
+                                  //   ),
+                                  //
+                                  //   enabledBorder: UnderlineInputBorder(
+                                  //     borderSide: BorderSide(color: Colors.white),
+                                  //     borderRadius: BorderRadius.circular(20.7),
+                                  //   ),
+                                  //   // focusedBorder: InputBorder.none,
+                                  //   // enabledBorder: InputBorder.none,
+                                  //   errorBorder: InputBorder.none,
+                                  //   disabledBorder: InputBorder.none,
+                                  // ),
+                                ),
                               ),
                               SvgPicture.asset(
                                 "Assets/editp.svg",
@@ -238,6 +357,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       SizedBox(
                         height: 15,
                       ),
+
                       Align(
                         alignment: Alignment.centerLeft,
                         child: CustomText(
@@ -252,31 +372,84 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       SizedBox(
                         height: 10,
                       ),
+
                       Container(
+                        height: 25,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                             border: Border.all(
                                 color: Colors.black.withOpacity(0.4))),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 5),
-                          child: Row(
+                              horizontal: 8.0
+                          ),
+                          child:Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               CustomText(
-                                text: "Kuwait City",
-                                color: Colors.black.withOpacity(0.7),
+                                text: currentCountry.length==0?"Choose Country":currentCountry[1],
+                                color: Colors.black.withOpacity(0.9),
                                 size: 15,
-                                fontWeight: FontWeight.w600,
-
-                                // fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w400,
                               ),
-                              SvgPicture.asset("Assets/arrowbut.svg",
-                                  height: 11,
-                                  color: Colors.black.withOpacity(0.6))
+                              MyPopupMenuButton(
+                                popupItems: _popupItemSubCategories1,
+                                onSelected: (val) {
+                             setState(() {
+                               currentCountry=val;
+                                 _popupItemSubCategories2 = _dataStates.where((element) => element[3]==currentCountry[3]).map((cat)
+                                 {
+                                   return PopupMenuItem<dynamic>(
+                                     value: cat,
+                                     child: Text(
+                                       '${cat[1]}',
+                                       // style: Text,
+                                     ),
+                                   );
+                                 }).toList();
+                                 print(_popupItemSubCategories2.length);
+                             });
+                                },
+                              ),
                             ],
                           ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   crossAxisAlignment: CrossAxisAlignment.center,
+                          //   children: [
+                          //     Expanded(
+                          //       child: DropdownButtonHideUnderline(
+                          //         child: SelectState(
+                          //           onCountryChanged: (value) {
+                          //             setState(() {
+                          //               country = value;
+                          //               print(value);
+                          //               print(value);
+                          //             });
+                          //           },
+                          //           onStateChanged:(value) {
+                          //             setState(() {
+                          //               // stateValue = value;
+                          //               print(value);
+                          //               print(value);
+                          //             });
+                          //           },
+                          //           onCityChanged:(value) {
+                          //             setState(() {
+                          //               print(value);
+                          //               print(value);
+                          //               // cityValue = value;
+                          //             });
+                          //           },
+                          //           show: 0,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     // SvgPicture.asset("Assets/arrowbut.svg",
+                          //     //     height: 11,
+                          //     //     color: Colors.black.withOpacity(0.6))
+                          //   ],
+                          // ),
                         ),
                       ),
                       SizedBox(
@@ -295,7 +468,45 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                           SizedBox(
                             width: 5,
                           ),
-                          selectItem("Choose"),
+                          Container(
+                            width: MediaQuery.of(context).size.width/2,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Colors.black.withOpacity(0.4))),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CustomText(
+                                    text: currentState.length==0?"Choose State":currentState[1],
+                                    color: Colors.black.withOpacity(0.9),
+                                    size: 15,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  MyPopupMenuButton(
+                                    popupItems: _popupItemSubCategories2,
+                                    onSelected: (val) {
+                                      setState(() {
+                                        currentState=val;
+                                        // _popupItemSubCategories2 = _dataCountries.where((element) => element[3]==currentCountry[1]).map((cat)
+                                        // {
+                                        //   return PopupMenuItem<dynamic>(
+                                        //     value: cat,
+                                        //     child: Text(
+                                        //       '${cat[1]}',
+                                        //       // style: Text,
+                                        //     ),
+                                        //   );
+                                        // }).toList();
+                                      });
+                                    },
+                                  ),
+                                ],
+                              )
+                            ),
+                          ),
                         ],
                       ),
                       SizedBox(
@@ -456,7 +667,9 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       SizedBox(
                         height: 10,
                       ),
-                      saveButton(context,"Upload"),
+                      saveButton(context,"Upload",(){
+
+                      }),
                       SizedBox(
                         height: 50,
                       ),
@@ -692,4 +905,54 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
      ),
    );
   }
+  void _basicContent() {
+    setState(() {
+      _popupItemSubCategories1 = _dataCountries.map((cat)
+      {
+        return PopupMenuItem<dynamic>(
+          value: cat,
+          child: Text(
+            '${cat[1]}',
+            // style: Text,
+          ),
+        );
+      }).toList();
+    });
+  }
 }
+
+class MyPopupMenuButton extends StatelessWidget {
+  final List<PopupMenuEntry<dynamic>> popupItems;
+  final void Function(dynamic newValue) onSelected;
+  final double elevation;
+  final Icon icon;
+  final double iconSize;
+  final EdgeInsets padding;
+
+  MyPopupMenuButton(
+      {@required this.popupItems,
+        @required this.onSelected,
+        this.elevation = 8.0,
+        this.icon = const Icon(Icons.keyboard_arrow_down, color: Colors.black),
+        this.iconSize = 24.0,
+        this.padding = const EdgeInsets.all(0.0)});
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton<dynamic>(
+      elevation: elevation,
+      onSelected: onSelected,
+      icon:        SvgPicture.asset("Assets/arrowbut.svg",
+          height: 11, color: Colors.black.withOpacity(0.5)),
+      iconSize: iconSize,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15.0),
+        ),
+      ),
+      padding:EdgeInsets.all(0),
+      itemBuilder: (context) => popupItems,
+    );
+  }
+}
+

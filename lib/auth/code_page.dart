@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:realestate/Classes/custom_text.dart';
@@ -21,7 +23,14 @@ class _CodePageState extends State<CodePage> {
   TextEditingController phone = new TextEditingController();
   TextEditingController password = new TextEditingController();
   TextEditingController pincode = new TextEditingController();
-
+  GlobalKey<FormState> _globalKey=GlobalKey<FormState>();
+Timer t;
+@override
+  void initState() {
+    // TODO: implement initState
+  setTimer();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,9 +72,9 @@ class _CodePageState extends State<CodePage> {
                       SizedBox(
                         height: 30,
                       ),
-                      Center(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width / 1.5,
+                      Form(
+                        key: _globalKey,
+                        child: Center(
                           child: PinCodeTextField(
                             controller: pincode,
                             appContext: context,
@@ -73,7 +82,7 @@ class _CodePageState extends State<CodePage> {
                               color: Constant.backgroundColor,
                               fontWeight: FontWeight.bold,
                             ),
-                            length: 4,
+                            length: 6,
                             // obscureText: true,
                             // obscuringCharacter: '*',
                             // blinkWhenObscuring: true,
@@ -140,75 +149,6 @@ class _CodePageState extends State<CodePage> {
                               return true;
                             },
                           ),
-//                           PinCodeTextField(
-//                             appContext: context,
-//                             pastedTextStyle: TextStyle(
-//                               color: Constant.appColor,
-//                               fontWeight: FontWeight.bold,
-//                             ),
-//                             length: 4,
-// // obscureText: true,
-// // obscuringCharacter: '*',
-// // blinkWhenObscuring: true,
-//                             animationType: AnimationType.fade,
-//                             validator: (v) {
-//                               if (v.length < 3) {
-//                                 return "Invalid Digits";
-//                               } else {
-//                                 return null;
-//                               }
-//                             },
-//                             pinTheme: PinTheme(
-//                               shape: PinCodeFieldShape.underline,
-//                               borderRadius: BorderRadius.circular(8),
-//                               fieldHeight: 50,
-//                               fieldWidth: 50,
-//                               activeFillColor: Colors.black.withOpacity(0.05),
-//                               selectedFillColor: Colors.black.withOpacity(0.05),
-//                               selectedColor: Constant.appColor,
-//                               inactiveColor:
-//                                   Constant.blueColor.withOpacity(0.4),
-//                               inactiveFillColor: Colors.black.withOpacity(0.05),
-//                               activeColor: Constant.appColor,
-// //     // hasError ? Colors.whit :
-// //     Colors.white.withOpacity(0.3),
-//                             ),
-//                             cursorColor: Colors.white,
-//                             animationDuration: Duration(milliseconds: 300),
-//                             backgroundColor: Colors.transparent,
-//                             enableActiveFill: true,
-//                             textStyle: TextStyle(
-//                               color: Constant.appColor,
-//                             ),
-// // errorAnimationController: errorController,
-// // controller: textEditingController,
-//                             keyboardType: TextInputType.number,
-// // boxShadows: [
-// //   BoxShadow(
-// //     offset: Offset(0, 1),
-// //     color: Colors.black12,
-// //     blurRadius: 10,
-// //   )
-// // ],
-//                             onCompleted: (v) {
-//                               print("Completed");
-//                             },
-//                             onTap: () {
-//                               print("Pressed");
-//                             },
-//                             onChanged: (value) {
-//                               print(value);
-//                               setState(() {
-// // currentText =currentText value;
-//                               });
-//                             },
-//                             beforeTextPaste: (text) {
-//                               print("Allowing to paste $text");
-// //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-// //but you can show anything you want here, like your pop up saying wrong paste format or etc
-//                               return true;
-//                             },
-//                           ),
                         ),
                       ),
                       SizedBox(
@@ -224,52 +164,60 @@ class _CodePageState extends State<CodePage> {
                       //       border: OutlineInputBorder(),
                       //     )),
 
-                      SizedBox(
-                        height: 30,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => SignUpPage()));
-                        },
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CustomText(
-                                  text: "Didn't recive code?",
-                                  fontWeight: FontWeight.w600,
-                                  size: 16,
-                                  color: Colors.black.withOpacity(0.5),
-                                ),
-                                CustomText(
-                                  text: "Request again",
-                                  fontWeight: FontWeight.w700,
-                                  size: 16,
-                                  color: Colors.black,
-                                ),
-                              ],
-                            ),
-                            CustomText(
-                              text: "Get Via Call",
-                              fontWeight: FontWeight.w700,
-                              size: 16,
-                              height: 1.4,
-                              color: Colors.black,
-                            ),
-                          ],
-                        ),
-                      ),
+                      // SizedBox(
+                      //   height: 30,
+                      // ),
+                      // InkWell(
+                      //   onTap: () {
+                      //     // if(_globalKey.currentState.validate()){
+                      //     //   t.cancel();
+                      //     //   Navigator.pop(context,pincode.text);
+                      //     // }
+                      //     // Navigator.of(context).push(MaterialPageRoute(
+                      //     //     builder: (context) => SignUpPage()));
+                      //   },
+                      //   child: Column(
+                      //     children: [
+                      //       Row(
+                      //         mainAxisAlignment: MainAxisAlignment.center,
+                      //         children: [
+                      //           CustomText(
+                      //             text: "Didn't recive code?",
+                      //             fontWeight: FontWeight.w600,
+                      //             size: 16,
+                      //             color: Colors.black.withOpacity(0.5),
+                      //           ),
+                      //           CustomText(
+                      //             text: "Request again",
+                      //             fontWeight: FontWeight.w700,
+                      //             size: 16,
+                      //             color: Colors.black,
+                      //           ),
+                      //         ],
+                      //       ),
+                      //       CustomText(
+                      //         text: "Get Via Call",
+                      //         fontWeight: FontWeight.w700,
+                      //         size: 16,
+                      //         height: 1.4,
+                      //         color: Colors.black,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       SizedBox(
                         height: 30,
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: MediaQuery.of(context).size.width / 6),
-                        child: bigButton2(context, "Verify", () {}),
+                        child: bigButton2(context, "Verify", () {
+                          if(_globalKey.currentState.validate()){
+                            t.cancel();
+                            Navigator.pop(context,pincode.text);
+                          }
+                        }),
                       ),
-
                       SizedBox(
                         height: 50,
                       ),
@@ -282,5 +230,12 @@ class _CodePageState extends State<CodePage> {
         ),
       ),
     );
+  }
+
+  void setTimer() {
+    t=
+        Timer(Duration(seconds:28),(){
+          Navigator.pop(context,"0000");
+        });
   }
 }

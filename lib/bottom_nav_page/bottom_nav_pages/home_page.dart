@@ -14,12 +14,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List cats = ["Apartments", "Studio", "Flats", "House"];
+  List cats = [
+    "Apartments",
+    "Condos",
+    "Studio Apartments",
+    "Farms",
+    "Offices",
+    "Storage",
+    "Recreational",
+    "Houses"
+  ];
   List catsImages = [
     "Assets/appartment.svg",
     "Assets/studio.svg",
     "Assets/flats.svg",
-    "Assets/homeicon.svg"
+    "Assets/homeicon.svg",
+    "Assets/appartment.svg",
+    "Assets/studio.svg",
+    "Assets/flats.svg",
+    "Assets/homeicon.svg",
   ];
   int selectedView = 0;
 
@@ -183,12 +196,15 @@ class _HomePageState extends State<HomePage> {
                                         color: Colors.white,
                                       )),
                                   SizedBox(
-                                    height: 8,
+                                    height: 3,
                                   ),
-                                  CustomText(
-                                    text: cats[index],
-                                    size: 12,
-                                    color: Colors.white,
+                                  Expanded(
+                                    child: CustomText(
+                                      text: cats[index],
+                                      alignemnt: TextAlign.center,
+                                      size: 11,
+                                      color: Colors.white,
+                                    ),
                                   )
                                 ],
                               ),
