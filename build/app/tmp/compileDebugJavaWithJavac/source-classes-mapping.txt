@@ -1,6 +1,0 @@
-io/flutter/plugins/GeneratedPluginRegistrant.java
- io.flutter.plugins.GeneratedPluginRegistrant
-com/example/realestate/MainActivity.java
- com.example.realestate.MainActivity
-com/example/realestate/BuildConfig.java
- com.example.realestate.BuildConfig
