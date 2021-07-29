@@ -6,22 +6,26 @@ class Property {
       position,
       description,
       id,
+  creatorId,
       timeStamp,
       availableFor,
       mainType,
       governorate,
       district,addType;
-  int bedRooms, masterBed, livingRoom, bathRooms, floors, parkingSpots;
+  int bedRooms, masterBed, livingRoom, bathRooms, floors, parkingSpots,packageIndex;
   bool maiRoom, swimmingPool, centralAc, elevator;
-  List<imgItem> images;
+  List images;
   Property(
       {this.name,
       this.price,
       this.position,
       this.description,
       this.id,
+        this.images,
+      this.creatorId,
       this.timeStamp,
       this.availableFor,
+      this.packageIndex,
       this.mainType,
       this.governorate,
       this.district,
@@ -35,7 +39,6 @@ class Property {
       this.maiRoom,
       this.swimmingPool,
       this.centralAc,
-      this.images,
       this.elevator});
 
   factory Property.fromMap(Map map) {
@@ -45,6 +48,7 @@ class Property {
       position: map['position'] as String,
       description: map['description'] as String,
       id: map['id'] as String,
+      creatorId: map['creatorId'] as String,
       timeStamp: map['timeStamp'] as String,
       availableFor: map['availableFor'] as String,
       mainType: map['mainType'] as String,
@@ -55,7 +59,18 @@ class Property {
       masterBed: map['masterBed'] as int,
       livingRoom: map['livingRoom'] as int,
       bathRooms: map['bathRooms'] as int,
-      images: map['images'] as List<imgItem>,
+      packageIndex: map['packageIndex'] as int,
+      images:  map['images'] == null ? [] : List<String>.from(map['images']),
+      // map['images'] == null
+      // ? []
+      //   // : map['comments'] as List<Comment>
+      //       : imgItem.toCommentList(data: map['images']),
+      // map['images'] as List<imgItem>,
+    //     likes: map['likes'] == null ? [] : List<String>.from(map['likes']),
+    // comments: map['comments'] == null
+    // ? []
+    // // : map['comments'] as List<Comment>
+    //     : Comment.toCommentList(data: map['comments']),
       floors: map['floors'] as int,
       parkingSpots: map['parkingSpots'] as int,
       maiRoom: map['maiRoom'] as bool,
@@ -73,9 +88,11 @@ class Property {
       'position': this.position,
       'description': this.description,
       'id': this.id,
+      'creatorId': this.creatorId,
       'timeStamp': this.timeStamp,
       'availableFor': this.availableFor,
       'mainType': this.mainType,
+      'packageIndex': this.packageIndex,
       'governorate': this.governorate,
       'district': this.district,
       'addType': this.addType,
@@ -96,4 +113,30 @@ class Property {
 class imgItem{
   String img,id;
   imgItem({this.img, this.id});
+
+  factory imgItem.fromMap(Map map) {
+    return new imgItem(
+      img: map['img'] as String,
+      id: map['id'] as String,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    // ignore: unnecessary_cast
+    return {
+      'img': this.img,
+      'id': this.id,
+    } as Map<String, dynamic>;
+  }
+  static List<imgItem> toCommentList({
+    @required var data,
+  }) {
+    Map values = data as Map;
+    List<imgItem> comments = [];
+    values.forEach((key, data) {
+      final imgItem comment = imgItem.fromMap(data);
+      comments.add(comment);
+    });
+    return comments;
+  }
 }

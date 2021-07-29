@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:realestate/Constants/constants.dart';
+import 'package:realestate/Function/read_data.dart';
 import 'package:realestate/bottom_nav_page/bottom_nav_pages/contact_us_page.dart';
 import 'package:realestate/bottom_nav_page/bottom_nav_pages/create_property_page.dart';
 import 'package:realestate/bottom_nav_page/bottom_nav_pages/favourites.dart';
@@ -16,7 +17,12 @@ class BottomNavPage extends StatefulWidget {
 
 class _BottomNavPageState extends State<BottomNavPage> {
   int selected = 0;
-
+@override
+  void initState() {
+    // TODO: implement initState
+  readData(context);
+  super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

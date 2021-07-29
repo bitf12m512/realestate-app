@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/ali/Desktop/Github/realestate-app/build/image_cropper/intermediates/res/merged/release/layout-v21/notification_action_tombstone.xml",
+        "source": "/Users/ali/.gradle/caches/transforms-2/files-2.1/196e05255dea385cbe02fa287f384c72/core-1.5.0/res/layout-v21/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "/Users/ali/Desktop/Github/realestate-app/build/image_cropper/intermediates/res/merged/release/layout-v21/notification_template_custom_big.xml",
+        "source": "/Users/ali/.gradle/caches/transforms-2/files-2.1/196e05255dea385cbe02fa287f384c72/core-1.5.0/res/layout-v21/notification_template_custom_big.xml"
+    },
+    {
+        "merged": "/Users/ali/Desktop/Github/realestate-app/build/image_cropper/intermediates/res/merged/release/layout-v21/notification_action.xml",
+        "source": "/Users/ali/.gradle/caches/transforms-2/files-2.1/196e05255dea385cbe02fa287f384c72/core-1.5.0/res/layout-v21/notification_action.xml"
+    },
+    {
+        "merged": "/Users/ali/Desktop/Github/realestate-app/build/image_cropper/intermediates/res/merged/release/layout-v21/notification_template_icon_group.xml",
+        "source": "/Users/ali/.gradle/caches/transforms-2/files-2.1/196e05255dea385cbe02fa287f384c72/core-1.5.0/res/layout-v21/notification_template_icon_group.xml"
+    }
+]

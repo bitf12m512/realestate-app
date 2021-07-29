@@ -35,13 +35,16 @@ dependencies:
   image_cropper: ^1.4.1
   country_state_city_picker: ^1.2.8
 #  csv_sheet:
-  csv: ^5.0.0
+  file_picker: ^3.0.4
+#  csv: ^5.0.0
   toast: ^0.1.5
   provider: ^5.0.0
   flutter_svg: ^0.22.0
   country_code_picker: ^2.0.2
   pin_code_fields: ^7.2.0
   carousel_slider: ^4.0.0
+  jiffy: ^4.1.0
+
 
 #  country_picker: ^2.0.6
 #  intl_phone_field: ^2.0.1

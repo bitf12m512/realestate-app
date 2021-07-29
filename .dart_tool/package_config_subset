@@ -38,10 +38,6 @@ cross_file
 2.12
 file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/cross_file-0.3.1+4/
 file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/cross_file-0.3.1+4/lib/
-csv
-2.12
-file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/csv-5.0.0/
-file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/csv-5.0.0/lib/
 cupertino_icons
 2.12
 file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.3/
@@ -50,6 +46,10 @@ fake_async
 2.12
 file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0/
 file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0/lib/
+file_picker
+2.12
+file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/file_picker-3.0.4/
+file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/file_picker-3.0.4/lib/
 firebase_auth
 2.12
 file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.0.1/
@@ -114,6 +114,10 @@ intl
 2.12
 file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0/
 file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0/lib/
+jiffy
+2.12
+file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/jiffy-4.1.0/
+file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/jiffy-4.1.0/lib/
 js
 2.12
 file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/js-0.6.3/

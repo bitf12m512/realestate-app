@@ -3,12 +3,15 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:realestate/Classes/custom_text.dart';
+import 'package:realestate/Classes/property.dart';
 import 'package:realestate/Constants/constants.dart';
 import 'package:realestate/Widgets/bed_item.dart';
 import 'package:realestate/Widgets/send_button.dart';
 
 class PropertyDetailPage extends StatefulWidget {
-  const PropertyDetailPage({Key key}) : super(key: key);
+  Property property;
+  PropertyDetailPage(
+      this.property); // const PropertyDetailPage({Key key}) : super(key: key);
 
   @override
   _PropertyDetailPageState createState() => _PropertyDetailPageState();
@@ -56,7 +59,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                         },
                         scrollDirection: Axis.horizontal,
                       ),
-                      items: images.map((i) {
+                      items: widget.property.images.map((i) {
                         return Builder(
                           builder: (BuildContext context) {
                             return InkWell(
@@ -70,7 +73,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                                 // height: MediaQuery.of(context).size.height/2,
                                 width: MediaQuery.of(context).size.width,
                                 decoration: BoxDecoration(
-                                  color: Colors.green,
+                                  // color: Colors.green,
                                   borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(20),
                                       bottomRight: Radius.circular(20)),
@@ -81,7 +84,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                                       bottomRight: Radius.circular(20)),
                                   child: FadeInImage(
                                       placeholder: AssetImage("download.png"),
-                                      image: AssetImage(
+                                      image: NetworkImage(
                                         i,
                                       ),
                                       fit: BoxFit.cover),
@@ -102,10 +105,15 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Icon(
-                                  Icons.arrow_back_ios_rounded,
-                                  color: Colors.white,
-                                  size: 45,
+                                GestureDetector(
+                                 onTap:(){
+                        Navigator.of(context).pop();
+                      },
+                                  child: Icon(
+                                    Icons.arrow_back_ios_rounded,
+                                    color: Colors.white,
+                                    size: 45,
+                                  ),
                                 ),
                                 SvgPicture.asset(
                                   "Assets/sharen.svg",
@@ -146,7 +154,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                                   ),
                                 ),
                                 CustomText(
-                                  text: "450 KWD",
+                                  text: "${widget.property.price} KWD",
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600,
                                   size: 22,
@@ -199,7 +207,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                               height: 10,
                             ),
                             CustomText(
-                              text: "House in Jabriya Block 6",
+                              text: widget.property.name,
                               // color: Colors.white,
                               size: 20,
                               fontWeight: FontWeight.w600,
@@ -263,10 +271,10 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             children: [
-                                              detailBedItem("Bedrooms", "   12",
+                                              detailBedItem("Bedrooms", "   ${widget.property.bedRooms}",
                                                   "Assets/bed.svg"),
                                               detailBedItem("Maid Room",
-                                                  "   Yes", "Assets/maid.svg"),
+                                                  "   ${widget.property.maiRoom==true?"Yes":"No"}", "Assets/maid.svg"),
                                             ],
                                           ),
                                           Row(
@@ -274,9 +282,9 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                                                 MainAxisAlignment.start,
                                             children: [
                                               detailBedItem("Master Rooms",
-                                                  "   12", "Assets/bed.svg"),
+                                                  "   ${widget.property.masterBed}", "Assets/bed.svg"),
                                               detailBedItem("Swimming Pool",
-                                                  "   01", "Assets/water.svg"),
+                                                  "   ${widget.property.swimmingPool}", "Assets/water.svg"),
                                             ],
                                           ),
                                           Row(
@@ -284,8 +292,8 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                                                 MainAxisAlignment.start,
                                             children: [
                                               detailBedItem("Living Rooms",
-                                                  "   12", "Assets/living.svg"),
-                                              detailBedItem("Area", "   01",
+                                                  "   ${widget.property.livingRoom}", "Assets/living.svg"),
+                                              detailBedItem("Area", "   ${widget.property.bathRooms}",
                                                   "Assets/area.svg"),
                                             ],
                                           ),
@@ -293,13 +301,14 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             children: [
-                                              detailBedItem("Garage", "   01",
+                                              detailBedItem("Garage", "   ${widget.property.parkingSpots}",
                                                   "Assets/garage.svg"),
                                               detailBedItem("Bathrooms",
-                                                  "   12", "Assets/bath.svg"),
+                                                  "   ${widget.property.bathRooms}", "Assets/bath.svg"),
                                             ],
                                           ),
-                                          detailBedItem("Floors", "   03",
+                                          detailBedItem("Floors", "   ${widget.property.floors
+                                          }",
                                               "Assets/area2.svg"),
                                           SizedBox(
                                             height: 10,

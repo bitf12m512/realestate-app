@@ -62,12 +62,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "csv",
-      "rootUri": "file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/csv-5.0.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "cupertino_icons",
       "rootUri": "file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.3",
       "packageUri": "lib/",
@@ -76,6 +70,12 @@
     {
       "name": "fake_async",
       "rootUri": "file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "file_picker",
+      "rootUri": "file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/file_picker-3.0.4",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -190,6 +190,12 @@
     {
       "name": "intl",
       "rootUri": "file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "jiffy",
+      "rootUri": "file:///Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/jiffy-4.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -350,7 +356,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2021-07-28T07:58:35.682020Z",
+  "generated": "2021-07-29T11:21:38.160092Z",
   "generator": "pub",
   "generatorVersion": "2.12.2"
 }
