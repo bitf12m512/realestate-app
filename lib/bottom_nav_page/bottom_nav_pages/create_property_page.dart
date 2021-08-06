@@ -74,10 +74,12 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   TextEditingController price = new TextEditingController();
   TextEditingController name = new TextEditingController();
   String governorate = "";
+  String position = "";
   String district = "";
   List currentState = [];
   List<PopupMenuEntry<dynamic>> _popupItemSubCategories1 = [];
   List<PopupMenuEntry<dynamic>> categories = [];
+  List<PopupMenuEntry<dynamic>> positions = [];
   List<PopupMenuEntry<dynamic>> city = [];
   List<PopupMenuEntry<dynamic>> Havalli = [];
   List<PopupMenuEntry<dynamic>> Mubarak = [];
@@ -445,137 +447,33 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       SizedBox(
                         height: 15,
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: selectItem("House", 3.2),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: CustomText(
-                          text: "Governorate",
-                          color: Colors.black.withOpacity(0.7),
-                          size: 15,
-                          fontWeight: FontWeight.w600,
-
-                          // fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        height: 25,
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Colors.black.withOpacity(0.4))),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CustomText(
-                                text: governorate.length == 0
-                                    ? "Choose Governorate"
-                                    : governorate,
-                                color: Colors.black.withOpacity(0.9),
-                                size: 15,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              MyPopupMenuButton(
-                                popupItems: _popupItemSubCategories1,
-                                onSelected: (val) {
-                                  setState(() {
-                                    governorate = val;
-                                    // _popupItemSubCategories2 = _dataStates.where((element) => element[3]==currentCountry[3]).map((cat)
-                                    // {
-                                    //   return PopupMenuItem<dynamic>(
-                                    //     value: cat,
-                                    //     child: Text(
-                                    //       '${cat[1]}',
-                                    //       // style: Text,
-                                    //     ),
-                                    //   );
-                                    // }).toList();
-                                    // print(_popupItemSubCategories2.length);
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        children: [
-                          CustomText(
-                            text: "District",
-                            color: Colors.black.withOpacity(0.7),
-                            size: 13,
-                            fontWeight: FontWeight.w600,
-
-                            // fontWeight: FontWeight.bold,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Container(
-                            height: 25,
-                            width: MediaQuery
-                                .of(context)
-                                .size
-                                .width / 1.5,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Colors.black.withOpacity(0.4))),
-                            child: Padding(
-                                padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: CustomText(
-                                        text: district.length == 0
-                                            ? "Choose District"
-                                            : district,
-                                        color: Colors.black.withOpacity(0.9),
-                                        size: 15,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                    MyPopupMenuButton(
-                                      popupItems: governorate.toLowerCase()
-                                          .contains("city") ? city : governorate
-                                          .toLowerCase().contains("Hawalli")
-                                          ? Havalli
-                                          :governorate.toLowerCase()
-                                          .contains("Jahra")?Jahra:governorate.toLowerCase()
-                                          .contains("Farwaniyah")?Farwaniya:governorate.toLowerCase()
-                                          .contains("Mubarak")?Mubarak:Ahmadi,
-                                      onSelected: (val) {
-                                        setState(() {
-                                          district = val;
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                )),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
+                      dropDownItem(context,"Category",category,category,categories,(val) {
+                        setState(() {
+                          category = val;
+                        });
+                      }),
+                      dropDownItem(context,"Governorate",governorate,"Choose Governorate",_popupItemSubCategories1,(val) {
+                        setState(() {
+                          governorate = val;
+                        });
+                      }),
+                      dropDownItem(context,"District",district,"Choose District",governorate.toLowerCase()
+                          .contains("city") ? city : governorate
+                          .toLowerCase().contains("Hawalli")
+                          ? Havalli
+                          :governorate.toLowerCase()
+                          .contains("Jahra")?Jahra:governorate.toLowerCase()
+                          .contains("Farwaniyah")?Farwaniya:governorate.toLowerCase()
+                          .contains("Mubarak")?Mubarak:Ahmadi,(val) {
+                        setState(() {
+                          district = val;
+                        });
+                      }),
+                      dropDownItem(context,"Position of RealEstate",position,"Choose Position",positions,(val) {
+                        setState(() {
+                          position = val;
+                        });
+                      }),
                       ListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
@@ -640,55 +538,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       SizedBox(
                         height: 20,
                       ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                          height: 25,
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width / 1.4,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.black.withOpacity(0.4))),
-                          child: Padding(
-                            padding:
-                            const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CustomText(
-                                  text: governorate.length == 0
-                                      ? "Position of Realestate"
-                                      : governorate,
-                                  color: Colors.black.withOpacity(0.9),
-                                  size: 15,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                MyPopupMenuButton(
-                                  popupItems: _popupItemSubCategories1,
-                                  onSelected: (val) {
-                                    setState(() {
-                                      governorate = val;
-                                      // _popupItemSubCategories2 = _dataStates.where((element) => element[3]==currentCountry[3]).map((cat)
-                                      // {
-                                      //   return PopupMenuItem<dynamic>(
-                                      //     value: cat,
-                                      //     child: Text(
-                                      //       '${cat[1]}',
-                                      //       // style: Text,
-                                      //     ),
-                                      //   );
-                                      // }).toList();
-                                      // print(_popupItemSubCategories2.length);
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+
                       // Align(
                       //   alignment: Alignment.centerLeft,
                       //   child:
@@ -731,12 +581,30 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                             .width / 1.1,
                         child: Row(
                           children: [
-                            Image.asset(
-                              "Assets/priceTag.png",
-                              height: 30,
-                            ),
-                            SizedBox(
-                              width: 10,
+                            // Image.asset(
+                            //   "Assets/priceTag.png",
+                            //   height: 30,
+                            // ),
+                            // SizedBox(
+                            //   width: 10,
+                            // ),
+                            Container(
+                          height: 30,
+                          // width: MediaQuery
+                          //     .of(context)
+                          //     .size
+                          //     .width / 2,
+                              color: Constant.blueColor,
+                              child: Center(
+                                child: CustomText(
+                                  text: " KWD ",
+                                  color: Colors.white,
+                                  size: 13,
+                                  fontWeight: FontWeight.w500,
+
+                                  // fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                             Container(
                               height: 30,
@@ -746,7 +614,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                   .width / 2,
                               decoration: BoxDecoration(
                                   border: Border.all(
-                                      color: Colors.black.withOpacity(0.4))),
+                                      color: Constant.blueColor)),
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 12.0),
@@ -758,6 +626,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                           controller: price,
                                           style: TextStyle(
                                             fontSize: 14,
+                                            color: Constant.blueColor,
                                             fontWeight: FontWeight.w500,
                                           ),
                                           validator: (String value) {
@@ -770,10 +639,14 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                           TextAlignVertical.center,
                                           maxLines: 1,
                                           keyboardType: TextInputType.number,
-                                          inputFormatters: [
-                                            LengthLimitingTextInputFormatter(
-                                                10),
+                                          // keyboardType: TextInputType.number
+                                          inputFormatters: [LengthLimitingTextInputFormatter(
+                                              12),
+                                            // WhitelistingTextInputFormatter.digitsOnly,
+                                            FilteringTextInputFormatter.digitsOnly
+                                            // WhitelistingTextInputFormatter.digitsOnly
                                           ],
+
                                           decoration: InputDecoration(
                                             prefixIconConstraints:
                                             BoxConstraints(
@@ -789,6 +662,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                                 0),
                                             hintStyle: TextStyle(
                                               fontSize: 14,
+                                              color: Constant.blueColor,
                                               fontWeight: FontWeight.w500,
                                             ),
                                             hintText: "Add Price",
@@ -840,14 +714,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                           ),
                                         ),
                                       ),
-                                      CustomText(
-                                        text: "KWD",
-                                        color: Colors.black.withOpacity(0.7),
-                                        size: 15,
-                                        fontWeight: FontWeight.w600,
 
-                                        // fontWeight: FontWeight.bold,
-                                      ),
                                     ],
                                   ),
                                 ),
@@ -1044,7 +911,9 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
           .size
           .width / 1.8,
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.black.withOpacity(0.4))),
+        color: Constant.blueColor,
+          // border: Border.all(color: Colors.black.withOpacity(0.4))
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
         child: Row(
@@ -1053,7 +922,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
           children: [
             CustomText(
               text: category,
-              color: Colors.black.withOpacity(0.4),
+              color: Colors.white,
               size: 13,
               // fontWeight: FontWeight.bold,
             ),
@@ -1229,6 +1098,15 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
           ),
         );
       }).toList();
+      positions = Constant.positions.map((cat) {
+        return PopupMenuItem<dynamic>(
+          value: cat,
+          child: Text(
+            '${cat}',
+            // style: Text,
+          ),
+        );
+      }).toList();
       Mubarak = Constant.Mubarak.map((cat) {
         return PopupMenuItem<dynamic>(
           value: cat,
@@ -1309,6 +1187,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
           packageIndex: selectedPackageIndex,
           timeStamp: time,
           id: id,
+          status: "Pending",
           creatorId:
           Provider
               .of<RoleIdentifier>(context, listen: false)
@@ -1353,6 +1232,62 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
           gravity: Toast.TOP);
     }
   }
+
+  dropDownItem(BuildContext context, String title,String value,String placeHolder,List<PopupMenuEntry<dynamic>> catList,Function onselected) {
+    return    Column(
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: CustomText(
+            text: title,
+            color: Colors.black.withOpacity(0.7),
+            size: 15,
+            fontWeight: FontWeight.w600,
+
+            // fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Container(
+          height: 30,
+          width: MediaQuery
+              .of(context)
+              .size
+              .width,
+          decoration: BoxDecoration(
+            color: Constant.blueColor,
+            // border: Border.all(
+            //     color: Colors.black.withOpacity(0.4))
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CustomText(
+                  text: value.length == 0
+                      ? placeHolder
+                      : value,
+                  color: Colors.white,
+                  size: 16.5,
+                  fontWeight: FontWeight.w400,
+                ),
+                MyPopupMenuButton(
+                  popupItems: catList,
+                  onSelected: onselected,
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+      ],
+    );
+  }
 }
 
 class MyPopupMenuButton extends StatelessWidget {
@@ -1376,7 +1311,7 @@ class MyPopupMenuButton extends StatelessWidget {
       elevation: elevation,
       onSelected: onSelected,
       icon: SvgPicture.asset("Assets/arrowbut.svg",
-          height: 11, color: Colors.black.withOpacity(0.5)),
+          height: 5, color: Colors.white),
       iconSize: iconSize,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(

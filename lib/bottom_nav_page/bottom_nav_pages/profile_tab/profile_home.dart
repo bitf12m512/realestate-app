@@ -51,7 +51,7 @@ class _ProfileHomePageState extends State<ProfileHomePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CustomText(
-                                  text: provider.appuser.firstName==null?"Unknown":provider.appuser.firstName+provider.appuser.lastName,
+                                  text: provider.appuser.firstName==null?"Unknown":provider.appuser.firstName+" "+provider.appuser.lastName,
                                   fontWeight: FontWeight.w500,
                                   size: 25,
                                   color: Colors.black.withOpacity(0.7),

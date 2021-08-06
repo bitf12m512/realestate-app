@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class Property {
   String name,
       price,
+  status,
       position,
       description,
       id,
@@ -20,6 +21,7 @@ class Property {
       this.price,
       this.position,
       this.description,
+      this.status,
       this.id,
         this.images,
       this.creatorId,
@@ -46,6 +48,7 @@ class Property {
       name: map['name'] as String,
       price: map['price'] as String,
       position: map['position'] as String,
+        status: map['status'] as String,
       description: map['description'] as String,
       id: map['id'] as String,
       creatorId: map['creatorId'] as String,
@@ -107,6 +110,7 @@ class Property {
       'swimmingPool': this.swimmingPool,
       'centralAc': this.centralAc,
       'elevator': this.elevator,
+      'status': this.status,
     } as Map<String, dynamic>;
   }
 }

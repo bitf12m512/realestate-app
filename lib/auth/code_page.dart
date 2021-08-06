@@ -234,7 +234,7 @@ Timer t;
 
   void setTimer() {
     t=
-        Timer(Duration(seconds:28),(){
+        Timer(Duration(seconds:57),(){
           Navigator.pop(context,"0000");
         });
   }

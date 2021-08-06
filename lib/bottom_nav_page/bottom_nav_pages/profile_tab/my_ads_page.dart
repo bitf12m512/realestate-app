@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jiffy/jiffy.dart';
+import 'package:provider/provider.dart';
 import 'package:realestate/Classes/custom_text.dart';
 import 'package:realestate/Constants/constants.dart';
+import 'package:realestate/Provider/provider_class.dart';
 import 'package:realestate/Widgets/bed_item.dart';
 import 'package:realestate/Widgets/rounded_app_bar.dart';
+import 'package:realestate/bottom_nav_page/bottom_nav_pages/edit_property/edit_property.dart';
+import 'package:realestate/bottom_nav_page/bottom_nav_pages/property_detail_page.dart';
 class MyAddsPage extends StatefulWidget {
   const MyAddsPage({Key key}) : super(key: key);
 
@@ -13,201 +18,250 @@ class MyAddsPage extends StatefulWidget {
 }
 
 class _MyAddsPageState extends State<MyAddsPage> {
-  int selected=0;
+  int selected=1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: [
-            roundedAppBarwithBack(context,"My Ads"),
-            Row(
+      body: Consumer<RoleIdentifier>(
+        builder: (context,provider,child){
+          return Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
               children: [
-               typeItem("Published",0,selected,(){
-                 setState(() {
-                   selected=0;
-                 });
-               }) ,
-                typeItem("Pendding",1,selected,(){
-                 setState(() {
-                   selected=1;
-                 });
-               })
-              ],
-            ),
-            Expanded(
-              child: Container(
-                // color: Colors.red,
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: MediaQuery.removePadding(
-                  context: context,
-                  removeTop: true,
-                  child: ListView.builder(
-                      itemCount: 10,
-                      itemBuilder: (context,index){
-                        return Padding(
-                          padding: const EdgeInsets.only(left:15.0,right: 15,bottom: 10,top: 10),
-                          child: Container(
-                            // height: MediaQuery.of(context).size.height / 3,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    spreadRadius: 3,
-                                    blurRadius: 7,
-                                    offset: Offset(0, 3),
-                                    // changes position of shadow
-                                  ),
-                                ],
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Stack(
-                              children: [
-                                Container(
+                roundedAppBarwithBack(context,"My Ads",(){
+                  Navigator.pop(context);
+                }),
+                Row(
+                  children: [
+                    typeItem("Published",0,selected,(){
+                      setState(() {
+                        selected=0;
+                      });
+                    }) ,
+                    typeItem("Pendding",1,selected,(){
+                      setState(() {
+                        selected=1;
+                      });
+                    })
+                  ],
+                ),
+                Expanded(
+                  child: Container(
+                    // color: Colors.red,
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    child: MediaQuery.removePadding(
+                      context: context,
+                      removeTop: true,
+                      child: provider.getMyPropertyList.length == 0
+                          ? Align(
+                        alignment: Alignment.topCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 50.0),
+                          child: CustomText(
+                            text: "You haven't added any Property yet.",
+                            size: 16,
+                            color: Colors.black.withOpacity(0.7),
+                          ),
+                        ),
+                      )
+                          : selected==0?Align(
+                        alignment: Alignment.topCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 50.0),
+                              child: CustomText(
+                        text: "No Adds are published yet.",
+                        size: 16,
+                        color: Colors.black.withOpacity(0.7),
+                      ),
+                            ),
+                          ):ListView.builder(
+                          itemCount:provider.getMyPropertyList.length ,
+                          itemBuilder: (context,index){
+                            return Padding(
+                              padding: const EdgeInsets.only(left:15.0,right: 15,bottom: 10,top: 10),
+                              child: GestureDetector(
+                                onTap: (){
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => PropertyDetailPage(
+                                          provider.getMyPropertyList[index],false)));
+                                },
+                                child: Container(
                                   width: MediaQuery.of(context).size.width,
-                                  child: Row(
+                                  decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.1),
+                                          spreadRadius: 3,
+                                          blurRadius: 7,
+                                          offset: Offset(0, 3),
+                                          // changes position of shadow
+                                        ),
+                                      ],
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: Stack(
                                     children: [
                                       Container(
-                                        height: MediaQuery.of(context).size.height / 5,
-                                        width: MediaQuery.of(context).size.width/3,
-                                        child: Container(
-                                          height:
-                                          MediaQuery.of(context).size.height /
-                                              5,
-                                          width: MediaQuery.of(context).size.width,
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(15),
-                                                topLeft: Radius.circular(15)),
-                                            child: Image.asset(
-                                              "Assets/homes@3x.png",
-                                              fit: BoxFit.cover,
+                                        width: MediaQuery.of(context).size.width,
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              height: MediaQuery.of(context).size.height / 5,
+                                              width: MediaQuery.of(context).size.width/3,
+                                              child: Container(
+                                                height:
+                                                MediaQuery.of(context).size.height /
+                                                    5,
+                                                width: MediaQuery.of(context).size.width,
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.only(
+                                                      bottomLeft: Radius.circular(15),
+                                                      topLeft: Radius.circular(15)),
+                                                  child: Image.network(
+                                                    provider.getMyPropertyList[index].images[0],
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Container(
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    CustomText(
+                                                      text:provider.getMyPropertyList[index].name,
+                                                      color: Colors.black,
+                                                      size: 14,
+                                                      fontWeight: FontWeight.w600,
+                                                    ),
+                                                    Container(
+                                                      height: 3,
+                                                      width: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                          8,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                        BorderRadius.circular(10),
+                                                        color: Constant.blueColor,
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      height: 1,
+                                                      width: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                          2,
+                                                      color: Constant.blueColor,
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                          MainAxisAlignment.start,
+                                                          children: [
+                                                            favBedItem("Bedrooms", "   ${provider.getMyPropertyList[index].bedRooms}",
+                                                                "Assets/bed.svg"),
+                                                            favBedItem("Bathrooms", "   ${provider.getMyPropertyList[index].bathRooms}",
+                                                                "Assets/bath.svg"),
+                                                          ],
+                                                        ),
+                                                        Align(
+                                                          alignment: Alignment.topRight,
+                                                          child: CustomText(
+                                                            text:  Jiffy(DateTime
+                                                                .fromMillisecondsSinceEpoch(
+                                                                int.parse(provider
+                                                                    .properties[
+                                                                index]
+                                                                    .timeStamp))
+                                                                .toLocal())
+                                                                .fromNow(),
+                                                            color: Colors.black.withOpacity(0.4),
+                                                            size:8,
+                                                            fontWeight: FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                          MainAxisAlignment.start,
+                                                          children: [
+                                                            favBedItem("Living Rooms", "   ${provider.getMyPropertyList[index].livingRoom}",
+                                                                "Assets/living.svg"),
+                                                            favBedItem("Garage", "   ${provider.getMyPropertyList[index].parkingSpots}",
+                                                                "Assets/garage.svg"),
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            SvgPicture.asset(""),
+                                                            CustomText(
+                                                              text: "${provider.getMyPropertyList[index].price}KWD",
+                                                              color: Constant.blueColor,
+                                                              size: 12,
+                                                              fontWeight: FontWeight.w500,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            )
+                                          ],
                                         ),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              CustomText(
-                                                text: "House in Jabriya Block 6",
-                                                color: Colors.black,
-                                                size: 14,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                              Container(
-                                                height: 3,
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                    8,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                  BorderRadius.circular(10),
-                                                  color: Constant.blueColor,
-                                                ),
-                                              ),
-                                              Container(
-                                                height: 1,
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                    2,
-                                                color: Constant.blueColor,
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                    children: [
-                                                      favBedItem("Bedrooms", "   03",
-                                                          "Assets/bed.svg"),
-                                                      favBedItem("Bathrooms", "   04",
-                                                          "Assets/bath.svg"),
-                                                    ],
-                                                  ),
-                                                  Align(
-                                                    alignment: Alignment.topRight,
-                                                    child: CustomText(
-                                                      text: "8 hours age",
-                                                      color: Colors.black.withOpacity(0.4),
-                                                      size:8,
-                                                      fontWeight: FontWeight.w500,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                    children: [
-                                                      favBedItem("Living Rooms", "   12",
-                                                          "Assets/living.svg"),
-                                                      favBedItem("Garage", "   01",
-                                                          "Assets/garage.svg"),
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      SvgPicture.asset(""),
-                                                      CustomText(
-                                                        text: " 450 KWD",
-                                                        color: Constant.blueColor,
-                                                        size: 12,
-                                                        fontWeight: FontWeight.w500,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                            ],
-                                          ),
+                                        child: InkWell(
+                                          onTap: (){
+
+                                            Navigator.of(context).push(MaterialPageRoute(
+                                                builder: (context) => EditPropertyPage(
+                                                    provider.getMyPropertyList[index])));
+                                          },
+                                          child: Align(
+                                              alignment: Alignment.topRight,
+                                              child: SvgPicture.asset("Assets/editp.svg",height: 16,)),
                                         ),
                                       )
                                     ],
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Align(
-                                      alignment: Alignment.topRight,
-                                      child: SvgPicture.asset("Assets/editp.svg",height: 16,)),
-                                )
-                              ],
-                            ),
-                          ),
-                        ) ;
-                      }),
-                ),
-              ),
-            )
-          ],
-        ),
+                              ),
+                            );
+                          }),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        },
       ),
     );
   }

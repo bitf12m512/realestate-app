@@ -35,7 +35,7 @@ roundedAppBar(BuildContext context,String s) {
     ),
   );
 }
-roundedAppBarwithBack(BuildContext context,String s) {
+roundedAppBarwithBack(BuildContext context,String s,Function ontap) {
   return   Container(
     // height: MediaQuery.of(context).size.height/10,
     width: MediaQuery.of(context).size.width,
@@ -71,11 +71,12 @@ roundedAppBarwithBack(BuildContext context,String s) {
             ),
             Align(
                 alignment: Alignment.centerLeft,
-                child: GestureDetector(
-                    onTap: (){
-                      Navigator.of(context).pop();
-                    },
-                    child: Icon(Icons.arrow_back_ios_rounded,size: 30,color: Colors.white,)))
+                child: Padding(
+                  padding: const EdgeInsets.only(left:8.0),
+                  child: GestureDetector(
+                      onTap:ontap,
+                      child: Icon(Icons.arrow_back_ios_rounded,size: 26,color: Colors.white,)),
+                ))
           ],
         ),
       ),
@@ -130,7 +131,7 @@ roundedAppBarwithBackedit(BuildContext context,String s,Function ontap,Color col
                     child: CustomText(
                       text: "Edit   ",
                       color: color,
-                      size: 22,
+                      size: 20,
                     )))
           ],
         ),

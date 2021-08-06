@@ -18,6 +18,13 @@ class Constant {
     "Recreational",
     "House"
   ];
+  static const List positions = [
+    "View on 3 streets",
+    "View on 2 streets",
+    "Corner house",
+    "with passage",
+    "with 2 passages"
+  ];
   static const List City = [
     "Abdulla Al-Salem",
     "Adailiya",

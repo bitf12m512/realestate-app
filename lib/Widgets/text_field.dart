@@ -102,6 +102,13 @@ Widget TextFieldBoxSmall(BuildContext context,IconData icon,String hinttext,bool
       if (value.isEmpty) {
         // ignore: missing_return
         return 'Field cannot be blank.';
+      } else if(hinttext.contains("Email Address")){
+        bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value);
+       if(emailValid==false){
+         return 'Enter a valid email e.g. ab@cd.com';
+       }
+
+        // return value.isValidEmail() ? null : "Enter a valid email e.g. ab@cd.com";
       }
     },
     textAlignVertical: TextAlignVertical.center,
@@ -186,4 +193,15 @@ Widget TextFieldBoxSmall(BuildContext context,IconData icon,String hinttext,bool
     //   disabledBorder: InputBorder.none,
     // ),
   );
+}
+
+// Using the RegExp from the answers by Eric and Justin,
+//     I made a extension method for String:
+
+extension EmailValidator on String {
+  bool isValidEmail() {
+    return RegExp(
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(this);
+  }
 }

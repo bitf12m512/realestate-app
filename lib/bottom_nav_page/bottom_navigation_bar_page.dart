@@ -85,6 +85,12 @@ class _BottomNavPageState extends State<BottomNavPage> {
                                   });
                                 }),
                                 Container(),
+                                // bottomItem("Assets/building_filled.svg",
+                                //     "Assets/building_outline.svg", selected, 3, () {
+                                //   setState(() {
+                                //     selected = 3;
+                                //   });
+                                // }),
                                 bottomItem("Assets/messagecallfilled.svg",
                                     "Assets/mailLiner.svg", selected, 3, () {
                                   setState(() {

@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:realestate/Classes/custom_text.dart';
+import 'package:realestate/Classes/fiter.dart';
 import 'package:realestate/Widgets/check_boxes.dart';
 import 'package:realestate/Widgets/filter_main_type.dart';
 import 'package:realestate/Widgets/send_button.dart';
@@ -24,7 +25,7 @@ class _FilterPageState extends State<FilterPage> {
   String mainType = "buy";
   int mainCat = 0;
   int subCat = 0;
-  List<int> propertyPropertiesQuantity = [0, 2, 1, 2];
+  List<int> propertyPropertiesQuantity = [0, 0, 0, 0];
   List headings = ["Bedrooms", "Master Rooms", "Bathrooms", "Parking Spots"];
   TextEditingController fromPrice = new TextEditingController();
   TextEditingController fromArea = new TextEditingController();
@@ -40,6 +41,7 @@ class _FilterPageState extends State<FilterPage> {
     "Condos",
     "Studio Apartments",
     "Farms",
+    "Chalets",
     "Offices",
     "Storage",
     "Recreational",
@@ -47,12 +49,13 @@ class _FilterPageState extends State<FilterPage> {
   ];
   List catsImages = [
     "Assets/appartment.svg",
+    "Assets/condos.svg",
     "Assets/studio.svg",
-    "Assets/flats.svg",
-    "Assets/homeicon.svg",
-    "Assets/appartment.svg",
-    "Assets/studio.svg",
-    "Assets/flats.svg",
+    "Assets/Farm.svg",
+    "Assets/chalet.svg",
+    "Assets/Office.svg",
+    "Assets/Storages.svg",
+    "Assets/recreational.svg",
     "Assets/homeicon.svg",
   ];
   List subCats = ["All", "House", "Flats", "Room", "Hotel"];
@@ -103,7 +106,7 @@ class _FilterPageState extends State<FilterPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               GestureDetector(
-                                onTap: (){
+                                onTap: () {
                                   Navigator.of(context).pop();
                                 },
                                 child: Icon(
@@ -144,8 +147,8 @@ class _FilterPageState extends State<FilterPage> {
                                   setState(() {
                                     mainType = "rent";
                                   });
-                                })
-                                ,filterMainType(context, "Exchange",
+                                }),
+                                filterMainType(context, "Exchange",
                                     mainType == "exchange" ? true : false, () {
                                   setState(() {
                                     mainType = "exchange";
@@ -167,7 +170,7 @@ class _FilterPageState extends State<FilterPage> {
                   // color: Colors.green,
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal:20.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -185,7 +188,7 @@ class _FilterPageState extends State<FilterPage> {
                           SizedBox(
                             height: 20,
                           ),
-                          head("Price Range"),
+                          head("Category"),
                           mainCats(),
                           subcats(),
                           SizedBox(
@@ -201,8 +204,8 @@ class _FilterPageState extends State<FilterPage> {
                           RangeSlider(
                             values: _currentRangeValues,
                             min: 0,
-                            max: 2000,
-                            divisions: 10,
+                            max: 200000,
+                            divisions: 100,
                             inactiveColor: Constant.darkblue.withOpacity(0.3),
                             activeColor: Constant.blueColor,
                             labels: RangeLabels(
@@ -336,22 +339,21 @@ class _FilterPageState extends State<FilterPage> {
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: propertyPropertiesQuantity.length,
                               itemBuilder: (context, index) {
-                                return increDec(
-                                    context,
-                                    headings[index],
-                                    propertyPropertiesQuantity[index],
-                                    () {
-                                      setState(() {
-                                        if(propertyPropertiesQuantity[index]!=0){
-                                          propertyPropertiesQuantity[index]=propertyPropertiesQuantity[index]-1;
-                                        }
-                                      });
-                                    },
-                                    () {
-                                      setState(() {
-                                        propertyPropertiesQuantity[index]=propertyPropertiesQuantity[index]+1;
-                                      });
-                                    });
+                                return increDec(context, headings[index],
+                                    propertyPropertiesQuantity[index], () {
+                                  setState(() {
+                                    if (propertyPropertiesQuantity[index] !=
+                                        0) {
+                                      propertyPropertiesQuantity[index] =
+                                          propertyPropertiesQuantity[index] - 1;
+                                    }
+                                  });
+                                }, () {
+                                  setState(() {
+                                    propertyPropertiesQuantity[index] =
+                                        propertyPropertiesQuantity[index] + 1;
+                                  });
+                                });
                               }),
                           checkBoxesWidget(),
                           SizedBox(
@@ -360,14 +362,53 @@ class _FilterPageState extends State<FilterPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              CustomText(
-                                text: "Reset",
-                                fontWeight: FontWeight.w800,
-                                size: 17,
-                                color: Colors.black.withOpacity(0.3),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    mainType = "buy";
+                                    mainCat = 0;
+                                    subCat=0;
+                                    fromPrice.clear();
+                                    toPrice.clear();
+                                    fromArea.clear();
+                                    toArea.clear();
+                                    propertyPropertiesQuantity[0] = 0;
+                                    propertyPropertiesQuantity[1] = 0;
+                                    propertyPropertiesQuantity[2] = 0;
+                                    propertyPropertiesQuantity[3] = 0;
+                                    moreValues[0] = false;
+                                    moreValues[1] = false;
+                                    moreValues[2] = false;
+                                    moreValues[3] = false;
+                                  });
+                                },
+                                child: CustomText(
+                                  text: "Reset",
+                                  fontWeight: FontWeight.w800,
+                                  size: 17,
+                                  color: Colors.black.withOpacity(0.3),
+                                ),
                               ),
-                              saveButton(context, "Search",(){
-
+                              saveButton(context, "Search", () {
+                                Filter filter = new Filter();
+                                filter.availableFor = mainType;
+                                filter.mainCategory = cats[mainCat];
+                                filter.priceStart = fromPrice.text;
+                                filter.priceEnd = toPrice.text;
+                                filter.areaStart = fromArea.text;
+                                filter.areaEnd = toArea.text;
+                                filter.bedrooms = propertyPropertiesQuantity[0];
+                                filter.masterRooms =
+                                    propertyPropertiesQuantity[1];
+                                filter.bathRooms =
+                                    propertyPropertiesQuantity[2];
+                                filter.parkingSpots =
+                                    propertyPropertiesQuantity[3];
+                                filter.maidRoom = moreValues[0];
+                                filter.swimmingPool = moreValues[1];
+                                filter.centralAC = moreValues[2];
+                                filter.elevator = moreValues[3];
+                                Navigator.pop(context,filter);
                               })
                             ],
                           ),
@@ -568,6 +609,7 @@ class _FilterPageState extends State<FilterPage> {
                         CustomText(
                           text: cats[index],
                           size: 12,
+                          alignemnt: TextAlign.center,
                           color: mainCat == index
                               ? Constant.blueColor.withOpacity(0.8)
                               : Colors.black.withOpacity(0.2),
@@ -712,7 +754,6 @@ class _FilterPageState extends State<FilterPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
         head(title),
         SizedBox(
           height: 20,

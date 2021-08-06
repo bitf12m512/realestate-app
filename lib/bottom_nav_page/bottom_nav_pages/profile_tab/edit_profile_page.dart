@@ -65,7 +65,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           key: _globalKey,
           child: Column(
             children: [
-              roundedAppBarwithBackedit(context, "Profile Edit",(){
+              roundedAppBarwithBackedit(context, editable==true?"Profile Edit":"Profile",(){
                 setState(() {
                   editable=true;
                 });
@@ -128,7 +128,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     ),
                                   ),
                                 ),
-                                Align(
+                                editable==true?Align(
                                   alignment: Alignment.bottomRight,
                                   child: GestureDetector(
                                     onTap: (){
@@ -177,7 +177,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       ),
                                     ),
                                   ),
-                                )
+                                ):Container()
                               ],
                             ),
                           ),
@@ -212,7 +212,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             height: 15,
                           ),
                           TextFieldBoxSmall(context, Icons.mail, "Email Address", editable, email,
-                              TextInputType.emailAddress, 14),
+                              TextInputType.emailAddress, 100),
                           SizedBox(
                             height: 15,
                           ),

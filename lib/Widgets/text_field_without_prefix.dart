@@ -14,7 +14,7 @@ Widget TextFieldWithOutPrefix(
     controller: controller,
     style: TextStyle(color: Colors.black.withOpacity(0.8), fontSize: 14),
     validator: (String value) {
-      if (value.isEmpty) {
+      if (value.isEmpty && hinttext!= "Address 2") {
         // ignore: missing_return
         return 'Field cannot be blank.';
       }

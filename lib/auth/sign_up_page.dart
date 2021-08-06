@@ -1,15 +1,19 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 import 'package:realestate/Classes/app_user.dart';
 import 'package:realestate/Classes/custom_text.dart';
+import 'package:realestate/Constants/constants.dart';
 import 'package:realestate/Function/service.dart';
 import 'package:realestate/Provider/provider_class.dart';
 import 'package:realestate/Widgets/alert_dialog.dart';
+import 'package:realestate/Widgets/back.dart';
 import 'package:realestate/Widgets/background.dart';
 import 'package:realestate/Widgets/big_button.dart';
 import 'package:realestate/Widgets/password_withOut_prefix.dart';
@@ -27,6 +31,11 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  GlobalKey<FormState> _globalKey=GlobalKey<FormState>();
+  Timer t;
+  String verificationIdg="";
+  TextEditingController pincode = new TextEditingController();
+  bool codepage=false;
   TextEditingController phone = new TextEditingController();
   TextEditingController firstName = new TextEditingController();
   TextEditingController lastname = new TextEditingController();
@@ -48,7 +57,9 @@ class _SignUpPageState extends State<SignUpPage> {
           children: [
             background(context),
             SafeArea(
-              child: Container(
+              child:codepage==true?
+              codePage():
+              Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child: Form(
@@ -238,7 +249,6 @@ class _SignUpPageState extends State<SignUpPage> {
                           bigButton(context, "Register", () {
                             if (_formKey.currentState.validate()) {
                               if (agree == true) {
-                                print("${prefixText}${phone.text}");
                                 handelOTPSignup();
                               } else {
                                 Toast.show(
@@ -273,7 +283,7 @@ class _SignUpPageState extends State<SignUpPage> {
     try {
       print("account created not yet");
       await FirebaseAuth.instance.verifyPhoneNumber(
-          phoneNumber: "${prefixText}${phone.text}".toString(),
+          phoneNumber: "${prefixText}${phone.text}".toString().trim(),
           timeout: Duration(seconds: 60),
           verificationCompleted: (AuthCredential authCredential) {},
           verificationFailed: (FirebaseAuthException authException) {
@@ -322,56 +332,370 @@ class _SignUpPageState extends State<SignUpPage> {
             duration: 4, gravity: Toast.TOP);
     }
   }
+  Widget codePage(){
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.height,
+      child: Stack(
+        children: [
+          background(context),
+          SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    back(context),
+                    CustomText(
+                      text: "Verify Phone",
+                      fontWeight: FontWeight.w700,
+                      size: 22,
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (context) => ForgotPassWordPage()));
+                      },
+                      child: CustomText(
+                        text: "Code is sent to ${phone.text}",
+                        fontWeight: FontWeight.w600,
+                        size: 14,
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Form(
+                      key: _globalKey,
+                      child: Center(
+                        child: PinCodeTextField(
+                          controller: pincode,
+                          appContext: context,
+                          pastedTextStyle: TextStyle(
+                            color: Constant.backgroundColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          length: 6,
+                          // obscureText: true,
+                          // obscuringCharacter: '*',
+                          // blinkWhenObscuring: true,
+                          animationType: AnimationType.fade,
+                          validator: (v) {
+                            if (v.length < 6) {
+                              return "Invalid Digits";
+                            } else {
+                              return null;
+                            }
+                          },
+                          pinTheme: PinTheme(
+                            shape: PinCodeFieldShape.box,
+                            borderRadius: BorderRadius.circular(8),
+                            fieldHeight: 50,
+                            fieldWidth: 50,
+                            activeFillColor:
+                            Constant.backgroundColor.withOpacity(0.06),
+                            selectedFillColor:
+                            Constant.backgroundColor.withOpacity(0.06),
+                            selectedColor:
+                            Constant.backgroundColor.withOpacity(0.06),
+                            inactiveColor: Colors.transparent,
+                            inactiveFillColor:
+                            Constant.backgroundColor.withOpacity(0.06),
+                            activeColor: Colors.transparent,
+                            //     // hasError ? Colors.whit :
+                            //     Colors.white.withOpacity(0.3),
+                          ),
+                          cursorColor:
+                          Constant.backgroundColor.withOpacity(0.5),
+                          animationDuration: Duration(milliseconds: 300),
+                          backgroundColor: Colors.transparent,
+                          enableActiveFill: true,
+                          textStyle: TextStyle(
+                            color: Constant.backgroundColor,
+                          ),
+                          // errorAnimationController: errorController,
+                          // controller: textEditingController,
+                          keyboardType: TextInputType.number,
+                          // boxShadows: [
+                          //   BoxShadow(
+                          //     offset: Offset(0, 1),
+                          //     color: Colors.black12,
+                          //     blurRadius: 10,
+                          //   )
+                          // ],
+                          onCompleted: (v) {
+                            print("Completed");
+                          },
+                          onTap: () {
+                            print("Pressed");
+                          },
+                          onChanged: (value) {
+                            print(value);
+                            setState(() {
+                              // currentText =currentText value;
+                            });
+                          },
+                          beforeTextPaste: (text) {
+                            print("Allowing to paste $text");
+                            //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+                            //but you can show anything you want here, like your pop up saying wrong paste format or etc
+                            return true;
+                          },
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
 
+                    // TextField(
+                    //     maxLines: 1,
+                    //     decoration: InputDecoration(
+                    //       // lableText:"Full name",
+                    //       // hintText: 'Full name',
+                    //      labelText: "full name",
+                    //       border: OutlineInputBorder(),
+                    //     )),
+
+                    // SizedBox(
+                    //   height: 30,
+                    // ),
+                    // InkWell(
+                    //   onTap: () {
+                    //     // if(_globalKey.currentState.validate()){
+                    //     //   t.cancel();
+                    //     //   Navigator.pop(context,pincode.text);
+                    //     // }
+                    //     // Navigator.of(context).push(MaterialPageRoute(
+                    //     //     builder: (context) => SignUpPage()));
+                    //   },
+                    //   child: Column(
+                    //     children: [
+                    //       Row(
+                    //         mainAxisAlignment: MainAxisAlignment.center,
+                    //         children: [
+                    //           CustomText(
+                    //             text: "Didn't recive code?",
+                    //             fontWeight: FontWeight.w600,
+                    //             size: 16,
+                    //             color: Colors.black.withOpacity(0.5),
+                    //           ),
+                    //           CustomText(
+                    //             text: "Request again",
+                    //             fontWeight: FontWeight.w700,
+                    //             size: 16,
+                    //             color: Colors.black,
+                    //           ),
+                    //         ],
+                    //       ),
+                    //       CustomText(
+                    //         text: "Get Via Call",
+                    //         fontWeight: FontWeight.w700,
+                    //         size: 16,
+                    //         height: 1.4,
+                    //         color: Colors.black,
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width / 6),
+                      child: bigButton2(context, "Verify", () {
+                        if(_globalKey.currentState.validate()){
+                          handelCode(pincode.text);
+                          // t.cancel();
+                          // Navigator.pop(context,pincode.text);
+                        }
+                      }),
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+  // codeSe(String verificationId, int forceResendingToken) async {
+  //   Navigator.of(context).pop();
+  //   String code = await Navigator.of(context)
+  //       .push(MaterialPageRoute(builder: (context) => CodePage()));
+  //   showAlertDialog(context, "Please wait...");
+  //   try {
+  //     AuthCredential credential = PhoneAuthProvider.credential(
+  //         verificationId: verificationId, smsCode: code);
+  //     if (code == "0000") {
+  //       Navigator.of(context).pop();
+  //       Toast.show('Connection timed out. Try again.', context,
+  //           duration: 4, gravity: Toast.TOP);
+  //     } else {
+  //       // user.user.uid;
+  //       var user = await FirebaseAuth.instance
+  //           .signInWithCredential(credential)
+  //           .catchError((error, stackTrace) async {
+  //         if (error.toString().contains(
+  //             "The sms verification code used to create "
+  //             "the phone auth credential is invalid. Please "
+  //             "resend the verification code sms and be sure use the verification code provided by the user.")) {
+  //           Toast.show(
+  //               "The sms verification code is invalid. Send it again.", context,
+  //               duration: 4, gravity: Toast.TOP);
+  //         }
+  //       });
+  //       AppUser appu = new AppUser();
+  //       appu.firstName = firstName.text;
+  //       appu.lastName = lastname.text;
+  //       appu.id = user.user.uid;
+  //       appu.phoneNumber = "${prefixText}${phone.text}";
+  //       await FirebaseDatabase.instance
+  //           .reference()
+  //           .child("Users")
+  //           .child(user.user.uid)
+  //           .set(appu.toMap());
+  //       Provider.of<RoleIdentifier>(context, listen: false).setAppuser(appu);
+  //       Navigator.of(context).pop();
+  //       Navigator.of(context).pushReplacement(
+  //           MaterialPageRoute(builder: (_) => BottomNavPage()));
+  //     }
+  //   } catch (e) {
+  //     Navigator.of(context).pop();
+  //     if (e.toString().contains(
+  //         "NoSuchMethodError: The getter 'user' was called on null.")) {
+  //     } else {
+  //       Toast.show(
+  //           "Please enter a valid"
+  //           " contact number. Follow the +123 34323454 format.",
+  //           context,
+  //           duration: 4,
+  //           gravity: Toast.TOP);
+  //     }
+  //   }
+  // }
   codeSe(String verificationId, int forceResendingToken) async {
     Navigator.of(context).pop();
-    String code = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => CodePage()));
+    // String code = await
+    // Navigator.of(context)
+    //     .push(MaterialPageRoute(builder: (context) => CodePage()));
+    setState((){
+      codepage=true;
+      verificationIdg=verificationId;
+      pincode= new TextEditingController();
+      setTimer();
+    });
+  }
+  void setTimer() {
+    t=
+        Timer(Duration(seconds:57),(){
+
+          setState(() {
+            codepage=false;
+            verificationIdg="";
+          });
+          handelCode("0000");
+          // Navigator.pop(context,"0000");
+        });
+  }
+  Future<void> handelCode(String code) async {
     showAlertDialog(context, "Please wait...");
     try {
       AuthCredential credential = PhoneAuthProvider.credential(
-          verificationId: verificationId, smsCode: code);
+          verificationId: verificationIdg, smsCode: code);
       if (code == "0000") {
         Navigator.of(context).pop();
         Toast.show('Connection timed out. Try again.', context,
             duration: 4, gravity: Toast.TOP);
-      } else {
-        // user.user.uid;
+      }
+      else {
         var user = await FirebaseAuth.instance
             .signInWithCredential(credential)
-            .catchError((error, stackTrace) async {
+            .catchError((error, stackTrace) {
           if (error.toString().contains(
               "The sms verification code used to create "
-              "the phone auth credential is invalid. Please "
-              "resend the verification code sms and be sure use the verification code provided by the user.")) {
+                  "the phone auth credential is invalid. Please "
+                  "resend the verification code sms and be sure use the verification code provided by the user.")) {
+            setState(() {
+              t.cancel();
+              codepage=false;
+            });
+            Navigator.of(context).pop();
             Toast.show(
                 "The sms verification code is invalid. Send it again.", context,
                 duration: 4, gravity: Toast.TOP);
           }
         });
-        AppUser appu = new AppUser();
-        appu.firstName = firstName.text;
-        appu.lastName = lastname.text;
-        appu.id = user.user.uid;
-        appu.phoneNumber = "${prefixText}${phone.text}";
-        await FirebaseDatabase.instance
-            .reference()
-            .child("Users")
-            .child(user.user.uid)
-            .set(appu.toMap());
-        Provider.of<RoleIdentifier>(context, listen: false).setAppuser(appu);
-        Navigator.of(context).pop();
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => BottomNavPage()));
+        if(codepage==true){
+          AppUser appu = new AppUser();
+          appu.firstName = firstName.text;
+          appu.lastName = lastname.text;
+          appu.id = user.user.uid;
+          appu.phoneNumber = "${prefixText}${phone.text}";
+          await FirebaseDatabase.instance
+              .reference()
+              .child("Users")
+              .child(user.user.uid)
+              .set(appu.toMap());
+          Provider.of<RoleIdentifier>(context, listen: false).setAppuser(appu);
+          Navigator.of(context).pop();
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (_) => BottomNavPage()));
+          // await FirebaseDatabase.instance
+          //     .reference()
+          //     .child("Users")
+          //     .child(user.user.uid)
+          //     .once()
+          //     .then((DataSnapshot dataSnapshot)
+          // async {
+          //   if (dataSnapshot.value != null) {
+          //     AppUser appUser = new AppUser();
+          //     appUser = AppUser.fromMap(dataSnapshot.value);
+          //     Provider.of<RoleIdentifier>(context, listen: false)
+          //         .setAppuser(appUser);
+          //   } else {
+          //     AppUser appu = new AppUser();
+          //     appu.id = user.user.uid;
+          //     appu.phoneNumber = phone.text;
+          //     await FirebaseDatabase.instance
+          //         .reference()
+          //         .child("Users")
+          //         .child(user.user.uid)
+          //         .set(appu.toMap());
+          //     Provider.of<RoleIdentifier>(context, listen: false)
+          //         .setAppuser(appu);
+          //     // Navigator.of(context).pop();
+          //     // Navigator.of(context).pushReplacement(
+          //     //     MaterialPageRoute(builder: (_) => BottomNavigationBarPage(0)));
+          //   }
+          //   Navigator.of(context).pop();
+          //   Navigator.of(context).pushReplacement(
+          //       MaterialPageRoute(builder: (_) => BottomNavPage()));
+          // });
+        }
       }
     } catch (e) {
       Navigator.of(context).pop();
+
       if (e.toString().contains(
           "NoSuchMethodError: The getter 'user' was called on null.")) {
       } else {
+        print("hub...................");
+        print(e.toString());
         Toast.show(
             "Please enter a valid"
-            " contact number. Follow the +123 34323454 format.",
+                " contact number. Follow the +123 34323454 format.",
             context,
             duration: 4,
             gravity: Toast.TOP);
