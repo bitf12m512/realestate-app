@@ -17,6 +17,7 @@ import 'package:realestate/Function/service.dart';
 import 'package:realestate/Provider/provider_class.dart';
 import 'package:realestate/Widgets/alert_dialog.dart';
 import 'package:realestate/Widgets/check_boxes.dart';
+import 'package:realestate/Widgets/price_field.dart';
 import 'package:realestate/Widgets/select_image_option.dart';
 import 'package:realestate/Widgets/send_button.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -75,6 +76,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
   String category = "House";
   TextEditingController description = new TextEditingController();
   TextEditingController price = new TextEditingController();
+  TextEditingController area = new TextEditingController();
   TextEditingController name = new TextEditingController();
   String governorate = "";
   String position = "";
@@ -669,166 +671,11 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
                             SizedBox(
                               height: 20,
                             ),
-                            Container(
-                              height: 30,
-                              width: MediaQuery.of(context).size.width / 1.1,
-                              child: Row(
-                                children: [
-                                  // Image.asset(
-                                  //   "Assets/priceTag.png",
-                                  //   height: 30,
-                                  // ),
-                                  // SizedBox(
-                                  //   width: 10,
-                                  // ),
-                                  Container(
-                                    height: 30,
-                                    // width: MediaQuery
-                                    //     .of(context)
-                                    //     .size
-                                    //     .width / 2,
-                                    color: Constant.blueColor,
-                                    child: Center(
-                                      child: CustomText(
-                                        text: " KWD ",
-                                        color: Colors.white,
-                                        size: 13,
-                                        fontWeight: FontWeight.w500,
-
-                                        // fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 30,
-                                    width:
-                                        MediaQuery.of(context).size.width / 2,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Constant.blueColor)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 12.0),
-                                      child: Center(
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              child: TextFormField(
-                                                controller: price,
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Constant.blueColor,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                                validator: (String value) {
-                                                  if (value.isEmpty) {
-                                                    // ignore: missing_return
-                                                    return 'Field cannot be blank.';
-                                                  }
-                                                },
-                                                textAlignVertical:
-                                                    TextAlignVertical.center,
-                                                maxLines: 1,
-                                                keyboardType:
-                                                    TextInputType.number,
-                                                // keyboardType: TextInputType.number
-                                                inputFormatters: [
-                                                  LengthLimitingTextInputFormatter(
-                                                      12),
-                                                  // WhitelistingTextInputFormatter.digitsOnly,
-                                                  FilteringTextInputFormatter
-                                                      .digitsOnly
-                                                  // WhitelistingTextInputFormatter.digitsOnly
-                                                ],
-
-                                                decoration: InputDecoration(
-                                                  prefixIconConstraints:
-                                                      BoxConstraints(
-                                                          minHeight: 24,
-                                                          minWidth: 24),
-                                                  contentPadding: EdgeInsets.symmetric(
-                                                      vertical:
-                                                          // hinttext.toLowerCase()=="Description".toLowerCase()?10:
-                                                          0,
-                                                      horizontal:
-                                                          // hinttext.toLowerCase()=="Description".toLowerCase()?20:
-                                                          0),
-                                                  hintStyle: TextStyle(
-                                                    fontSize: 14,
-                                                    color: Constant.blueColor,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                  hintText: "Add Price",
-                                                  // labelText: "Property",
-                                                  filled: true,
-                                                  isDense: true,
-                                                  enabled: true,
-                                                  fillColor: Constant.appColor,
-                                                  border:
-                                                      new OutlineInputBorder(
-                                                    borderRadius:
-                                                        new BorderRadius
-                                                            .circular(1.0),
-                                                    borderSide: new BorderSide(
-                                                        color:
-                                                            Colors.transparent,
-                                                        width: 1.3),
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(1)),
-                                                    borderSide: new BorderSide(
-                                                        color:
-                                                            Colors.transparent,
-                                                        width: 1.3),
-                                                  ),
-                                                  disabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(1)),
-                                                    borderSide: new BorderSide(
-                                                        color:
-                                                            Colors.transparent,
-                                                        width: 1.3),
-                                                  ),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(1)),
-                                                    borderSide: new BorderSide(
-                                                        color:
-                                                            Colors.transparent,
-                                                        width: 1.3),
-                                                  ),
-                                                  errorBorder:
-                                                      OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(1)),
-                                                    borderSide: BorderSide(
-                                                        width: 1,
-                                                        color:
-                                                            Colors.transparent),
-                                                  ),
-                                                  // focusedBorder: InputBorder.none,
-                                                  // enabledBorder: InputBorder.none,
-                                                  // errorBorder: InputBorder.none,
-                                                  // disabledBorder: InputBorder.none,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            pricefield(context," KWD ","Add Price",price),    SizedBox(
+                              height: 20,
                             ),
+                            pricefield(context," sq.ft ","Add Area",area),
+
                             SizedBox(
                               height: 20,
                             ),
@@ -896,15 +743,25 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
                                           duration: 4,
                                           gravity: Toast.TOP);
                                     } else {
-                                      if (description.text == "") {
-                                        Toast.show(
-                                            "Please add some description of your Property.",
-                                            context,
-                                            duration: 4,
-                                            gravity: Toast.TOP);
-                                      } else {
-                                        uploadProperty();
-                                      }
+                                     if(area.text==""){
+                                       Toast.show(
+                                           "Please add Area of your Property.",
+                                           context,
+                                           duration: 4,
+                                           gravity: Toast.TOP);
+                                     }
+                                     else{
+                                       if (description.text == "") {
+                                       Toast.show(
+                                           "Please add some description of your Property.",
+                                           context,
+                                           duration: 4,
+                                           gravity: Toast.TOP);
+                                     } else {
+                                       uploadProperty();
+                                     }
+
+                                     }
                                     }
                                   }
                                 }
@@ -1301,6 +1158,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
     ];
     moreValues = [p.maiRoom, p.swimmingPool, p.centralAc, p.elevator];
     price.text = p.price;
+    area.text=p.area;
     description.text = p.description;
     selectedPackageIndex = p.packageIndex;
     ImageUrls = List<String>.from(p.images);
@@ -1339,6 +1197,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
           packageIndex: selectedPackageIndex,
           timeStamp: time,
           id: id,
+          area: area.text,
           status:widget.property.status,
           creatorId:
               Provider.of<RoleIdentifier>(context, listen: false).appuser.id);
@@ -1459,9 +1318,11 @@ class MyPopupMenuButton extends StatelessWidget {
     return PopupMenuButton<dynamic>(
       elevation: elevation,
       onSelected: onSelected,
+      // tooltip: "this is the tootl",
       icon: SvgPicture.asset("Assets/arrowbut.svg",
           height: 5, color: Colors.white),
       iconSize: iconSize,
+      // child: Text("t"),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(15.0),

@@ -79,6 +79,13 @@
             </list>
           </value>
         </entry>
+        <entry key="dropdown_below">
+          <value>
+            <list>
+              <option value="$PROJECT_DIR$/../../Developer/flutter/.pub-cache/hosted/pub.dartlang.org/dropdown_below-1.0.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="fake_async">
           <value>
             <list>
@@ -422,6 +429,7 @@
       <root url="file://$PROJECT_DIR$/../../Developer/flutter/.pub-cache/hosted/pub.dartlang.org/country_state_city_picker-1.2.8/lib" />
       <root url="file://$PROJECT_DIR$/../../Developer/flutter/.pub-cache/hosted/pub.dartlang.org/cross_file-0.3.1+4/lib" />
       <root url="file://$PROJECT_DIR$/../../Developer/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.3/lib" />
+      <root url="file://$PROJECT_DIR$/../../Developer/flutter/.pub-cache/hosted/pub.dartlang.org/dropdown_below-1.0.0/lib" />
       <root url="file://$PROJECT_DIR$/../../Developer/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0/lib" />
       <root url="file://$PROJECT_DIR$/../../Developer/flutter/.pub-cache/hosted/pub.dartlang.org/file_picker-3.0.4/lib" />
       <root url="file://$PROJECT_DIR$/../../Developer/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.0.1/lib" />

@@ -355,6 +355,10 @@ class _SearchPropertyPageState extends State<SearchPropertyPage> {
           for (int i = 0; i < provider.getPropertyBackList.length; i++) {
             if (provider.getPropertyBackList[i].name
                 .toLowerCase()
+                .contains(val.toLowerCase()) || provider.getPropertyBackList[i].district
+                .toLowerCase()
+                .contains(val.toLowerCase()) || provider.getPropertyBackList[i].governorate
+                .toLowerCase()
                 .contains(val.toLowerCase())) {
               provider.addTOProprertyList(provider.getPropertyBackList[i]);
             }

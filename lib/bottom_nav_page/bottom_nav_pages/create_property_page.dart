@@ -17,9 +17,13 @@ import 'package:realestate/Function/service.dart';
 import 'package:realestate/Provider/provider_class.dart';
 import 'package:realestate/Widgets/alert_dialog.dart';
 import 'package:realestate/Widgets/check_boxes.dart';
+import 'package:realestate/Widgets/dop_down_movie.dart';
+import 'package:realestate/Widgets/drop_down_button.dart';
+import 'package:realestate/Widgets/price_field.dart';
 import 'package:realestate/Widgets/select_image_option.dart';
 import 'package:realestate/Widgets/send_button.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:realestate/bottom_nav_page/bottom_nav_pages/edit_property/edit_property.dart';
 import 'package:toast/toast.dart';
 
 // import 'package:csv/csv.dart';
@@ -47,14 +51,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
     "Assets/garage.svg"
   ];
   List imagesuri = [];
-  List governorates = [
-    "Kuwait city",
-    "Jahra",
-    "Hawalli",
-    "Farwaniyah",
-    "Mubarak Al-Kabeer",
-    "Al-Ahmadi"
-  ];
+
   List titles = [
     "Bedrooms",
     "Master Bedroom",
@@ -69,23 +66,25 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   int selectedtype = 0;
   String selectedtypeName = "Rent";
   String country;
-  String category = "House";
+  String category = "Select Category";
   TextEditingController description = new TextEditingController();
   TextEditingController price = new TextEditingController();
+  TextEditingController area = new TextEditingController();
   TextEditingController name = new TextEditingController();
-  String governorate = "";
+  String governorate = "Select Governorate";
   String position = "";
   String district = "";
   List currentState = [];
-  List<PopupMenuEntry<dynamic>> _popupItemSubCategories1 = [];
-  List<PopupMenuEntry<dynamic>> categories = [];
-  List<PopupMenuEntry<dynamic>> positions = [];
-  List<PopupMenuEntry<dynamic>> city = [];
-  List<PopupMenuEntry<dynamic>> Havalli = [];
-  List<PopupMenuEntry<dynamic>> Mubarak = [];
-  List<PopupMenuEntry<dynamic>> Ahmadi = [];
-  List<PopupMenuEntry<dynamic>> Farwaniya = [];
-  List<PopupMenuEntry<dynamic>> Jahra = [];
+  List<DropdownMenuItem<String>>  _popupItemSubCategories1 = [];
+  List<DropdownMenuItem<String>>  categories = [];
+  // List<DropdownMenuItem<String>> drops = [];
+  List<DropdownMenuItem<String>>  positions = [];
+  List<DropdownMenuItem<String>>  city = [];
+  List<DropdownMenuItem<String>> Havalli = [];
+  List<DropdownMenuItem<String>> Mubarak = [];
+  List<DropdownMenuItem<String>> Ahmadi = [];
+  List<DropdownMenuItem<String>> Farwaniya = [];
+  List<DropdownMenuItem<String>> Jahra = [];
 
   // This function is triggered when the floating button is pressed
   // void _loadCSV() async {
@@ -447,33 +446,49 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       SizedBox(
                         height: 15,
                       ),
-                      dropDownItem(context,"Category",category,category,categories,(val) {
-                        setState(() {
-                          category = val;
-                        });
-                      }),
-                      dropDownItem(context,"Governorate",governorate,"Choose Governorate",_popupItemSubCategories1,(val) {
-                        setState(() {
-                          governorate = val;
-                        });
-                      }),
-                      dropDownItem(context,"District",district,"Choose District",governorate.toLowerCase()
-                          .contains("city") ? city : governorate
-                          .toLowerCase().contains("Hawalli")
-                          ? Havalli
-                          :governorate.toLowerCase()
-                          .contains("Jahra")?Jahra:governorate.toLowerCase()
-                          .contains("Farwaniyah")?Farwaniya:governorate.toLowerCase()
-                          .contains("Mubarak")?Mubarak:Ahmadi,(val) {
-                        setState(() {
-                          district = val;
-                        });
-                      }),
-                      dropDownItem(context,"Position of RealEstate",position,"Choose Position",positions,(val) {
-                        setState(() {
-                          position = val;
-                        });
-                      }),
+                      categories.length==0?Container():dropDownWidget(
+                          context,"Category",category,categories,(newValue) {
+                   setState(() {
+                     category = newValue;
+                   });
+                 }),
+                 //      ,dropDownWidget(context,"Governorate",governorate,_popupItemSubCategories1,(newValue) {
+                 //   setState(() {
+                 //     governorate = newValue;
+                 //   });
+                 // }),
+                      // dropDownWidget(context,"Governorate",governorate,_popupItemSubCategories1,(newValue) {
+                      //   setState(() {
+                      //     governorate = newValue;
+                      //   });
+                      // }),
+                      // dropDownItem(context,"Category",category,category,categories,(val) {
+                      //   setState(() {
+                      //     category = val;
+                      //   });
+                      // }),
+                      // dropDownItem(context,"Governorate",governorate,"Choose Governorate",_popupItemSubCategories1,(val) {
+                      //   setState(() {
+                      //     governorate = val;
+                      //   });
+                      // }),
+                      // dropDownItem(context,"District",district,"Choose District",governorate.toLowerCase()
+                      //     .contains("city") ? city : governorate
+                      //     .toLowerCase().contains("Hawalli")
+                      //     ? Havalli
+                      //     :governorate.toLowerCase()
+                      //     .contains("Jahra")?Jahra:governorate.toLowerCase()
+                      //     .contains("Farwaniyah")?Farwaniya:governorate.toLowerCase()
+                      //     .contains("Mubarak")?Mubarak:Ahmadi,(val) {
+                      //   setState(() {
+                      //     district = val;
+                      //   });
+                      // }),
+                      // dropDownItem(context,"Position of RealEstate",position,"Choose Position",positions,(val) {
+                      //   setState(() {
+                      //     position = val;
+                      //   });
+                      // }),
                       ListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
@@ -538,191 +553,14 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                       SizedBox(
                         height: 20,
                       ),
-
-                      // Align(
-                      //   alignment: Alignment.centerLeft,
-                      //   child:
-                      //   Container(
-                      //     width: MediaQuery.of(context).size.width / 1.3,
-                      //     decoration: BoxDecoration(
-                      //         border: Border.all(
-                      //             color: Colors.black.withOpacity(0.4))),
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.symmetric(
-                      //           horizontal: 8.0, vertical: 5),
-                      //       child: Row(
-                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //         crossAxisAlignment: CrossAxisAlignment.center,
-                      //         children: [
-                      //           CustomText(
-                      //             text: "Position of Realestate",
-                      //             color: Colors.black.withOpacity(0.4),
-                      //             size: 15,
-                      //             fontWeight: FontWeight.w600,
-                      //
-                      //             // fontWeight: FontWeight.bold,
-                      //           ),
-                      //           SvgPicture.asset("Assets/arrowbut.svg",
-                      //               height: 11,
-                      //               color: Colors.black.withOpacity(0.6))
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                       SizedBox(
                         height: 20,
                       ),
-                      Container(
-                        height: 30,
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width / 1.1,
-                        child: Row(
-                          children: [
-                            // Image.asset(
-                            //   "Assets/priceTag.png",
-                            //   height: 30,
-                            // ),
-                            // SizedBox(
-                            //   width: 10,
-                            // ),
-                            Container(
-                          height: 30,
-                          // width: MediaQuery
-                          //     .of(context)
-                          //     .size
-                          //     .width / 2,
-                              color: Constant.blueColor,
-                              child: Center(
-                                child: CustomText(
-                                  text: " KWD ",
-                                  color: Colors.white,
-                                  size: 13,
-                                  fontWeight: FontWeight.w500,
-
-                                  // fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: 30,
-                              width: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width / 2,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Constant.blueColor)),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12.0),
-                                child: Center(
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: TextFormField(
-                                          controller: price,
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Constant.blueColor,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                          validator: (String value) {
-                                            if (value.isEmpty) {
-                                              // ignore: missing_return
-                                              return 'Field cannot be blank.';
-                                            }
-                                          },
-                                          textAlignVertical:
-                                          TextAlignVertical.center,
-                                          maxLines: 1,
-                                          keyboardType: TextInputType.number,
-                                          // keyboardType: TextInputType.number
-                                          inputFormatters: [LengthLimitingTextInputFormatter(
-                                              12),
-                                            // WhitelistingTextInputFormatter.digitsOnly,
-                                            FilteringTextInputFormatter.digitsOnly
-                                            // WhitelistingTextInputFormatter.digitsOnly
-                                          ],
-
-                                          decoration: InputDecoration(
-                                            prefixIconConstraints:
-                                            BoxConstraints(
-                                                minHeight: 24,
-                                                minWidth: 24),
-                                            contentPadding: EdgeInsets
-                                                .symmetric(
-                                                vertical:
-                                                // hinttext.toLowerCase()=="Description".toLowerCase()?10:
-                                                0,
-                                                horizontal:
-                                                // hinttext.toLowerCase()=="Description".toLowerCase()?20:
-                                                0),
-                                            hintStyle: TextStyle(
-                                              fontSize: 14,
-                                              color: Constant.blueColor,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                            hintText: "Add Price",
-                                            // labelText: "Property",
-                                            filled: true,
-                                            isDense: true,
-                                            enabled: true,
-                                            fillColor: Constant.appColor,
-                                            border: new OutlineInputBorder(
-                                              borderRadius:
-                                              new BorderRadius.circular(
-                                                  1.0),
-                                              borderSide: new BorderSide(
-                                                  color: Colors.transparent,
-                                                  width: 1.3),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(1)),
-                                              borderSide: new BorderSide(
-                                                  color: Colors.transparent,
-                                                  width: 1.3),
-                                            ),
-                                            disabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(1)),
-                                              borderSide: new BorderSide(
-                                                  color: Colors.transparent,
-                                                  width: 1.3),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(1)),
-                                              borderSide: new BorderSide(
-                                                  color: Colors.transparent,
-                                                  width: 1.3),
-                                            ),
-                                            errorBorder: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(1)),
-                                              borderSide: BorderSide(
-                                                  width: 1,
-                                                  color: Colors.transparent),
-                                            ),
-                                            // focusedBorder: InputBorder.none,
-                                            // enabledBorder: InputBorder.none,
-                                            // errorBorder: InputBorder.none,
-                                            // disabledBorder: InputBorder.none,
-                                          ),
-                                        ),
-                                      ),
-
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                      pricefield(context," KWD ","Add Price",area),
+                      SizedBox(
+                        height: 20,
                       ),
+                     pricefield(context," Sq.ft ","Add Area",area),
                       SizedBox(
                         height: 20,
                       ),
@@ -784,6 +622,11 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                     context,
                                     duration: 4, gravity: Toast.TOP);
                               } else {
+                              if(area.text==""){
+                                Toast.show("Please add Area of your Property.",
+                                    context,
+                                    duration: 4, gravity: Toast.TOP);
+                              }else{
                                 if (description.text == "") {
                                   Toast.show(
                                       "Please add some description of your Property.",
@@ -793,6 +636,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                                 } else {
                                   uploadProperty();
                                 }
+                              }
                               }
                             }
                           }
@@ -926,25 +770,25 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
               size: 13,
               // fontWeight: FontWeight.bold,
             ),
-            MyPopupMenuButton(
-              popupItems: categories,
-              onSelected: (val) {
-                setState(() {
-                  category = val;
-                  // _popupItemSubCategories2 = _dataStates.where((element) => element[3]==currentCountry[3]).map((cat)
-                  // {
-                  //   return PopupMenuItem<dynamic>(
-                  //     value: cat,
-                  //     child: Text(
-                  //       '${cat[1]}',
-                  //       // style: Text,
-                  //     ),
-                  //   );
-                  // }).toList();
-                  // print(_popupItemSubCategories2.length);
-                });
-              },
-            ),
+            // MyPopupMenuButton(
+            //   popupItems: categories,
+            //   onSelected: (val) {
+            //     setState(() {
+            //       category = val;
+            //       // _popupItemSubCategories2 = _dataStates.where((element) => element[3]==currentCountry[3]).map((cat)
+            //       // {
+            //       //   return PopupMenuItem<dynamic>(
+            //       //     value: cat,
+            //       //     child: Text(
+            //       //       '${cat[1]}',
+            //       //       // style: Text,
+            //       //     ),
+            //       //   );
+            //       // }).toList();
+            //       // print(_popupItemSubCategories2.length);
+            //     });
+            //   },
+            // ),
           ],
         ),
       ),
@@ -1062,87 +906,155 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
 
   void _basicContent() {
     setState(() {
-      _popupItemSubCategories1 = governorates.map((cat) {
-        return PopupMenuItem<dynamic>(
-          value: cat,
-          child: Text(
-            '${cat}',
-            // style: Text,
+      for (var i in Constant.governorates) {
+        _popupItemSubCategories1.add(
+          DropdownMenuItem(
+            value: i,
+            child: Text(i),
           ),
         );
-      }).toList();
-      categories = Constant.cats.map((cat) {
-        return PopupMenuItem<dynamic>(
-          value: cat,
-          child: Text(
-            '${cat}',
-            // style: Text,
+      }
+      for (var i in Constant.cats) {
+        categories.add(
+          DropdownMenuItem(
+            value: i,
+            child: Text(i),
           ),
         );
-      }).toList();
-      city = Constant.City.map((cat) {
-        return PopupMenuItem<dynamic>(
-          value: cat,
-          child: Text(
-            '${cat}',
-            // style: Text,
+      }
+      for (var i in Constant.City) {
+        city.add(
+          DropdownMenuItem(
+            value: i,
+            child: Text(i),
           ),
         );
-      }).toList();
-      Havalli = Constant.Havalli.map((cat) {
-        return PopupMenuItem<dynamic>(
-          value: cat,
-          child: Text(
-            '${cat}',
-            // style: Text,
+      }
+      for (var i in Constant.Havalli) {
+        Havalli.add(
+          DropdownMenuItem(
+            value: i,
+            child: Text(i),
           ),
         );
-      }).toList();
-      positions = Constant.positions.map((cat) {
-        return PopupMenuItem<dynamic>(
-          value: cat,
-          child: Text(
-            '${cat}',
-            // style: Text,
+      }
+      for (var i in Constant.positions) {
+        positions.add(
+          DropdownMenuItem(
+            value: i,
+            child: Text(i),
           ),
         );
-      }).toList();
-      Mubarak = Constant.Mubarak.map((cat) {
-        return PopupMenuItem<dynamic>(
-          value: cat,
-          child: Text(
-            '${cat}',
-            // style: Text,
+      }  for (var i in Constant.Mubarak) {
+        Mubarak.add(
+          DropdownMenuItem(
+            value: i,
+            child: Text(i),
           ),
         );
-      }).toList();
-      Ahmadi = Constant.Ahmadi.map((cat) {
-        return PopupMenuItem<dynamic>(
-          value: cat,
-          child: Text(
-            '${cat}',
-            // style: Text,
+      }  for (var i in Constant.Ahmadi) {
+        Ahmadi.add(
+          DropdownMenuItem(
+            value: i,
+            child: Text(i),
           ),
         );
-      }).toList();
-      Farwaniya = Constant.Farwaniya.map((cat) {
-        return PopupMenuItem<dynamic>(
-          value: cat,
-          child: Text(
-            '${cat}',
-            // style: Text,
+      }  for (var i in Constant.Farwaniya) {
+        Farwaniya.add(
+          DropdownMenuItem(
+            value: i,
+            child: Text(i),
           ),
         );
-      }).toList();
-      Jahra = Constant.Jahra.map((cat) {
-        return PopupMenuItem<dynamic>(
-          value: cat,
-          child: Text(
-            '${cat}',
-            // style: Text,
+      } for (var i in Constant.Jahra) {
+        Jahra.add(
+          DropdownMenuItem(
+            value: i,
+            child: Text(i),
           ),
         );
-      }).toList();
+      }
+      // _popupItemSubCategories1 = Constant.governorates.map((cat) {
+      //   return PopupMenuItem<dynamic>(
+      //     value: cat,
+      //     child: Text(
+      //       '${cat}',
+      //       // style: Text,
+      //     ),
+      //   );
+      // }).toList();
+      // categories = Constant.cats.map((cat) {
+      //   return PopupMenuItem<dynamic>(
+      //     value: cat,
+      //     child: Text(
+      //       '${cat}',
+      //       // style: Text,
+      //     ),
+      //   );
+      // }).toList();
+      // city = Constant.City.map((cat) {
+      //   return PopupMenuItem<dynamic>(
+      //     value: cat,
+      //     child: Text(
+      //       '${cat}',
+      //       // style: Text,
+      //     ),
+      //   );
+      // }).toList();
+      // Havalli = Constant.Havalli.map((cat) {
+      //   return PopupMenuItem<dynamic>(
+      //     value: cat,
+      //     child: Text(
+      //       '${cat}',
+      //       // style: Text,
+      //     ),
+      //   );
+      // }).toList();
+      // positions = Constant.positions.map((cat) {
+      //   return PopupMenuItem<dynamic>(
+      //     value: cat,
+      //     child: Text(
+      //       '${cat}',
+      //       // style: Text,
+      //     ),
+      //   );
+      // }).toList();
+      // Mubarak = Constant.Mubarak.map((cat) {
+      //   return PopupMenuItem<dynamic>(
+      //     value: cat,
+      //     child: Text(
+      //       '${cat}',
+      //       // style: Text,
+      //     ),
+      //   );
+      // }).toList();
+      // Ahmadi = Constant.Ahmadi.map((cat) {
+      //   return PopupMenuItem<dynamic>(
+      //     value: cat,
+      //     child: Text(
+      //       '${cat}',
+      //       // style: Text,
+      //     ),
+      //   );
+      // }).toList();
+      // Farwaniya = Constant.Farwaniya.map((cat) {
+      //   return PopupMenuItem<dynamic>(
+      //     value: cat,
+      //     child: Text(
+      //       '${cat}',
+      //       // style: Text,
+      //     ),
+      //   );
+      // }).toList();
+      // Jahra = Constant.Jahra.map((cat) {
+      //   return PopupMenuItem<dynamic>(
+      //     value: cat,
+      //     child: Text(
+      //       '${cat}',
+      //       // style: Text,
+      //     ),
+      //   );
+      // }).toList();
     });
   }
 
@@ -1188,6 +1100,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
           timeStamp: time,
           id: id,
           status: "Pending",
+          area: area.text,
           creatorId:
           Provider
               .of<RoleIdentifier>(context, listen: false)
@@ -1233,93 +1146,6 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
     }
   }
 
-  dropDownItem(BuildContext context, String title,String value,String placeHolder,List<PopupMenuEntry<dynamic>> catList,Function onselected) {
-    return    Column(
-      children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: CustomText(
-            text: title,
-            color: Colors.black.withOpacity(0.7),
-            size: 15,
-            fontWeight: FontWeight.w600,
 
-            // fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Container(
-          height: 30,
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
-          decoration: BoxDecoration(
-            color: Constant.blueColor,
-            // border: Border.all(
-            //     color: Colors.black.withOpacity(0.4))
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomText(
-                  text: value.length == 0
-                      ? placeHolder
-                      : value,
-                  color: Colors.white,
-                  size: 16.5,
-                  fontWeight: FontWeight.w400,
-                ),
-                MyPopupMenuButton(
-                  popupItems: catList,
-                  onSelected: onselected,
-                ),
-              ],
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 15,
-        ),
-      ],
-    );
-  }
 }
 
-class MyPopupMenuButton extends StatelessWidget {
-  final List<PopupMenuEntry<dynamic>> popupItems;
-  final void Function(dynamic newValue) onSelected;
-  final double elevation;
-  final Icon icon;
-  final double iconSize;
-  final EdgeInsets padding;
-
-  MyPopupMenuButton({@required this.popupItems,
-    @required this.onSelected,
-    this.elevation = 8.0,
-    this.icon = const Icon(Icons.keyboard_arrow_down, color: Colors.black),
-    this.iconSize = 24.0,
-    this.padding = const EdgeInsets.all(0.0)});
-
-  @override
-  Widget build(BuildContext context) {
-    return PopupMenuButton<dynamic>(
-      elevation: elevation,
-      onSelected: onSelected,
-      icon: SvgPicture.asset("Assets/arrowbut.svg",
-          height: 5, color: Colors.white),
-      iconSize: iconSize,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(15.0),
-        ),
-      ),
-      padding: EdgeInsets.all(0),
-      itemBuilder: (context) => popupItems,
-    );
-  }
-}

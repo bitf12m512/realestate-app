@@ -7,6 +7,7 @@ import 'package:realestate/Classes/custom_text.dart';
 import 'package:realestate/Constants/constants.dart';
 import 'package:realestate/Provider/provider_class.dart';
 import 'package:realestate/Widgets/bed_item.dart';
+import 'package:realestate/Widgets/no_property_found.dart';
 import 'package:realestate/Widgets/rounded_app_bar.dart';
 import 'package:realestate/bottom_nav_page/bottom_nav_pages/edit_property/edit_property.dart';
 import 'package:realestate/bottom_nav_page/bottom_nav_pages/property_detail_page.dart';
@@ -55,28 +56,8 @@ class _MyAddsPageState extends State<MyAddsPage> {
                       context: context,
                       removeTop: true,
                       child: provider.getMyPropertyList.length == 0
-                          ? Align(
-                        alignment: Alignment.topCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 50.0),
-                          child: CustomText(
-                            text: "You haven't added any Property yet.",
-                            size: 16,
-                            color: Colors.black.withOpacity(0.7),
-                          ),
-                        ),
-                      )
-                          : selected==0?Align(
-                        alignment: Alignment.topCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 50.0),
-                              child: CustomText(
-                        text: "No Adds are published yet.",
-                        size: 16,
-                        color: Colors.black.withOpacity(0.7),
-                      ),
-                            ),
-                          ):ListView.builder(
+                          ?  noPropertyFoundWidget(context, "You haven't added any Property yet.")
+                          : selected==0? noPropertyFoundWidget(context, "No Published Adds found"):ListView.builder(
                           itemCount:provider.getMyPropertyList.length ,
                           itemBuilder: (context,index){
                             return Padding(

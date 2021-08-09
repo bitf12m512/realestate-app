@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class Property {
   String name,
+  area,
       price,
   status,
       position,
@@ -24,6 +25,7 @@ class Property {
       this.status,
       this.id,
         this.images,
+        this.area,
       this.creatorId,
       this.timeStamp,
       this.availableFor,
@@ -50,6 +52,7 @@ class Property {
       position: map['position'] as String,
         status: map['status'] as String,
       description: map['description'] as String,
+        area: map['area'] as String,
       id: map['id'] as String,
       creatorId: map['creatorId'] as String,
       timeStamp: map['timeStamp'] as String,
@@ -95,6 +98,7 @@ class Property {
       'timeStamp': this.timeStamp,
       'availableFor': this.availableFor,
       'mainType': this.mainType,
+      'area': this.area,
       'packageIndex': this.packageIndex,
       'governorate': this.governorate,
       'district': this.district,

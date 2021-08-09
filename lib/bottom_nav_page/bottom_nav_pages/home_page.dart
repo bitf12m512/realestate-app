@@ -9,8 +9,10 @@ import 'package:realestate/Classes/fiter.dart';
 import 'package:realestate/Constants/constants.dart';
 import 'package:realestate/Provider/provider_class.dart';
 import 'package:realestate/Widgets/bed_item.dart';
+import 'package:realestate/Widgets/no_property_found.dart';
 import 'package:realestate/bottom_nav_page/Filter/filter_page.dart';
 import 'package:realestate/bottom_nav_page/Filter/search_property_page.dart';
+import 'package:realestate/bottom_nav_page/bottom_nav_pages/edit_property/edit_property.dart';
 import 'package:realestate/bottom_nav_page/bottom_nav_pages/property_detail_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,6 +23,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  ScrollController scrollController=new ScrollController();
   List cats = [
     "Apartments",
     "Condos",
@@ -86,12 +89,12 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 CustomText(
                                   text: "Find best place",
-                                  size: 26,
+                                  size: 22,
                                   color: Colors.white,
                                 ),
                                 CustomText(
-                                  text: " nearby",
-                                  size: 26,
+                                  text: " Nearby",
+                                  size: 22,
                                   color: Constant.blueColor.withOpacity(0.8),
                                 ),
                               ],
@@ -133,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                                             width: 5,
                                           ),
                                           CustomText(
-                                            text: "Search Your Position",
+                                            text: "Search",
                                             size: 12,
                                             color: Colors.white,
                                           ),
@@ -483,6 +486,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           provider.getPropertyList.length == 0
               ? ListView.builder(
+            controller: scrollController,
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: 1,
@@ -491,18 +495,13 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.only(
                           bottom: 30.0, left: 15, right: 15),
                       child: Container(
-                        height: 1000,
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: CustomText(
-                            text: "No Properties found",
-                            color: Colors.black.withOpacity(0.7),
-                          ),
-                        ),
+                        height: 500,
+                        child:  noPropertyFoundWidget(context, "No Properties found"),
                       ),
                     );
                   })
               : ListView.builder(
+              controller: scrollController,
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: provider.getPropertyList.length,
@@ -725,44 +724,75 @@ class _HomePageState extends State<HomePage> {
                                 padding: const EdgeInsets.all(12.0),
                                 child: Align(
                                     alignment: Alignment.topRight,
-                                    child: InkWell(
-                                        onTap: () async {
-                                          List favs = [];
-                                          for (int i = 0;
-                                              i <
-                                                  provider
-                                                      .favouriteIdies.length;
-                                              i++) {
-                                            favs.add(
-                                                provider.favouriteIdies[i]);
-                                          }
-                                          if (favs.contains(
-                                              provider.properties[index].id)) {
-                                            favs.remove(
-                                                provider.properties[index].id);
-                                          } else {
-                                            favs.add(
-                                                provider.properties[index].id);
-                                          }
-                                          await FirebaseDatabase.instance
-                                              .reference()
-                                              .child("Users")
-                                              .child(
-                                                  Provider.of<RoleIdentifier>(
-                                                          context,
-                                                          listen: false)
-                                                      .appuser
-                                                      .id)
-                                              .update({"favourites": favs});
-                                        },
-                                        child: Icon(
-                                          provider.favouriteIdies.contains(
-                                                  provider.properties[index].id)
-                                              ? Icons.favorite
-                                              : Icons.favorite_border_rounded,
-                                          color: Constant.blueColor,
-                                          size: 30,
-                                        ))),
+                                    child: Container(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          InkWell(
+                                              onTap: () async {
+                                                List favs = [];
+                                                for (int i = 0;
+                                                    i <
+                                                        provider
+                                                            .favouriteIdies.length;
+                                                    i++) {
+                                                  favs.add(
+                                                      provider.favouriteIdies[i]);
+                                                }
+                                                if (favs.contains(
+                                                    provider.properties[index].id)) {
+                                                  favs.remove(
+                                                      provider.properties[index].id);
+                                                } else {
+                                                  favs.add(
+                                                      provider.properties[index].id);
+                                                }
+                                                await FirebaseDatabase.instance
+                                                    .reference()
+                                                    .child("Users")
+                                                    .child(
+                                                        Provider.of<RoleIdentifier>(
+                                                                context,
+                                                                listen: false)
+                                                            .appuser
+                                                            .id)
+                                                    .update({"favourites": favs});
+                                              },
+                                              child: Icon(
+                                                provider.favouriteIdies.contains(
+                                                        provider.properties[index].id)
+                                                    ? Icons.favorite
+                                                    : Icons.favorite_border_rounded,
+                                                color: Constant.blueColor,
+                                                size: 30,
+                                              )),
+                                          provider.getMyProductsidies.contains(provider.properties[index].id)?
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Align(
+                                                alignment: Alignment.topLeft,
+                                                child:      InkWell(
+                                                  onTap: (){
+
+                                                    Navigator.of(context).push(MaterialPageRoute(
+                                                        builder: (context) => EditPropertyPage(
+                                                            provider.getMyPropertyList[index])));
+                                                  },
+                                                  child: Container(
+                                                      decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(3),
+                                                          color: Colors.white
+                                                      ),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.all(3.0),
+                                                        child: SvgPicture.asset("Assets/editp.svg",height: 20,),
+                                                      )),
+                                                )),
+                                          ):Container()
+
+                                        ],
+                                      ),
+                                    )),
                               )
                             ],
                           ),
@@ -782,6 +812,7 @@ class _HomePageState extends State<HomePage> {
     return Consumer<RoleIdentifier>(builder: (context, provider, child) {
       return provider.getPropertyList.length == 0
           ? ListView.builder(
+        controller: scrollController,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemCount: 1,
@@ -790,18 +821,13 @@ class _HomePageState extends State<HomePage> {
                   padding:
                       const EdgeInsets.only(bottom: 30.0, left: 15, right: 15),
                   child: Container(
-                    height: 1000,
-                    child: Align(
-                      alignment: Alignment.topCenter,
-                      child: CustomText(
-                        text: "No Properties found",
-                        color: Colors.black.withOpacity(0.7),
-                      ),
-                    ),
+                    height: 500,
+                    child:  noPropertyFoundWidget(context, "No Properties found")
                   ),
                 );
               })
           : GridView.builder(
+          controller: scrollController,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
@@ -1051,7 +1077,29 @@ class _HomePageState extends State<HomePage> {
                                       color: Constant.blueColor,
                                       size: 25,
                                     ))),
-                          )
+                          ),
+                         provider.getMyProductsidies.contains(provider.properties[index].id)? Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Align(
+                                alignment: Alignment.topLeft,
+                                child:      InkWell(
+                                  onTap: (){
+
+                                    Navigator.of(context).push(MaterialPageRoute(
+                                        builder: (context) => EditPropertyPage(
+                                            provider.getMyPropertyList[index])));
+                                  },
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(3),
+                                        color: Colors.white
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(3.0),
+                                        child: SvgPicture.asset("Assets/editp.svg",height: 20,),
+                                      )),
+                                )),
+                          ):Container()
                         ],
                       ),
                     ),
@@ -1061,103 +1109,19 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void setFilter(Filter filter) {
+  Future<void> setFilter(Filter filter) async {
     var provider = Provider.of<RoleIdentifier>(context, listen: false);
     provider.setPropertyList([]);
     for (int i = 0; i < provider.getPropertyBackList.length; i++) {
       bool match = false;
       if (provider.getPropertyBackList[i].availableFor.toLowerCase() ==
-          filter.availableFor.toLowerCase()) {
+          filter.availableFor.toLowerCase() || filter.availableFor.toLowerCase()=="all") {
         if (provider.getPropertyBackList[i].mainType.toLowerCase() ==
             filter.mainCategory.toLowerCase()) {
-          if (filter.priceEnd != "") {
-            if (double.parse(provider.getPropertyBackList[i].price) <
-                    double.parse(filter.priceEnd) &&
-                double.parse(provider.getPropertyBackList[i].price) >
-                    double.parse(filter.priceStart)) {
-              match=true;
-            }
-            // else{
-            //
-            // }
-          }
-          // if (filter.areaEnd != "") {
-          //   if (double.parse(provider.getPropertyBackList[i].) <
-          //           double.parse(filter.priceEnd) &&
-          //       double.parse(provider.getPropertyBackList[i].price) >
-          //           double.parse(filter.priceStart)) {
-          //     match=true;
-          //   }
-          // }
-          if(filter.bedrooms!=0){
-            if(filter.bedrooms==provider.getPropertyBackList[i].bedRooms){
-              match=true;
-            }
-            else{
-              match=false;
-            }
-          }
-
-          if(filter.masterRooms!=0){
-            if(filter.masterRooms==provider.getPropertyBackList[i].masterBed){
-              match=true;
-            }
-            else{
-              match=false;
-            }
-          }
-
-          if(filter.bathRooms!=0){
-            if(filter.bathRooms==provider.getPropertyBackList[i].bathRooms){
-              match=true;
-            }
-            else{
-              match=false;
-            }
-          }
-
-          if(filter.parkingSpots!=0){
-            if(filter.parkingSpots==provider.getPropertyBackList[i].parkingSpots){
-              match=true;
-            }
-            else{
-              match=false;
-            }
-          }
-
-if(filter.maidRoom==true){
-  if(filter.maidRoom==provider.getPropertyBackList[i].maiRoom){
-    match=true;
-  }
-  else{
-    match=false;
-  }
-}
-         if(filter.swimmingPool==true){
-           if(filter.swimmingPool==provider.getPropertyBackList[i].swimmingPool){
-             match=true;
-           }
-           else{
-             match=false;
-           }
-         }
-         if(filter.centralAC==true){
-           if(filter.centralAC==provider.getPropertyBackList[i].centralAc){
-             match=true;
-           }
-           else{
-             match=false;
-           }
-         }
-         if(filter.elevator==true){
-           if(filter.elevator==provider.getPropertyBackList[i].elevator){
-             match=true;
-           }
-           else{
-             match=false;
-           }
-         }
-
+       match=subfilter(filter,i,true);
+        }else if( filter.mainCategory.toLowerCase()=="all"){
+          print("maintype is alll");
+          match=subfilter(filter,i,true);
         }
       }
       if(match==true){
@@ -1165,7 +1129,112 @@ if(filter.maidRoom==true){
       }
     }
     setState(() {
-
+      // if(provider.)
+      scrollController.animateTo(60,
+          duration: Duration(seconds: 2),
+          curve: Curves.fastOutSlowIn);
+         // .
     });
+  }
+
+  bool subfilter(Filter filter,int i,bool maching) {
+    var provider = Provider.of<RoleIdentifier>(context, listen: false);
+    bool match=maching;
+
+    if (filter.governorate != "") {
+      if (provider.getPropertyBackList[i].governorate ==
+          filter.governorate || filter.governorate=="All") {
+        match=true;
+      }
+    }
+    if(filter.governorate!="All" && filter.governorate!=""){
+      if (filter.district != "") {
+        if (provider.getPropertyBackList[i].district ==
+            filter.district || filter.district=="All") {
+          match=true;
+        }
+      }
+    }
+    if (filter.priceEnd != "") {
+      if (double.parse(provider.getPropertyBackList[i].price) <
+          double.parse(filter.priceEnd) &&
+          double.parse(provider.getPropertyBackList[i].price) >
+              double.parse(filter.priceStart)) {
+        match=true;
+      }
+    }
+    if (filter.areaEnd != "") {
+      if (double.parse(provider.getPropertyBackList[i].area) <
+          double.parse(filter.priceEnd) &&
+          double.parse(provider.getPropertyBackList[i].area) >
+              double.parse(filter.priceStart)) {
+        match=true;
+      }
+    }
+    if(filter.bedrooms!=0){
+      if(filter.bedrooms==provider.getPropertyBackList[i].bedRooms){
+        match=true;
+      }
+      else{
+        match=false;
+      }
+    }
+    if(filter.masterRooms!=0){
+      if(filter.masterRooms==provider.getPropertyBackList[i].masterBed){
+        match=true;
+      }
+      else{
+        match=false;
+      }
+    }
+    if(filter.bathRooms!=0){
+      if(filter.bathRooms==provider.getPropertyBackList[i].bathRooms){
+        match=true;
+      }
+      else{
+        match=false;
+      }
+    }
+    if(filter.parkingSpots!=0){
+      if(filter.parkingSpots==provider.getPropertyBackList[i].parkingSpots){
+        match=true;
+      }
+      else{
+        match=false;
+      }
+    }
+    if(filter.maidRoom==true){
+      if(filter.maidRoom==provider.getPropertyBackList[i].maiRoom){
+        match=true;
+      }
+      else{
+        match=false;
+      }
+    }
+    if(filter.swimmingPool==true){
+      if(filter.swimmingPool==provider.getPropertyBackList[i].swimmingPool){
+        match=true;
+      }
+      else{
+        match=false;
+      }
+    }
+    if(filter.centralAC==true){
+      if(filter.centralAC==provider.getPropertyBackList[i].centralAc){
+        match=true;
+      }
+      else{
+        match=false;
+      }
+    }
+    if(filter.elevator==true){
+      if(filter.elevator==provider.getPropertyBackList[i].elevator){
+        match=true;
+      }
+      else{
+        match=false;
+      }
+    }
+    return match;
   }
 }
