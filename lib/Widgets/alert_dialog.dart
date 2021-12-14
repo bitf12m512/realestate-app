@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 showAlertDialog(BuildContext context, String str) {
   return showDialog(
       barrierDismissible: false,
@@ -25,14 +25,14 @@ showMessageDialog(BuildContext context, String str,Function ontap2) {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text("Cancel",style: TextStyle(
+              child: Text("Cancel".tr(),style: TextStyle(
                   color: Colors.black.withOpacity(0.8),
                   fontSize: 18
               ),),
             ),
             TextButton(
               onPressed: ontap2,
-              child: Text("Create Account",style: TextStyle(
+              child: Text("Create Account".tr(),style: TextStyle(
                   color: Colors.black.withOpacity(0.8),
                   fontSize: 18
               ),),
@@ -51,14 +51,14 @@ showConfirmationDialog(BuildContext context, String str,Function ontap2) {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text("No",style: TextStyle(
+              child: Text("no".tr(),style: TextStyle(
                   color: Colors.black.withOpacity(0.8),
                   fontSize: 18
               ),),
             ),
             TextButton(
               onPressed: ontap2,
-              child: Text("Yes",style: TextStyle(
+              child: Text("yes".tr(),style: TextStyle(
                   color: Colors.black.withOpacity(0.8),
                   fontSize: 18
               ),),

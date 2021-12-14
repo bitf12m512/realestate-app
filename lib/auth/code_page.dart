@@ -7,11 +7,8 @@ import 'package:realestate/Constants/constants.dart';
 import 'package:realestate/Widgets/back.dart';
 import 'package:realestate/Widgets/background.dart';
 import 'package:realestate/Widgets/big_button.dart';
-import 'package:realestate/Widgets/passwoed_field.dart';
-import 'package:realestate/Widgets/text_field.dart';
 import 'package:realestate/auth/forgot_pasword_page.dart';
-import 'package:realestate/auth/sign_up_page.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 class CodePage extends StatefulWidget {
   const CodePage({Key key}) : super(key: key);
 
@@ -48,9 +45,11 @@ Timer t;
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      back(context),
+                      back(context,(){
+                        Navigator.pop(context);
+                      }),
                       CustomText(
-                        text: "Verify Phone",
+                        text: "verifyP".tr(),
                         fontWeight: FontWeight.w700,
                         size: 22,
                       ),
@@ -63,7 +62,7 @@ Timer t;
                               builder: (context) => ForgotPassWordPage()));
                         },
                         child: CustomText(
-                          text: "Code is sent to +232222323222",
+                          text: "Code is sent to".tr(),
                           fontWeight: FontWeight.w600,
                           size: 14,
                           color: Colors.black.withOpacity(0.5),
@@ -89,7 +88,7 @@ Timer t;
                             animationType: AnimationType.fade,
                             validator: (v) {
                               if (v.length < 6) {
-                                return "Invalid Digits";
+                                return "invalidD".tr();
                               } else {
                                 return null;
                               }
@@ -211,7 +210,7 @@ Timer t;
                       Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: MediaQuery.of(context).size.width / 6),
-                        child: bigButton2(context, "Verify", () {
+                        child: bigButton2(context, "Verify".tr(), () {
                           if(_globalKey.currentState.validate()){
                             t.cancel();
                             Navigator.pop(context,pincode.text);
@@ -233,9 +232,9 @@ Timer t;
   }
 
   void setTimer() {
-    t=
-        Timer(Duration(seconds:57),(){
-          Navigator.pop(context,"0000");
-        });
+    // t=
+    //     Timer(Duration(seconds:57),(){
+    //       Navigator.pop(context,"0000");
+    //     });
   }
 }

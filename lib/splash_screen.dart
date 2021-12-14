@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           color: Constant.appColor,
-          child:Image.asset("Assets/logotext-excluded.png",fit:BoxFit.fill,),
+          // child:Image.asset("Assets/logotext-excluded.png",fit:BoxFit.fill,),
         ),
         SafeArea(
           child: Center(
@@ -80,24 +80,28 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     }
     else{
-      await FirebaseDatabase.instance
-          .reference()
-          .child("Users")
-          .child(user.uid)
-          .once()
-          .then((DataSnapshot dataSnapshot) {
-        if (dataSnapshot.value != null) {
-          AppUser appUser = new AppUser();
-          appUser = AppUser.fromMap(dataSnapshot.value);
-          Provider.of<RoleIdentifier>(context, listen: false).setAppuser(appUser);
-        }
-        // Navigator.of(context).pop();
-        // Navigator.of(context).pushReplacement(
-        //     MaterialPageRoute(builder: (_) => BottomNavigationBarPage(0)));
-      });
+      // await FirebaseDatabase.instance
+      //     .reference()
+      //     .child("Users")
+      //     .child(user.uid)
+      //     .once()
+      //     .then((DataSnapshot dataSnapshot) {
+      //   if (dataSnapshot.value != null) {
+      //     AppUser appUser = new AppUser();
+      //     appUser = AppUser.fromMap(dataSnapshot.value);
+      //     Provider.of<RoleIdentifier>(context, listen: false).setAppuser(appUser);
+      //   }
+      //   // Navigator.of(context).pop();
+      //   // Navigator.of(context).pushReplacement(
+      //   //     MaterialPageRoute(builder: (_) => BottomNavigationBarPage(0)));
+      // });
+      Provider.of<RoleIdentifier>(context,listen: false).appuser.id=user.uid;
       Future.delayed(Duration(seconds: 2)).then((val) {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (_) => BottomNavPage()));
+            builder: (_) =>
+
+                BottomNavPage(user.uid)
+        ));
       });
     }
     // List cat=["Shoes","Bags","Cosmetics","Saloon","Food","Clothes","Kitchen tools","Grocery","Speakers"];

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:realestate/Classes/custom_text.dart';
 import 'package:realestate/Constants/constants.dart';
-Widget dropDownWidget(BuildContext context,String title,String val,List<DropdownMenuItem<String>> values,Function onvalue){
+import 'package:easy_localization/easy_localization.dart';
+Widget dropDownWidget(BuildContext context,GlobalKey key,String title,String val,List<DropdownMenuItem<String>> values,Function onvalue){
   return  Column(
     children: [
       Align(
@@ -27,6 +28,7 @@ Widget dropDownWidget(BuildContext context,String title,String val,List<Dropdown
           color: Constant.blueColor.withOpacity(0.9)
         ),
         child: DropdownBelow(
+   key: key,
           itemWidth: 300,
           itemTextstyle: TextStyle(
               fontSize:  16.5, fontWeight: FontWeight.w400, color: Colors.black),
@@ -39,6 +41,7 @@ Widget dropDownWidget(BuildContext context,String title,String val,List<Dropdown
           value: val,
           items: values,
           onChanged: onvalue,
+          // isDense: true,
         ),
       ),
       SizedBox(

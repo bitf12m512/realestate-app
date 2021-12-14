@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
@@ -65,7 +65,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           key: _globalKey,
           child: Column(
             children: [
-              roundedAppBarwithBackedit(context, editable==true?"Profile Edit":"Profile",(){
+              roundedAppBarwithBackedit(context, editable==true?"Profile Edit".tr():"Profile".tr(),(){
                 setState(() {
                   editable=true;
                 });
@@ -136,14 +136,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         imageSelectionOption(context,
                                                 () async {
                                               Navigator.of(context).pop();
-                                              File f = await GetImage();
+                                              File f = await GetImage(context);
                                               image = await CropImage(
                                                   context, f);
                                               setState(() {});
                                             }, () async {
                                               Navigator.of(context).pop();
                                               File f =
-                                              await GetImageFromGallery();
+                                              await GetImageFromGallery(context);
                                               image = await CropImage(
                                                   context, f);
                                               setState(() {});
@@ -185,9 +185,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             height: 20,
                           ),
                           CustomText(
-                            text: "Personal Information",
+                            text: "Personal Information".tr(),
                             color: Colors.black,
-                            size: 26,
+                            size: 23,
                             fontWeight: FontWeight.w600,
                           ),
                           SizedBox(
@@ -196,14 +196,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           Row(
                             children: [
                               Expanded(
-                                child: TextFieldWithOutPrefix(context,"", "First Name",
+                                child: TextFieldWithOutPrefix(context,"", "First Name".tr(),
                                     editable, firstName, TextInputType.text, 14),
                               ),
                               SizedBox(
                                 width: 10,
                               ),
                               Expanded(
-                                child: TextFieldWithOutPrefix(context, "","Last Name",
+                                child: TextFieldWithOutPrefix(context, "","Last Name".tr(),
                                     editable, lastname, TextInputType.text, 14),
                               ),
                             ],
@@ -211,7 +211,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           SizedBox(
                             height: 15,
                           ),
-                          TextFieldBoxSmall(context, Icons.mail, "Email Address", editable, email,
+                          TextFieldBoxSmall(context, Icons.mail, "emailAddress".tr(), editable, email,
                               TextInputType.emailAddress, 100),
                           SizedBox(
                             height: 15,
@@ -253,21 +253,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           // SizedBox(
                           //   height: 15,
                           // ),
-                          TextFieldWithOutPrefix(context,"" ,"Phone No",
+                          TextFieldWithOutPrefix(context,"" ,"phoneNumber".tr(),
                               false, phone, TextInputType.phone, 14),
                           SizedBox(
                             height: 15,
                           ),
-                          TextFieldWithOutPrefix(context,"", "Address 1",
+                          TextFieldWithOutPrefix(context,"", "Address 1".tr(),
                               editable, address1, TextInputType.text, 14),
                           SizedBox(
                             height: 15,
                           ),
-                          TextFieldWithOutPrefix(context,"", "Address 2",
+                          TextFieldWithOutPrefix(context,"", "Address 2".tr(),
                               editable, address2, TextInputType.text, 14),     SizedBox(
                             height: 15,
                           ),
-                         editable==true? saveButton(context,"Save",(){
+                         editable==true? saveButton(context,"Save".tr(),(){
                             if(_globalKey.currentState.validate()){
                               updateProfile();
                             }
@@ -299,7 +299,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
   Future<void>  updateProfile() async {
 
-    showAlertDialog(context, "Please wait...");
+    showAlertDialog(context, "pleasewait".tr());
     AppUser appu=new AppUser();
     try{
       if(image!=null){
@@ -313,7 +313,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
       appu.lastName=lastname.text;
       appu.firstAddress=address1.text;
       appu.secondAddress=address2.text;
-      print("kkkkk");
       appu.country=null;
 
       appu.phoneNumber=phone.text;
@@ -327,7 +326,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
       //     .reference()
       //     .child("Users")
       //     .child(appu.id).update({"countryCode": countryCode});
-      print("kilpkkkk");
       Provider.of<RoleIdentifier>(context,listen: false).setAppuser(appu);
       setData();
       Navigator.of(context).pop();
@@ -335,7 +333,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         editable = false;
       });
       Toast.show(
-          'Profile Updated.', context,
+          'Profile Updated.'.tr(), context,
           duration: 4, gravity: Toast.TOP);
     }
     catch(e)
@@ -343,7 +341,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       Navigator.of(context).pop();
       print(e.toString());
       Toast.show(
-          'An error error occurred', context,
+          'errorOccurred'.tr(), context,
           duration: 4, gravity: Toast.TOP);
     }
 

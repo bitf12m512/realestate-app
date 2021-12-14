@@ -5,9 +5,9 @@ Widget noPropertyFoundWidget(BuildContext context,String title){
   return Align(
     alignment: Alignment.topCenter,
     child: Padding(
-      padding: const EdgeInsets.only(top: 50.0),
+      padding: const EdgeInsets.only(top: 150.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SvgPicture.asset("Assets/box.svg",
               height: 100,

@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:realestate/Classes/custom_text.dart';
 import 'package:realestate/Classes/fiter.dart';
 import 'package:realestate/Widgets/check_boxes.dart';
+import 'package:realestate/Widgets/dop_down_movie.dart';
 import 'package:realestate/Widgets/drop_down_button.dart';
 import 'package:realestate/Widgets/filter_main_type.dart';
 import 'package:realestate/Widgets/send_button.dart';
@@ -12,9 +13,10 @@ import '../../Classes/custom_text.dart';
 import '../../Constants/constants.dart';
 import '../../Constants/constants.dart';
 import '../../Widgets/text_field_without_prefix.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 class FilterPage extends StatefulWidget {
-  const FilterPage({Key key}) : super(key: key);
+  Filter filter=new Filter();
+  FilterPage(this.filter); // const FilterPage({Key key}) : super(key: key);
 
   @override
   _FilterPageState createState() => _FilterPageState();
@@ -23,11 +25,9 @@ class FilterPage extends StatefulWidget {
 class _FilterPageState extends State<FilterPage> {
   CarouselController _carouselController = new CarouselController();
   List images = ["Assets/homes@3x.png", "Assets/sampleb@3x.png"];
-  String mainType = "buy";
+  String mainType = "all";
   int mainCat = 0;
   int subCat = 0;
-  String governorate = "";
-  // String position = "";
   List avaiableIcons = [
     "Assets/house.svg",
     "Assets/buy.svg",
@@ -35,20 +35,42 @@ class _FilterPageState extends State<FilterPage> {
     "Assets/all.svg"
   ];
   String selectedCategory = "All";
-  String district = "";
+  String governorate = "All";
+  String district = "All";
+  String position =   "All";
+  String positionval = "";
   List<int> propertyPropertiesQuantity = [0, 0, 0, 0];
-  List headings = ["Bedrooms", "Master Rooms", "Bathrooms", "Parking Spots"];
+  List headings = ["bedrooms".tr(), "materBedRoom".tr(), "bathrooms".tr(), "parkingSpots".tr()];
   TextEditingController fromPrice = new TextEditingController();
   TextEditingController fromArea = new TextEditingController();
   TextEditingController toArea = new TextEditingController();
   TextEditingController toPrice = new TextEditingController();
-  List<PopupMenuEntry<dynamic>> _popupItemSubCategories1 = [];
-
-  // RangeValues _currentRangeValues = const RangeValues(10, 80);
+  List<DropdownMenuItem<String>> _popupItemSubCategories1 = [];
+  List<DropdownMenuItem<String>> categories = [];
+  List<DropdownMenuItem<String>> positions = [];
+  List<DropdownMenuItem<String>> city = [];
+  List<DropdownMenuItem<String>> Havalli = [];
+  List<DropdownMenuItem<String>> Mubarak = [];
+  List<DropdownMenuItem<String>> all = [];
+  List<DropdownMenuItem<String>> Ahmadi = [];
+  List<DropdownMenuItem<String>> Farwaniya = [];
+  List<DropdownMenuItem<String>> Jahra = [];
   RangeValues _currentRangeValues = const RangeValues(10, 80);
   RangeValues _currentAreaValues = const RangeValues(10, 800);
   List<bool> moreValues = [false, false, false, false];
   List cats = [
+    "All".tr(),
+    "Apartments".tr(),
+    "Condos".tr(),
+    "Studio Apartments".tr(),
+    "Farms".tr(),
+    "Chalets".tr(),
+    "Offices".tr(),
+    "Storage".tr(),
+    "Recreational".tr(),
+    "Houses".tr()
+  ];
+  List cats2 = [
     "All",
     "Apartments",
     "Condos",
@@ -72,14 +94,15 @@ class _FilterPageState extends State<FilterPage> {
     "Assets/recreational.svg",
     "Assets/homeicon.svg",
   ];
-  List subCats = ["All", "House", "Flats", "Room", "Hotel"];
-  List<PopupMenuEntry<dynamic>> city = [];
-  List<PopupMenuEntry<dynamic>> Havalli = [];
-  List<PopupMenuEntry<dynamic>> Mubarak = [];
-  List<PopupMenuEntry<dynamic>> All = [];
-  List<PopupMenuEntry<dynamic>> Ahmadi = [];
-  List<PopupMenuEntry<dynamic>> Farwaniya = [];
-  List<PopupMenuEntry<dynamic>> Jahra = [];
+  List subCats = ["All".tr(), "House".tr(), "Flats".tr(), "Room".tr(), "Hotel".tr()];
+
+  // List<PopupMenuEntry<dynamic>> city = [];
+  // List<PopupMenuEntry<dynamic>> Havalli = [];
+  // List<PopupMenuEntry<dynamic>> Mubarak = [];
+  // List<PopupMenuEntry<dynamic>> All = [];
+  // List<PopupMenuEntry<dynamic>> Ahmadi = [];
+  // List<PopupMenuEntry<dynamic>> Farwaniya = [];
+  // List<PopupMenuEntry<dynamic>> Jahra = [];
   List subCatsImages = [
     "Assets/S1.svg",
     "Assets/S2.svg",
@@ -87,12 +110,18 @@ class _FilterPageState extends State<FilterPage> {
     "Assets/S4.svg",
     "Assets/S5.svg"
   ];
-@override
+  final GlobalKey dropdownKey = GlobalKey();
+  final GlobalKey dropdownKey1 = GlobalKey();
+  final GlobalKey dropdownKey2 = GlobalKey();
+  final GlobalKey dropdownKey3 = GlobalKey();
+
+  @override
   void initState() {
     // TODO: implement initState
-  _basicContent();
-  super.initState();
+    _basicContent();
+    super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,10 +133,9 @@ class _FilterPageState extends State<FilterPage> {
               Stack(
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height/9,
+                    height: MediaQuery.of(context).size.height / 9,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      // color: Colors.green,
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(20),
                           bottomRight: Radius.circular(20)),
@@ -117,9 +145,8 @@ class _FilterPageState extends State<FilterPage> {
                           bottomLeft: Radius.circular(20),
                           bottomRight: Radius.circular(20)),
                       child: Image.asset(
-
                         "Assets/filterBack.png",
-                        fit:BoxFit.fill,
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
@@ -143,7 +170,7 @@ class _FilterPageState extends State<FilterPage> {
                                 ),
                               ),
                               CustomText(
-                                text: "Filter",
+                                text: "filter".tr(),
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
                                 size: 20,
@@ -155,7 +182,6 @@ class _FilterPageState extends State<FilterPage> {
                               )
                             ],
                           ),
-
                         ],
                       ),
                     ),
@@ -180,9 +206,9 @@ class _FilterPageState extends State<FilterPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               typeItem(context, "All", avaiableIcons[3]),
-                              typeItem(context, "Rent", avaiableIcons[0]),
-                              typeItem(context, "Buy", avaiableIcons[1]),
-                              typeItem(context, "Exchange", avaiableIcons[2]),
+                              typeItem(context, "rent", avaiableIcons[0]),
+                              typeItem(context, "buy", avaiableIcons[1]),
+                              typeItem(context, "exchange", avaiableIcons[2]),
                             ],
                           ),
                           // Padding(
@@ -225,7 +251,7 @@ class _FilterPageState extends State<FilterPage> {
                           SizedBox(
                             height: 20,
                           ),
-                          head("Category"),
+                          head("category".tr()),
                           SizedBox(
                             height: 10,
                           ),
@@ -234,53 +260,84 @@ class _FilterPageState extends State<FilterPage> {
                           SizedBox(
                             height: 20,
                           ),
-                          dropDownItemFilter(context,17,"Governorate",governorate,"Choose Governorate",_popupItemSubCategories1,(val) {
+                          dropDownWidget(
+                              context,
+                              dropdownKey,
+                              "governorate".tr(),
+                              governorate,
+                              _popupItemSubCategories1, (newValue) {
                             setState(() {
-                              governorate = val;
-                              if(val.toString().toLowerCase()=="all")
-                              {
-                                district="All";
-                              }
+                              governorate = newValue;
+                              print(newValue);
+                              print(newValue);
+                              print(newValue);
                             });
                           }),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          dropDownItemFilter(context,17,"District",district,"Choose District",governorate.toLowerCase()
-                              .contains("city") ? city : governorate
-                              .toLowerCase().contains("Hawalli")
-                              ? Havalli
-                              :governorate.toLowerCase()
-                              .contains("Jahra")?Jahra:governorate.toLowerCase()
-                              .contains("Farwaniyah")?Farwaniya:governorate.toLowerCase()
-                              .contains("Mubarak")?Mubarak:governorate.toLowerCase()
-                              .contains("all")?All:Ahmadi,(val) {
+                          dropDownWidget(
+                              context,
+                              dropdownKey1,
+                              "district".tr(),
+                              district,
+                              governorate.toLowerCase().contains("Al Asimah Governorate".toLowerCase())
+                                  ? city
+                                  : governorate.toLowerCase().contains("hawalli")
+                                  ? Havalli
+                                  : governorate
+                                  .toLowerCase()
+                                  .contains("jahra")
+                                  ? Jahra
+                                  : governorate
+                                  .toLowerCase()
+                                  .contains("farwaniya")
+                                  ? Farwaniya
+                                  : governorate
+                                  .toLowerCase()
+                                  .contains("mubarak")
+                                  ? Mubarak
+                                  : governorate
+                                  .toLowerCase()
+                                  .contains("all")
+                                  ? all
+                                  : Ahmadi,
+                                  (newValue) {
                             setState(() {
-                              district = val;
+                              district = newValue;
+                            });
+                          }),
+                          dropDownWidget(
+                              context,
+                              dropdownKey2,
+                              "position".tr(),
+                              position,
+                              positions, (newValue) {
+                            setState(() {
+                              position = newValue;
+                              positionval=newValue;
                             });
                           }),
                           SizedBox(
                             height: 20,
-                          ), SizedBox(
+                          ),
+                          SizedBox(
                             height: 20,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              head("Price Range"),
-                              dropDownWidget("KWD")
+                              head("priceRange".tr()),
+                              dropDownWidgetSim("kwd".tr())
                             ],
                           ),
                           RangeSlider(
                             values: _currentRangeValues,
                             min: 0,
                             max: 200000,
-                            divisions: 100,
+                            divisions: 1000,
                             inactiveColor: Constant.darkblue.withOpacity(0.3),
                             activeColor: Constant.blueColor,
                             labels: RangeLabels(
-                              "Rs${_currentRangeValues.start.round().toString()}K",
-                              "Rs${_currentRangeValues.end.round().toString()}K",
+                              "${_currentRangeValues.start.round().toString()}${'kwd'.tr()}",
+                              "${_currentRangeValues.end.round().toString()}${'kwd'.tr()}",
                             ),
                             onChanged: (RangeValues values) {
                               setState(() {
@@ -299,7 +356,7 @@ class _FilterPageState extends State<FilterPage> {
                                   child: TextFieldWithSubmission(
                                       context,
                                       "",
-                                      "From",
+                                      "from".tr(),
                                       false,
                                       fromPrice,
                                       TextInputType.number,
@@ -313,20 +370,19 @@ class _FilterPageState extends State<FilterPage> {
                               })),
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 30),
-                                child: head("to"),
+                                child: head("to".tr()),
                               ),
                               Expanded(
                                   child: TextFieldWithSubmission(
                                       context,
                                       "",
-                                      "To",
+                                      "to2".tr(),
                                       true,
                                       toPrice,
                                       TextInputType.number,
                                       10, (val) {
                                 _currentRangeValues = RangeValues(
                                   _currentRangeValues.start,
-
                                   double.parse(val),
                                 );
                               })),
@@ -338,8 +394,8 @@ class _FilterPageState extends State<FilterPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              head("Area Range"),
-                              dropDownWidget("Sqr. ft.")
+                              head("areaRange".tr()),
+                              dropDownWidgetSim("sqft".tr())
                             ],
                           ),
                           SizedBox(
@@ -351,7 +407,7 @@ class _FilterPageState extends State<FilterPage> {
                                   child: TextFieldWithSubmission(
                                       context,
                                       "",
-                                      "From",
+                                      "from".tr(),
                                       false,
                                       fromArea,
                                       TextInputType.number,
@@ -365,22 +421,22 @@ class _FilterPageState extends State<FilterPage> {
                               })),
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 30),
-                                child: head("to"),
+                                child: head("to".tr()),
                               ),
                               Expanded(
                                   child: TextFieldWithSubmission(
                                       context,
                                       "",
-                                      "To",
+                                      "to2".tr(),
                                       true,
                                       toArea,
                                       TextInputType.number,
                                       10, (val) {
-                                    // _currentRangeValues = RangeValues(
-                                    //   _currentRangeValues.start,
-                                    //
-                                    //   double.parse(val),
-                                    // );
+                                // _currentRangeValues = RangeValues(
+                                //   _currentRangeValues.start,
+                                //
+                                //   double.parse(val),
+                                // );
                                 _currentAreaValues = RangeValues(
                                   _currentAreaValues.start,
                                   double.parse(val),
@@ -397,8 +453,8 @@ class _FilterPageState extends State<FilterPage> {
                             inactiveColor: Constant.darkblue.withOpacity(0.3),
                             activeColor: Constant.blueColor,
                             labels: RangeLabels(
-                              "${_currentAreaValues.start.round().toString()}Sqr. ft.",
-                              "${_currentAreaValues.end.round().toString()}Sqr. ft.",
+                              "${_currentAreaValues.start.round().toString()}${'sqft'.tr()}",
+                              "${_currentAreaValues.end.round().toString()}${'sqft'.tr()}",
                             ),
                             onChanged: (RangeValues values) {
                               setState(() {
@@ -442,9 +498,11 @@ class _FilterPageState extends State<FilterPage> {
                               InkWell(
                                 onTap: () {
                                   setState(() {
-                                    mainType = "buy";
+                                    mainType = "All";
+                                    selectedCategory ="all";
+                                    // mainType = title.toLowerCase();
                                     mainCat = 0;
-                                    subCat=0;
+                                    subCat = 0;
                                     fromPrice.clear();
                                     toPrice.clear();
                                     fromArea.clear();
@@ -457,21 +515,25 @@ class _FilterPageState extends State<FilterPage> {
                                     moreValues[1] = false;
                                     moreValues[2] = false;
                                     moreValues[3] = false;
-                                    governorate="";
-                                    district='';
+                                    governorate = "All";
+                                    district = 'All';
+                                    position="Corner house";
+
+                                    positionval="";
                                   });
                                 },
                                 child: CustomText(
-                                  text: "Reset",
+                                  text: "reset".tr(),
                                   fontWeight: FontWeight.w800,
                                   size: 17,
                                   color: Colors.black.withOpacity(0.3),
                                 ),
                               ),
-                              saveButton(context, "Search", () {
+                              saveButton(context, "search".tr(), () {
+
                                 Filter filter = new Filter();
                                 filter.availableFor = mainType;
-                                filter.mainCategory = cats[mainCat];
+                                filter.mainCategory = cats2[mainCat];
                                 filter.priceStart = fromPrice.text;
                                 filter.priceEnd = toPrice.text;
                                 filter.areaStart = fromArea.text;
@@ -483,13 +545,14 @@ class _FilterPageState extends State<FilterPage> {
                                     propertyPropertiesQuantity[2];
                                 filter.parkingSpots =
                                     propertyPropertiesQuantity[3];
+                                filter.position=positionval;
                                 filter.maidRoom = moreValues[0];
                                 filter.swimmingPool = moreValues[1];
                                 filter.centralAC = moreValues[2];
                                 filter.elevator = moreValues[3];
-                                filter.district=district;
-                                filter.governorate=governorate;
-                                Navigator.pop(context,filter);
+                                filter.district = district;
+                                filter.governorate = governorate;
+                                Navigator.pop(context, filter);
                               })
                             ],
                           ),
@@ -710,14 +773,14 @@ class _FilterPageState extends State<FilterPage> {
       children: [
         Row(
           children: [
-            checkboxes(context, "Assets/maid.svg", "Maid Room", moreValues[0],
+            checkboxes(context, "Assets/maid.svg", "maidRoom".tr(), moreValues[0],
                 () {
               setState(() {
                 moreValues[0] = !moreValues[0];
               });
             }),
             checkboxes(
-                context, "Assets/water.svg", "Swimming Pool", moreValues[1],
+                context, "Assets/water.svg", "swimmingPool".tr(), moreValues[1],
                 () {
               setState(() {
                 moreValues[1] = !moreValues[1];
@@ -730,14 +793,14 @@ class _FilterPageState extends State<FilterPage> {
         ),
         Row(
           children: [
-            checkboxes(context, "Assets/locat.svg", "Central AC", moreValues[2],
+            checkboxes(context, "Assets/locat.svg", "centralAc".tr(), moreValues[2],
                 () {
               setState(() {
                 moreValues[2] = !moreValues[2];
               });
             }),
             checkboxes(
-                context, "Assets/elevator.svg", "Elevator", moreValues[3], () {
+                context, "Assets/elevator.svg", "elevator".tr(), moreValues[3], () {
               setState(() {
                 moreValues[3] = !moreValues[3];
               });
@@ -794,104 +857,149 @@ class _FilterPageState extends State<FilterPage> {
       ],
     );
   }
-  void _basicContent() {
-    setState(() {
-      _popupItemSubCategories1 = Constant.governoratesA.map((cat) {
-        return PopupMenuItem<dynamic>(
-          value: cat,
-          child: Text(
-            '${cat}',
-            // style: Text,
-          ),
-        );
-      }).toList();
-      // categories = Constant.cats.map((cat) {
-      //   return PopupMenuItem<dynamic>(
-      //     value: cat,
-      //     child: Text(
-      //       '${cat}',
-      //       // style: Text,
-      //     ),
-      //   );
-      // }).toList();
-      city = Constant.CityA.map((cat) {
-        return PopupMenuItem<dynamic>(
-          value: cat,
-          child: Text(
-            '${cat}',
-            // style: Text,
-          ),
-        );
-      }).toList();
-      Havalli = Constant.HavalliA.map((cat) {
-        return PopupMenuItem<dynamic>(
-          value: cat,
-          child: Text(
-            '${cat}',
-            // style: Text,
-          ),
-        );
-      }).toList();
-      // positions = Constant.positions.map((cat) {
-      //   return PopupMenuItem<dynamic>(
-      //     value: cat,
-      //     child: Text(
-      //       '${cat}',
-      //       // style: Text,
-      //     ),
-      //   );
-      // }).toList();
-      Mubarak = Constant.MubarakA.map((cat) {
-        return PopupMenuItem<dynamic>(
-          value: cat,
-          child: Text(
-            '${cat}',
-            // style: Text,
-          ),
-        );
-      }).toList();
-      Ahmadi = Constant.AhmadiA.map((cat) {
-        return PopupMenuItem<dynamic>(
-          value: cat,
-          child: Text(
-            '${cat}',
-            // style: Text,
-          ),
-        );
-      }).toList();
-      Farwaniya = Constant.FarwaniyaA.map((cat) {
-        return PopupMenuItem<dynamic>(
-          value: cat,
-          child: Text(
-            '${cat}',
-            // style: Text,
-          ),
-        );
-      }).toList();
-      Jahra = Constant.JahraA.map((cat) {
-        return PopupMenuItem<dynamic>(
-          value: cat,
-          child: Text(
-            '${cat}',
-            // style: Text,
-          ),
-        );
-      }).toList();
-      All = Constant.all.map((cat) {
-        return PopupMenuItem<dynamic>(
-          value: cat,
-          child: Text(
-            '${cat}',
-            // style: Text,
-          ),
-        );
-      }).toList();
+
+  void _basicContent(){
+    for (var i in Constant.governoratesA) {
+      _popupItemSubCategories1.add(
+        DropdownMenuItem(
+          value: i,
+          child: Text(i).tr(),
+        ),
+      );
+    }
+    for (var i in Constant.cats) {
+      categories.add(
+        DropdownMenuItem(
+          value: i,
+          child: Text(i).tr(),
+        ),
+      );
+    }
+    for (var i in Constant.AsimahA) {
+      city.add(
+        DropdownMenuItem(
+          value: i,
+          child: Text(i).tr(),
+        ),
+      );
+    }
+    all.add(
+      DropdownMenuItem(
+        value: "All",
+        child: Text("All").tr(),
+      ),
+    );
+    for (var i in Constant.HavalliA) {
+      Havalli.add(
+        DropdownMenuItem(
+          value: i,
+          child: Text(i).tr(),
+        ),
+      );
+    }
+    for (var i in Constant.positions) {
+      positions.add(
+        DropdownMenuItem(
+          value: i,
+          child: Text(i).tr(),
+        ),
+      );
+    }
+    for (var i in Constant.MubarakA) {
+      Mubarak.add(
+        DropdownMenuItem(
+          value: i,
+          child: Text(i).tr(),
+        ),
+      );
+    }
+    for (var i in Constant.AhmadiA) {
+      Ahmadi.add(
+        DropdownMenuItem(
+          value: i,
+          child: Text(i).tr(),
+        ),
+      );
+    }
+    for (var i in Constant.FarwaniyaA) {
+      Farwaniya.add(
+        DropdownMenuItem(
+          value: i,
+          child: Text(i).tr(),
+        ),
+      );
+    }
+    for (var i in Constant.JahraA) {
+      Jahra.add(
+        DropdownMenuItem(
+          value: i,
+          child: Text(i).tr(),
+        ),
+      );
+    }
+    if(widget.filter.mainCategory!=null){
+      selectedCategory = widget.filter.availableFor;
+      mainType = widget.filter.availableFor.toLowerCase();
+    }
+    if(widget.filter.mainCategory!=null){
+      mainCat = cats2.indexOf(widget.filter.mainCategory);
+    }
+    if(widget.filter.governorate!=null){
+      governorate=widget.filter.governorate;
+    } if(widget.filter.district!=null){
+      district=widget.filter.district;    }
+    if(widget.filter.position!=null &&widget.filter.position!=""){
+      position=widget.filter.position;
+    }
+    if(widget.filter.areaEnd!=null && widget.filter.areaEnd!=""){
+      _currentAreaValues = RangeValues(
+        double.parse(widget.filter.areaStart),
+        double.parse(widget.filter.areaEnd),
+        // _currentAreaValues.end,
+      );
+      fromArea.text=widget.filter.areaStart;
+      toArea.text=widget.filter.areaEnd;
+    }
+    if(widget.filter.priceEnd!=null && widget.filter.priceEnd!=""){
+      _currentRangeValues = RangeValues(
+        double.parse(widget.filter.priceStart),
+        double.parse(widget.filter.priceEnd),
+        // _currentAreaValues.end,
+      );
+      fromPrice.text=widget.filter.priceStart;
+      toPrice.text=widget.filter.priceEnd;
+    }
+    if(widget.filter.bedrooms!=null){
+      propertyPropertiesQuantity[0]=widget.filter.bedrooms;
+    }
+    if(widget.filter.masterRooms!=null){
+      propertyPropertiesQuantity[1]=widget.filter.masterRooms;
+    } if(widget.filter.bathRooms!=null){
+      propertyPropertiesQuantity[2]=widget.filter.bathRooms;
+    } if(widget.filter.parkingSpots!=null){
+      propertyPropertiesQuantity[3]=widget.filter.parkingSpots;
+    }
+    if(widget.filter.maidRoom!=null){
+      moreValues[0]=widget.filter.maidRoom;
+    }
+    if(widget.filter.swimmingPool!=null){
+      moreValues[1]=widget.filter.swimmingPool;
+    }
+    if(widget.filter.centralAC!=null){
+      moreValues[2]=widget.filter.centralAC;
+    }
+    if(widget.filter.elevator!=null){
+      moreValues[3]=widget.filter.elevator;
+    }
+    setState(() {});
+    Future.delayed(Duration(seconds: 2)).then((value) {
+      setState(() {});
     });
   }
 
-  dropDownWidget(String title) {
+  dropDownWidgetSim(String title) {
     return Container(
-      width: MediaQuery.of(context).size.width / 4,
+      width: MediaQuery.of(context).size.width / 3.6,
       decoration: BoxDecoration(border: Border.all(color: Constant.blueColor)),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
@@ -996,6 +1104,7 @@ class _FilterPageState extends State<FilterPage> {
       ],
     );
   }
+
   Widget typeItem(BuildContext context, String title, String icon) {
     return GestureDetector(
       onTap: () {
@@ -1019,7 +1128,7 @@ class _FilterPageState extends State<FilterPage> {
         // }
         //
         setState(() {
-          selectedCategory = title;
+          selectedCategory = title.toLowerCase();
           mainType = title.toLowerCase();
         });
       },
@@ -1028,7 +1137,7 @@ class _FilterPageState extends State<FilterPage> {
         width: MediaQuery.of(context).size.width / 4.6,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(1000),
-            color: selectedCategory == title
+            color: selectedCategory.toLowerCase() == title.toLowerCase()
                 ? Constant.darkblue
                 : Constant.blueColor),
         child: Padding(
@@ -1045,9 +1154,9 @@ class _FilterPageState extends State<FilterPage> {
                 width: 2,
               ),
               CustomText(
-                text: title,
+                text: title.tr(),
                 color: Colors.white,
-                size: 10,
+                size: 9,
               ),
             ],
           ),
@@ -1055,5 +1164,4 @@ class _FilterPageState extends State<FilterPage> {
       ),
     );
   }
-
 }

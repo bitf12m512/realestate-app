@@ -1,4 +1,10 @@
 PODS:
+  - cloud_functions (3.0.0):
+    - Firebase/Functions (= 8.3.0)
+    - firebase_core
+    - Flutter
+  - device_info (0.0.1):
+    - Flutter
   - DKImagePickerController/Core (4.3.2):
     - DKImagePickerController/ImageDataManager
     - DKImagePickerController/Resource
@@ -41,6 +47,12 @@ PODS:
   - Firebase/Database (8.3.0):
     - Firebase/CoreOnly
     - FirebaseDatabase (~> 8.3.0)
+  - Firebase/Functions (8.3.0):
+    - Firebase/CoreOnly
+    - FirebaseFunctions (~> 8.3.0)
+  - Firebase/Messaging (8.3.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 8.3.0)
   - firebase_auth (3.0.1):
     - Firebase/Auth (= 8.3.0)
     - firebase_core
@@ -52,6 +64,10 @@ PODS:
     - Firebase/Database (= 8.3.0)
     - firebase_core
     - Flutter
+  - firebase_messaging (10.0.4):
+    - Firebase/Messaging (= 8.3.0)
+    - firebase_core
+    - Flutter
   - FirebaseAuth (8.3.0):
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
@@ -61,7 +77,7 @@ PODS:
     - FirebaseCoreDiagnostics (~> 8.0)
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/Logger (~> 7.4)
-  - FirebaseCoreDiagnostics (8.4.0):
+  - FirebaseCoreDiagnostics (8.5.0):
     - GoogleDataTransport (~> 9.0)
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/Logger (~> 7.4)
@@ -69,7 +85,29 @@ PODS:
   - FirebaseDatabase (8.3.0):
     - FirebaseCore (~> 8.0)
     - leveldb-library (~> 1.22)
+  - FirebaseFunctions (8.3.0):
+    - FirebaseCore (~> 8.0)
+    - GTMSessionFetcher/Core (~> 1.5)
+  - FirebaseInstallations (8.5.0):
+    - FirebaseCore (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.4)
+    - GoogleUtilities/UserDefaults (~> 7.4)
+    - PromisesObjC (< 3.0, >= 1.2)
+  - FirebaseMessaging (8.3.0):
+    - FirebaseCore (~> 8.0)
+    - FirebaseInstallations (~> 8.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
+    - GoogleUtilities/Environment (~> 7.4)
+    - GoogleUtilities/Reachability (~> 7.4)
+    - GoogleUtilities/UserDefaults (~> 7.4)
   - Flutter (1.0.0)
+  - flutter_image_compress (0.0.1):
+    - Flutter
+    - Mantle
+    - SDWebImage
+    - SDWebImageWebPCoder
+  - flutter_webview_plugin (0.0.1):
+    - Flutter
   - GoogleDataTransport (9.1.0):
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
@@ -89,6 +127,8 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.5.0)"
   - GoogleUtilities/Reachability (7.5.0):
     - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (7.5.0):
+    - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.6.1)
   - image_cropper (0.0.4):
     - Flutter
@@ -96,6 +136,20 @@ PODS:
   - image_picker (0.0.1):
     - Flutter
   - leveldb-library (1.22.1)
+  - libwebp (1.2.0):
+    - libwebp/demux (= 1.2.0)
+    - libwebp/mux (= 1.2.0)
+    - libwebp/webp (= 1.2.0)
+  - libwebp/demux (1.2.0):
+    - libwebp/webp
+  - libwebp/mux (1.2.0):
+    - libwebp/demux
+  - libwebp/webp (1.2.0)
+  - Mantle (2.1.6):
+    - Mantle/extobjc (= 2.1.6)
+  - Mantle/extobjc (2.1.6)
+  - myfatoorah_flutter (0.0.1):
+    - Flutter
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
@@ -105,17 +159,32 @@ PODS:
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
+  - SDWebImageWebPCoder (0.8.4):
+    - libwebp (~> 1.0)
+    - SDWebImage/Core (~> 5.10)
+  - shared_preferences (0.0.1):
+    - Flutter
   - SwiftyGif (5.4.0)
   - TOCropViewController (2.6.0)
+  - webview_flutter (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
+  - cloud_functions (from `.symlinks/plugins/cloud_functions/ios`)
+  - device_info (from `.symlinks/plugins/device_info/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_database (from `.symlinks/plugins/firebase_database/ios`)
+  - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
+  - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
+  - flutter_webview_plugin (from `.symlinks/plugins/flutter_webview_plugin/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
+  - myfatoorah_flutter (from `.symlinks/plugins/myfatoorah_flutter/ios`)
+  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
 
 SPEC REPOS:
   trunk:
@@ -126,17 +195,27 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseDatabase
+    - FirebaseFunctions
+    - FirebaseInstallations
+    - FirebaseMessaging
     - GoogleDataTransport
     - GoogleUtilities
     - GTMSessionFetcher
     - leveldb-library
+    - libwebp
+    - Mantle
     - nanopb
     - PromisesObjC
     - SDWebImage
+    - SDWebImageWebPCoder
     - SwiftyGif
     - TOCropViewController
 
 EXTERNAL SOURCES:
+  cloud_functions:
+    :path: ".symlinks/plugins/cloud_functions/ios"
+  device_info:
+    :path: ".symlinks/plugins/device_info/ios"
   file_picker:
     :path: ".symlinks/plugins/file_picker/ios"
   firebase_auth:
@@ -145,14 +224,28 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_core/ios"
   firebase_database:
     :path: ".symlinks/plugins/firebase_database/ios"
+  firebase_messaging:
+    :path: ".symlinks/plugins/firebase_messaging/ios"
   Flutter:
     :path: Flutter
+  flutter_image_compress:
+    :path: ".symlinks/plugins/flutter_image_compress/ios"
+  flutter_webview_plugin:
+    :path: ".symlinks/plugins/flutter_webview_plugin/ios"
   image_cropper:
     :path: ".symlinks/plugins/image_cropper/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
+  myfatoorah_flutter:
+    :path: ".symlinks/plugins/myfatoorah_flutter/ios"
+  shared_preferences:
+    :path: ".symlinks/plugins/shared_preferences/ios"
+  webview_flutter:
+    :path: ".symlinks/plugins/webview_flutter/ios"
 
 SPEC CHECKSUMS:
+  cloud_functions: 3c28b449603cc0be688d37a15f9feee5880fca8b
+  device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
@@ -160,23 +253,35 @@ SPEC CHECKSUMS:
   firebase_auth: 3b08d67bda60758347d15584fd0a7a4cf5f6496f
   firebase_core: 72374607c8c6f5a0adc0559e5c5bf57deda975e3
   firebase_database: 27de7affa8b73e25afe25ee7ec18e3216d8d279c
+  firebase_messaging: 55c5b8184efd330b9d1f1765b55c4ae57e015c5e
   FirebaseAuth: fd12c82de44e7ad3b821610c387b8251f03aa0f9
   FirebaseCore: a6dba751680d7033b9d3831e1cfc95ead0605118
-  FirebaseCoreDiagnostics: cad03be1904b975f845e632f2720c3337da27faf
+  FirebaseCoreDiagnostics: 7bf55d386f9fc690d971b70a582142321a390eb8
   FirebaseDatabase: 3cb36bbf667be87d72cebc8dbe72e2e8cac1d615
+  FirebaseFunctions: f391cdeef45d2e85ef4e16a6ecca05f30e162c41
+  FirebaseInstallations: f2bc590b291d25fb40a9a05b8281c02a881b5117
+  FirebaseMessaging: 42252b79b860482021483748669ec32e22196462
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  flutter_image_compress: fd2b476345226e1a10ea352fa306af95704642c1
+  flutter_webview_plugin: ed9e8a6a96baf0c867e90e1bce2673913eeac694
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
   GoogleUtilities: eea970f4a389963963bffe8d8fabe43540678b9c
   GTMSessionFetcher: 36689134877faeb055b27dfa4ccc9ceaa42e029e
   image_cropper: f1668dd8d2cad2d357955caad15a40547856edcb
   image_picker: e06f7a68f000bd36f552c1847e33cda96ed31f1f
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
+  libwebp: e90b9c01d99205d03b6bb8f2c8c415e5a4ef66f0
+  Mantle: 4c0ed6ce47c96eccc4dc3bb071deb3def0e2c3be
+  myfatoorah_flutter: 7db54f4e59b70038704a174c3511718e0d1746b1
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
+  SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
+  shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   SwiftyGif: 5d4af95df24caf1c570dbbcb32a3b8a0763bc6d7
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
+  webview_flutter: 3603125dfd3bcbc9d8d418c3f80aeecf331c068b
 
-PODFILE CHECKSUM: fe0e1ee7f3d1f7d00b11b474b62dd62134535aea
+PODFILE CHECKSUM: 3dffd8c48b531d21ec0ec153c22dc8e3a6223bc9
 
 COCOAPODS: 1.10.1

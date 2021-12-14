@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 class Filter{
-  String availableFor,mainCategory,priceStart,priceEnd,areaStart,areaEnd,governorate,district;
+  String availableFor,mainCategory,
+      priceStart,priceEnd,areaStart,areaEnd,governorate,district,position;
+
   int bedrooms,bathRooms,parkingSpots,masterRooms;
   bool maidRoom,swimmingPool,centralAC,elevator;
 
@@ -19,6 +21,7 @@ class Filter{
       this.masterRooms,
       this.maidRoom,
       this.swimmingPool,
+      this.position,
       this.centralAC,
       this.elevator});
 }

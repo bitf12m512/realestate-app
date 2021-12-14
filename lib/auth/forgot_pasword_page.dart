@@ -38,7 +38,9 @@ class _ForgotPassWordPageState extends State<ForgotPassWordPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      back(context),
+                      back(context,(){
+                      Navigator.pop(context);
+                      }),
                       Center(
                         child: Container(
                             height: MediaQuery.of(context).size.height / 3.5,

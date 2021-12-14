@@ -4,6 +4,7 @@ class Property {
   String name,
   area,
       price,
+  premiumTill,
   status,
       position,
       description,
@@ -26,6 +27,7 @@ class Property {
       this.id,
         this.images,
         this.area,
+        this.premiumTill,
       this.creatorId,
       this.timeStamp,
       this.availableFor,
@@ -48,6 +50,7 @@ class Property {
   factory Property.fromMap(Map map) {
     return new Property(
       name: map['name'] as String,
+        premiumTill: map['premiumTill'] as String,
       price: map['price'] as String,
       position: map['position'] as String,
         status: map['status'] as String,
@@ -105,6 +108,7 @@ class Property {
       'addType': this.addType,
       'bedRooms': this.bedRooms,
       'masterBed': this.masterBed,
+      'premiumTill': this.premiumTill,
       'livingRoom': this.livingRoom,
       'bathRooms': this.bathRooms,
       'images': this.images,

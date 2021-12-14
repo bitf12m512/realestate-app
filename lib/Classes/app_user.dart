@@ -3,8 +3,9 @@ import 'package:country_code_picker/country_code.dart';
 class AppUser {
   String firstName,email, lastName,imgurl, id, phoneNumber, firstAddress,secondAddress;
   CountryCode country;
+  List<String> deviceTokens;
   AppUser(
-      {this.firstName, this.lastName,this.imgurl,this.email, this.id, this.firstAddress,this.secondAddress,this.phoneNumber, this.country});
+      {this.firstName, this.deviceTokens,this.lastName,this.imgurl,this.email, this.id, this.firstAddress,this.secondAddress,this.phoneNumber, this.country});
 
   factory AppUser.fromMap(Map map) {
     return new AppUser(
@@ -17,6 +18,7 @@ class AppUser {
       firstAddress: map['firstAddress'] as String,
       secondAddress: map['secondAddress'] as String,
       country: map['country'] as CountryCode,
+      deviceTokens: map['deviceTokens']==null?[]:List<String>.from(map['deviceTokens']),
     );
   }
 

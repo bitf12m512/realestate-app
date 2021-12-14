@@ -24,7 +24,7 @@ Widget bigButton(BuildContext context,String title,Function ontap){
         child: CustomText(
           text: title,
           fontWeight: FontWeight.w800,
-          size: 22,
+          size: 20,
           color: Colors.white,
         ),
       ),
@@ -54,7 +54,7 @@ Widget bigButton2(BuildContext context,String title,Function ontap){
         child: CustomText(
           text: title,
           fontWeight: FontWeight.w800,
-          size: 22,
+          size: 20,
           color: Colors.white,
         ),
       ),

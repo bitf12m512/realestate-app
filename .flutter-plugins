@@ -1,11 +1,27 @@
 # This is a generated file; do not edit or check into version control.
+cloud_functions=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_functions-3.0.0/
+cloud_functions_web=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_functions_web-4.0.10/
+device_info=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/device_info-2.0.2/
 file_picker=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/file_picker-3.0.4/
 firebase_auth=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.0.1/
 firebase_auth_web=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth_web-3.0.0/
 firebase_core=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-1.4.0/
 firebase_core_web=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-1.1.0/
 firebase_database=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_database-7.1.2/
+firebase_messaging=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_messaging-10.0.4/
+firebase_messaging_web=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_messaging_web-2.0.3/
+flutter_image_compress=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_image_compress-1.1.0/
 flutter_plugin_android_lifecycle=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-2.0.2/
+flutter_webview_plugin=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_webview_plugin-0.4.0/
 image_cropper=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/image_cropper-1.4.1/
 image_picker=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.8.2/
 image_picker_for_web=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker_for_web-2.1.1/
+myfatoorah_flutter=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/myfatoorah_flutter-2.0.3/
+path_provider_linux=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-2.0.2/
+path_provider_windows=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.0.3/
+shared_preferences=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-2.0.7/
+shared_preferences_linux=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_linux-2.0.2/
+shared_preferences_macos=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-2.0.2/
+shared_preferences_web=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-2.0.2/
+shared_preferences_windows=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_windows-2.0.2/
+webview_flutter=/Users/ali/Desktop/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/webview_flutter-2.0.13/

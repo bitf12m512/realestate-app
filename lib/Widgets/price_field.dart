@@ -6,7 +6,7 @@ import 'package:realestate/Constants/constants.dart';
 pricefield(BuildContext context, String title, String hint,
     TextEditingController controller) {
   return Container(
-    height: 30,
+    height: 38,
     width: MediaQuery.of(context).size.width / 1.1,
     child: Row(
       children: [
@@ -18,7 +18,8 @@ pricefield(BuildContext context, String title, String hint,
         //   width: 10,
         // ),
         Container(
-          height: 30,
+          height: 38,
+          width: 80,
           // width: MediaQuery
           //     .of(context)
           //     .size
@@ -36,7 +37,7 @@ pricefield(BuildContext context, String title, String hint,
           ),
         ),
         Container(
-          height: 30,
+          height: 38,
           width: MediaQuery.of(context).size.width / 2,
           decoration:
               BoxDecoration(border: Border.all(color: Constant.blueColor)),

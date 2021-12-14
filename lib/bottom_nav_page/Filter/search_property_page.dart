@@ -6,11 +6,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
 import 'package:realestate/Classes/custom_text.dart';
+import 'package:realestate/Classes/fiter.dart';
 import 'package:realestate/Constants/constants.dart';
+import 'package:realestate/Function/set_filter.dart';
 import 'package:realestate/Provider/provider_class.dart';
 import 'package:realestate/Widgets/bed_item.dart';
 import 'package:realestate/Widgets/rounded_app_bar.dart';
 import 'package:realestate/Widgets/text_field.dart';
+import 'package:realestate/bottom_nav_page/Filter/filter_page.dart';
 import 'package:realestate/bottom_nav_page/bottom_nav_pages/property_detail_page.dart';
 
 class SearchPropertyPage extends StatefulWidget {
@@ -22,7 +25,8 @@ class SearchPropertyPage extends StatefulWidget {
 
 class _SearchPropertyPageState extends State<SearchPropertyPage> {
   TextEditingController searcher = new TextEditingController();
-
+  ScrollController scrollController = new ScrollController();
+ Filter previousFilter=new Filter();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,24 +36,55 @@ class _SearchPropertyPageState extends State<SearchPropertyPage> {
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
-              roundedAppBarwithBack(context, "Search",(){
+              roundedAppBarwithBackAndFilter(context, "Search", () {
                 FocusScopeNode currentFocus = FocusScope.of(context);
                 if (!currentFocus.hasPrimaryFocus) {
                   currentFocus.unfocus();
                 }
                 provider.setPropertyList([]);
                 for (int i = 0; i < provider.getPropertyBackList.length; i++) {
-                    provider.addTOProprertyList(provider.getPropertyBackList[i]);
+                  provider.addTOProprertyList(provider.getPropertyBackList[i]);
                 }
                 Navigator.pop(context);
-              }),
+              }, () async {
+                var provider =
+                Provider.of<RoleIdentifier>(
+                    context,
+                    listen: false);
+                provider.setPropertyList([]);
+                for (int i = 0;
+                i <
+                    provider.getPropertyBackList
+                        .length;
+                i++) {
+                  provider.addTOProprertyList(provider
+                      .getPropertyBackList[i]);
+                }
+                // setState(() {
+                //   selectedCategory = "";
+                // });
+                Filter filter = new Filter();
+                filter = await Navigator.of(context)
+                    .push(MaterialPageRoute(
+                    builder: (context) =>
+                        FilterPage(previousFilter)));
+                if (filter != null) {
+                  previousFilter=filter;
+                  setFilter(filter,context);
+                  setState(() {
+                    // if(provider.)
+                    scrollController.animateTo(60,
+                        duration: Duration(seconds: 2), curve: Curves.fastOutSlowIn);
+                    // .
+                  });
+                }
+              },),
               SizedBox(
                 height: 10,
               ),
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: textField()
-                  // TextFieldBox(context,Icons.search,"Search",true,searcher,TextInputType.text,100),
                   ),
               SizedBox(
                 height: 5,
@@ -71,6 +106,7 @@ class _SearchPropertyPageState extends State<SearchPropertyPage> {
                           ),
                         )
                       : ListView.builder(
+                          controller: scrollController,
                           padding: EdgeInsets.only(top: 5),
                           itemCount: provider.getPropertyList.length,
                           itemBuilder: (context, index) {
@@ -78,13 +114,19 @@ class _SearchPropertyPageState extends State<SearchPropertyPage> {
                               padding: const EdgeInsets.only(
                                   left: 15.0, right: 15, bottom: 15),
                               child: GestureDetector(
-                                onTap: (){
+                                onTap: () {
+                                  FocusScopeNode currentFocus =
+                                      FocusScope.of(context);
+
+                                  if (!currentFocus.hasPrimaryFocus) {
+                                    currentFocus.unfocus();
+                                  }
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => PropertyDetailPage(
-                                          provider.getPropertyList[index],false)));
+                                          provider.getPropertyList[index],
+                                          false)));
                                 },
                                 child: Container(
-                                  // height: MediaQuery.of(context).size.height / 3,
                                   width: MediaQuery.of(context).size.width,
                                   decoration: BoxDecoration(
                                       boxShadow: [
@@ -101,7 +143,8 @@ class _SearchPropertyPageState extends State<SearchPropertyPage> {
                                   child: Stack(
                                     children: [
                                       Container(
-                                        width: MediaQuery.of(context).size.width,
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                         child: Row(
                                           children: [
                                             Container(
@@ -122,11 +165,14 @@ class _SearchPropertyPageState extends State<SearchPropertyPage> {
                                                     .size
                                                     .width,
                                                 child: ClipRRect(
-                                                  borderRadius: BorderRadius.only(
-                                                      bottomLeft:
-                                                          Radius.circular(15),
-                                                      topLeft:
-                                                          Radius.circular(15)),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          bottomLeft:
+                                                              Radius.circular(
+                                                                  15),
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  15)),
                                                   child: Image.network(
                                                     provider.properties[index]
                                                         .images[0],
@@ -142,9 +188,11 @@ class _SearchPropertyPageState extends State<SearchPropertyPage> {
                                                 child: Container(
                                                   child: Column(
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment.center,
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: [
                                                       SizedBox(
                                                         height: 5,
@@ -158,29 +206,16 @@ class _SearchPropertyPageState extends State<SearchPropertyPage> {
                                                         fontWeight:
                                                             FontWeight.w600,
                                                       ),
-                                                      Container(
-                                                        height: 3,
-                                                        width:
-                                                            MediaQuery.of(context)
-                                                                    .size
-                                                                    .width /
-                                                                8,
-                                                        decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                          color:
-                                                              Constant.blueColor,
-                                                        ),
-                                                      ),
+
                                                       Container(
                                                         height: 1,
-                                                        width:
-                                                            MediaQuery.of(context)
-                                                                    .size
-                                                                    .width /
-                                                                2,
-                                                        color: Constant.blueColor,
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width /
+                                                            2,
+                                                        color:
+                                                            Constant.blueColor,
                                                       ),
                                                       SizedBox(
                                                         height: 5,
@@ -218,12 +253,14 @@ class _SearchPropertyPageState extends State<SearchPropertyPage> {
                                                                           .timeStamp))
                                                                       .toLocal())
                                                                   .fromNow(),
-                                                              color: Colors.black
+                                                              color: Colors
+                                                                  .black
                                                                   .withOpacity(
                                                                       0.4),
                                                               size: 8,
                                                               fontWeight:
-                                                                  FontWeight.w500,
+                                                                  FontWeight
+                                                                      .w500,
                                                             ),
                                                           ),
                                                         ],
@@ -249,23 +286,22 @@ class _SearchPropertyPageState extends State<SearchPropertyPage> {
                                                                     "Assets/garage.svg"),
                                                               ],
                                                             ),
-                                                            Row(
-                                                              children: [
-                                                                //   Image.asset(
-                                                                //   "Assets/priceTag.png",
-                                                                //   height: 14,
-                                                                // ),
-                                                                CustomText(
-                                                                  text:
-                                                                      "${provider.properties[index].price}KWD",
-                                                                  color: Constant
-                                                                      .blueColor,
-                                                                  size: 11,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                              ],
+                                                            Container(
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width /
+                                                                  6,
+                                                              child: CustomText(
+                                                                text:
+                                                                    "${provider.properties[index].price.length < 6 ? provider.properties[index].price : "${provider.properties[index].price.substring(0, 5)}.."}KWD",
+                                                                color: Constant
+                                                                    .blueColor,
+                                                                size: 10,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
@@ -290,7 +326,8 @@ class _SearchPropertyPageState extends State<SearchPropertyPage> {
                                                   List favs = [];
                                                   for (int i = 0;
                                                       i <
-                                                          provider.favouriteIdies
+                                                          provider
+                                                              .favouriteIdies
                                                               .length;
                                                       i++) {
                                                     favs.add(provider
@@ -304,7 +341,8 @@ class _SearchPropertyPageState extends State<SearchPropertyPage> {
                                                     favs.add(provider
                                                         .properties[index].id);
                                                   }
-                                                  await FirebaseDatabase.instance
+                                                  await FirebaseDatabase
+                                                      .instance
                                                       .reference()
                                                       .child("Users")
                                                       .child(Provider.of<
@@ -344,25 +382,26 @@ class _SearchPropertyPageState extends State<SearchPropertyPage> {
       }),
     );
   }
-
   textField() {
     return TextFormField(
       controller: searcher,
       onChanged: (val) {
         // setState(() {
-          var provider = Provider.of<RoleIdentifier>(context, listen: false);
-          provider.setPropertyList([]);
-          for (int i = 0; i < provider.getPropertyBackList.length; i++) {
-            if (provider.getPropertyBackList[i].name
-                .toLowerCase()
-                .contains(val.toLowerCase()) || provider.getPropertyBackList[i].district
-                .toLowerCase()
-                .contains(val.toLowerCase()) || provider.getPropertyBackList[i].governorate
-                .toLowerCase()
-                .contains(val.toLowerCase())) {
-              provider.addTOProprertyList(provider.getPropertyBackList[i]);
-            }
+        var provider = Provider.of<RoleIdentifier>(context, listen: false);
+        provider.setPropertyList([]);
+        for (int i = 0; i < provider.getPropertyBackList.length; i++) {
+          if (provider.getPropertyBackList[i].name
+                  .toLowerCase()
+                  .contains(val.toLowerCase()) ||
+              provider.getPropertyBackList[i].district
+                  .toLowerCase()
+                  .contains(val.toLowerCase()) ||
+              provider.getPropertyBackList[i].governorate
+                  .toLowerCase()
+                  .contains(val.toLowerCase())) {
+            provider.addTOProprertyList(provider.getPropertyBackList[i]);
           }
+        }
         // });
         // setState(() {
         //   // selectedCategory = title;
@@ -399,8 +438,7 @@ class _SearchPropertyPageState extends State<SearchPropertyPage> {
             horizontal:
                 // hinttext.toLowerCase()=="Description".toLowerCase()?20:
                 15),
-        hintStyle:
-            TextStyle(color: Colors.white, fontSize: 16),
+        hintStyle: TextStyle(color: Colors.white, fontSize: 16),
         hintText: "Search",
         // labelText: "Search",
         filled: true,
@@ -425,8 +463,7 @@ class _SearchPropertyPageState extends State<SearchPropertyPage> {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(1000)),
-          borderSide:
-              BorderSide(width: 1, color: Colors.white),
+          borderSide: BorderSide(width: 1, color: Colors.white),
         ),
         // focusedBorder: InputBorder.none,
         // enabledBorder: InputBorder.none,
