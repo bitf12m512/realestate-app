@@ -15,6 +15,7 @@ MERGED from [:flutter_plugin_android_lifecycle] /Users/ali/Desktop/Github/reales
 MERGED from [:shared_preferences] /Users/ali/Desktop/Github/realestate-app/build/shared_preferences/intermediates/library_manifest/release/AndroidManifest.xml:2:1-7:12
 MERGED from [:myfatoorah_flutter] /Users/ali/Desktop/Github/realestate-app/build/myfatoorah_flutter/intermediates/library_manifest/release/AndroidManifest.xml:2:1-7:12
 MERGED from [:webview_flutter] /Users/ali/Desktop/Github/realestate-app/build/webview_flutter/intermediates/library_manifest/release/AndroidManifest.xml:2:1-7:12
+MERGED from [:url_launcher_android] /Users/ali/Desktop/Github/realestate-app/build/url_launcher_android/intermediates/library_manifest/release/AndroidManifest.xml:2:1-14:12
 MERGED from [:flutter_webview_plugin] /Users/ali/Desktop/Github/realestate-app/build/flutter_webview_plugin/intermediates/library_manifest/release/AndroidManifest.xml:2:1-21:12
 MERGED from [:image_cropper] /Users/ali/Desktop/Github/realestate-app/build/image_cropper/intermediates/library_manifest/release/AndroidManifest.xml:2:1-7:12
 MERGED from [:device_info] /Users/ali/Desktop/Github/realestate-app/build/device_info/intermediates/library_manifest/release/AndroidManifest.xml:2:1-7:12
@@ -124,6 +125,8 @@ MERGED from [:firebase_core] /Users/ali/Desktop/Github/realestate-app/build/fire
 MERGED from [:firebase_core] /Users/ali/Desktop/Github/realestate-app/build/firebase_core/intermediates/library_manifest/release/AndroidManifest.xml:7:5-13:19
 MERGED from [:image_picker] /Users/ali/Desktop/Github/realestate-app/build/image_picker/intermediates/library_manifest/release/AndroidManifest.xml:7:5-17:19
 MERGED from [:image_picker] /Users/ali/Desktop/Github/realestate-app/build/image_picker/intermediates/library_manifest/release/AndroidManifest.xml:7:5-17:19
+MERGED from [:url_launcher_android] /Users/ali/Desktop/Github/realestate-app/build/url_launcher_android/intermediates/library_manifest/release/AndroidManifest.xml:7:5-12:19
+MERGED from [:url_launcher_android] /Users/ali/Desktop/Github/realestate-app/build/url_launcher_android/intermediates/library_manifest/release/AndroidManifest.xml:7:5-12:19
 MERGED from [:flutter_webview_plugin] /Users/ali/Desktop/Github/realestate-app/build/flutter_webview_plugin/intermediates/library_manifest/release/AndroidManifest.xml:8:5-19:19
 MERGED from [:flutter_webview_plugin] /Users/ali/Desktop/Github/realestate-app/build/flutter_webview_plugin/intermediates/library_manifest/release/AndroidManifest.xml:8:5-19:19
 MERGED from [com.google.firebase:firebase-functions:20.0.0] /Users/ali/.gradle/caches/transforms-2/files-2.1/37f52d760fc28869a8493b29a2d365b2/jetified-firebase-functions-20.0.0/AndroidManifest.xml:14:5-22:19
@@ -173,7 +176,7 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/ali/
 	android:label
 		ADDED from /Users/ali/Desktop/Github/realestate-app/android/app/src/main/AndroidManifest.xml:6:9-36
 	android:icon
-		ADDED from /Users/ali/Desktop/Github/realestate-app/android/app/src/main/AndroidManifest.xml:7:9-43
+		ADDED from /Users/ali/Desktop/Github/realestate-app/android/app/src/main/AndroidManifest.xml:7:9-45
 activity#com.yalantis.ucrop.UCropActivity
 ADDED from /Users/ali/Desktop/Github/realestate-app/android/app/src/main/AndroidManifest.xml:8:8-11:70
 	android:screenOrientation
@@ -250,6 +253,8 @@ MERGED from [:myfatoorah_flutter] /Users/ali/Desktop/Github/realestate-app/build
 MERGED from [:myfatoorah_flutter] /Users/ali/Desktop/Github/realestate-app/build/myfatoorah_flutter/intermediates/library_manifest/release/AndroidManifest.xml:5:5-44
 MERGED from [:webview_flutter] /Users/ali/Desktop/Github/realestate-app/build/webview_flutter/intermediates/library_manifest/release/AndroidManifest.xml:5:5-44
 MERGED from [:webview_flutter] /Users/ali/Desktop/Github/realestate-app/build/webview_flutter/intermediates/library_manifest/release/AndroidManifest.xml:5:5-44
+MERGED from [:url_launcher_android] /Users/ali/Desktop/Github/realestate-app/build/url_launcher_android/intermediates/library_manifest/release/AndroidManifest.xml:5:5-44
+MERGED from [:url_launcher_android] /Users/ali/Desktop/Github/realestate-app/build/url_launcher_android/intermediates/library_manifest/release/AndroidManifest.xml:5:5-44
 MERGED from [:flutter_webview_plugin] /Users/ali/Desktop/Github/realestate-app/build/flutter_webview_plugin/intermediates/library_manifest/release/AndroidManifest.xml:6:5-44
 MERGED from [:flutter_webview_plugin] /Users/ali/Desktop/Github/realestate-app/build/flutter_webview_plugin/intermediates/library_manifest/release/AndroidManifest.xml:6:5-44
 MERGED from [:image_cropper] /Users/ali/Desktop/Github/realestate-app/build/image_cropper/intermediates/library_manifest/release/AndroidManifest.xml:5:5-44
@@ -582,6 +587,14 @@ data
 ADDED from [:file_picker] /Users/ali/Desktop/Github/realestate-app/build/file_picker/intermediates/library_manifest/release/AndroidManifest.xml:13:13-44
 	android:mimeType
 		ADDED from [:file_picker] /Users/ali/Desktop/Github/realestate-app/build/file_picker/intermediates/library_manifest/release/AndroidManifest.xml:13:19-41
+activity#io.flutter.plugins.urllauncher.WebViewActivity
+ADDED from [:url_launcher_android] /Users/ali/Desktop/Github/realestate-app/build/url_launcher_android/intermediates/library_manifest/release/AndroidManifest.xml:8:9-11:74
+	android:exported
+		ADDED from [:url_launcher_android] /Users/ali/Desktop/Github/realestate-app/build/url_launcher_android/intermediates/library_manifest/release/AndroidManifest.xml:10:13-37
+	android:theme
+		ADDED from [:url_launcher_android] /Users/ali/Desktop/Github/realestate-app/build/url_launcher_android/intermediates/library_manifest/release/AndroidManifest.xml:11:13-71
+	android:name
+		ADDED from [:url_launcher_android] /Users/ali/Desktop/Github/realestate-app/build/url_launcher_android/intermediates/library_manifest/release/AndroidManifest.xml:9:13-74
 provider#androidx.core.content.FileProvider
 ADDED from [:flutter_webview_plugin] /Users/ali/Desktop/Github/realestate-app/build/flutter_webview_plugin/intermediates/library_manifest/release/AndroidManifest.xml:9:9-18:20
 	android:grantUriPermissions

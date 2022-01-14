@@ -1,7 +1,7 @@
 # compiler: R8
 # compiler_version: 2.1.62
 # min_api: 21
-# pg_map_id: d15d446
+# pg_map_id: cdf5ac0
 # common_typos_disable
 androidx.activity.Cancellable -> androidx.activity.a:
 androidx.activity.ComponentActivity -> androidx.activity.ComponentActivity:
@@ -25445,6 +25445,56 @@ io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin -> io.flutter.plugi
     void teardownChannel() -> b
     void onAttachedToEngine(io.flutter.embedding.engine.plugins.FlutterPlugin$FlutterPluginBinding) -> d
     void onDetachedFromEngine(io.flutter.embedding.engine.plugins.FlutterPlugin$FlutterPluginBinding) -> j
+io.flutter.plugins.urllauncher.MethodCallHandlerImpl -> io.flutter.plugins.urllauncher.a:
+    io.flutter.plugins.urllauncher.UrlLauncher urlLauncher -> a
+    io.flutter.plugin.common.MethodChannel channel -> b
+    android.os.Bundle extractBundle(java.util.Map) -> a
+    void onCanLaunch(io.flutter.plugin.common.MethodChannel$Result,java.lang.String) -> b
+    void onCloseWebView(io.flutter.plugin.common.MethodChannel$Result) -> c
+    void onLaunch(io.flutter.plugin.common.MethodCall,io.flutter.plugin.common.MethodChannel$Result,java.lang.String) -> d
+    void startListening(io.flutter.plugin.common.BinaryMessenger) -> e
+    void onMethodCall(io.flutter.plugin.common.MethodCall,io.flutter.plugin.common.MethodChannel$Result) -> f
+    void stopListening() -> g
+io.flutter.plugins.urllauncher.UrlLauncher -> io.flutter.plugins.urllauncher.b:
+    android.content.Context applicationContext -> a
+    android.app.Activity activity -> b
+    boolean canLaunch(java.lang.String) -> a
+    void closeWebView() -> b
+    io.flutter.plugins.urllauncher.UrlLauncher$LaunchStatus launch(java.lang.String,android.os.Bundle,boolean,boolean,boolean) -> c
+    void setActivity(android.app.Activity) -> d
+io.flutter.plugins.urllauncher.UrlLauncher$LaunchStatus -> io.flutter.plugins.urllauncher.b$a:
+    io.flutter.plugins.urllauncher.UrlLauncher$LaunchStatus[] $VALUES -> g
+    io.flutter.plugins.urllauncher.UrlLauncher$LaunchStatus OK -> d
+    io.flutter.plugins.urllauncher.UrlLauncher$LaunchStatus NO_ACTIVITY -> e
+    io.flutter.plugins.urllauncher.UrlLauncher$LaunchStatus ACTIVITY_NOT_FOUND -> f
+io.flutter.plugins.urllauncher.UrlLauncherPlugin -> io.flutter.plugins.urllauncher.c:
+    io.flutter.plugins.urllauncher.MethodCallHandlerImpl methodCallHandler -> a
+    io.flutter.plugins.urllauncher.UrlLauncher urlLauncher -> b
+    void onAttachedToActivity(io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding) -> a
+    void onAttachedToEngine(io.flutter.embedding.engine.plugins.FlutterPlugin$FlutterPluginBinding) -> d
+    void onDetachedFromActivity() -> g
+    void onReattachedToActivityForConfigChanges(io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding) -> i
+    void onDetachedFromEngine(io.flutter.embedding.engine.plugins.FlutterPlugin$FlutterPluginBinding) -> j
+    void onDetachedFromActivityForConfigChanges() -> k
+io.flutter.plugins.urllauncher.WebViewActivity -> io.flutter.plugins.urllauncher.WebViewActivity:
+    android.content.IntentFilter closeIntentFilter -> g
+    java.lang.String URL_EXTRA -> i
+    java.lang.String ACTION_CLOSE -> h
+    java.lang.String ENABLE_DOM_EXTRA -> k
+    java.lang.String ENABLE_JS_EXTRA -> j
+    android.webkit.WebView webview -> f
+    android.content.BroadcastReceiver broadcastReceiver -> d
+    android.webkit.WebViewClient webViewClient -> e
+    android.webkit.WebView access$000(io.flutter.plugins.urllauncher.WebViewActivity) -> a
+    android.content.Intent createIntent(android.content.Context,java.lang.String,boolean,boolean,android.os.Bundle) -> b
+    java.util.Map extractHeaders(android.os.Bundle) -> c
+io.flutter.plugins.urllauncher.WebViewActivity$1 -> io.flutter.plugins.urllauncher.WebViewActivity$a:
+    io.flutter.plugins.urllauncher.WebViewActivity this$0 -> a
+io.flutter.plugins.urllauncher.WebViewActivity$2 -> io.flutter.plugins.urllauncher.WebViewActivity$b:
+io.flutter.plugins.urllauncher.WebViewActivity$FlutterWebChromeClient -> io.flutter.plugins.urllauncher.WebViewActivity$c:
+    io.flutter.plugins.urllauncher.WebViewActivity this$0 -> a
+io.flutter.plugins.urllauncher.WebViewActivity$FlutterWebChromeClient$1 -> io.flutter.plugins.urllauncher.WebViewActivity$c$a:
+    io.flutter.plugins.urllauncher.WebViewActivity$FlutterWebChromeClient this$1 -> a
 io.flutter.plugins.webviewflutter.DisplayListenerProxy -> io.flutter.plugins.d.a:
     java.util.ArrayList listenersBeforeWebView -> a
     void onPostWebViewInitialization(android.hardware.display.DisplayManager) -> a

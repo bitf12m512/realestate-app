@@ -278,13 +278,12 @@ class _FavouritesPageState extends State<FavouritesPage> {
                                                                         ),
                                                                         Row(
                                                                           children: [
-                                                                            //   Image.asset(
-                                                                            //   "Assets/priceTag.png",
-                                                                            //   height: 14,
-                                                                            // ),
+                                                                            Image.asset(
+                                                                              "Assets/priceTag.png",
+                                                                              height: 13,
+                                                                            ),
                                                                             CustomText(
-                                                                              text: "${provider.properties[index].price.length > 6 ? "${provider.properties[index].price.substring(0, 5)}.." : provider.properties[index].price}${'kwd'.tr()}",
-
+                                                                              text: " ${provider.properties[index].price.length > 6 ? "${provider.properties[index].price.substring(0, 5)}.." : provider.properties[index].price}${" "+'kwd'.tr()}",
                                                                               // text:
                                                                               //     "${provider.properties[index].price}KWD",
                                                                               color: Constant.blueColor,

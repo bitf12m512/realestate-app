@@ -77,6 +77,7 @@ readData(BuildContext context) async {
         AppUser appUser = new AppUser();
         appUser = AppUser.fromMap(dataSnapshot.value[keys[i]]);
         appUSers.add(appUser);
+        print(appUser.phoneNumber);
       }
       // appUSers=Li/st<AppUser>.from(dataSnapshot.value.toList());
       //
@@ -140,7 +141,8 @@ readData(BuildContext context) async {
           .setMyProductsIdies([]);
       List keys = event.snapshot.value.keys.toList();
       for (int i = 0; i < keys.length; i++) {
-        Property p = Property.fromMap(event.snapshot.value[keys[i]]);
+        Property p = new Property();
+       p= Property.fromMap(event.snapshot.value[keys[i]]);
         if (p.premiumTill == null) {
           p.premiumTill = p.timeStamp;
         }
@@ -154,17 +156,20 @@ readData(BuildContext context) async {
       }
       properties.sort((b, a) => a.premiumTill.compareTo(b.premiumTill));
       for (int i = 0; i < properties.length; i++) {
-        if (properties[i].creatorId ==
-            Provider.of<RoleIdentifier>(context, listen: false).appuser.id) {
-          Provider.of<RoleIdentifier>(context, listen: false)
-              .addToMyProprertyList(properties[i]);
-          Provider.of<RoleIdentifier>(context, listen: false)
-              .addToMyProductsIdies(properties[i].id);
-        }
-        Provider.of<RoleIdentifier>(context, listen: false)
-            .addTOProprertyList(properties[i]);
-        Provider.of<RoleIdentifier>(context, listen: false)
-            .addTOProprertyBackList(properties[i]);
+       if(properties[i].creatorId!=null){
+         if (properties[i].creatorId ==
+             Provider.of<RoleIdentifier>(context, listen: false).appuser.id) {
+           Provider.of<RoleIdentifier>(context, listen: false)
+               .addToMyProprertyList(properties[i]);
+           Provider.of<RoleIdentifier>(context, listen: false)
+               .addToMyProductsIdies(properties[i].id);
+         }
+         print(properties[i].creatorId);
+         Provider.of<RoleIdentifier>(context, listen: false)
+             .addTOProprertyList(properties[i]);
+         Provider.of<RoleIdentifier>(context, listen: false)
+             .addTOProprertyBackList(properties[i]);
+       }
       }
     } else {
       Provider.of<RoleIdentifier>(context, listen: false).setPropertyList([]);

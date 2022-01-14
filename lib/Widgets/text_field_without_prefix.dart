@@ -23,7 +23,12 @@ Widget TextFieldWithOutPrefix(
         }
       },
       textAlignVertical: TextAlignVertical.center,
-      maxLines: hinttext.toLowerCase() == "Description".toLowerCase() ||
+      maxLines:
+      // "Notes": "ملحوظات",
+      //
+      hinttext.toLowerCase() == "Notes".toLowerCase() ||
+      hinttext.toLowerCase() == "ملحوظات".toLowerCase() ||
+      hinttext.toLowerCase() == "Description".toLowerCase() ||
               hinttext.toLowerCase() == "Comment".toLowerCase()
           ? 8
           : 1,
@@ -32,7 +37,7 @@ Widget TextFieldWithOutPrefix(
         LengthLimitingTextInputFormatter(limit),
         // NoLeadingSpaceFormatter(),
       ],
-
+    textAlign: TextAlign.start,
       decoration: InputDecoration(
         prefixText: prefixText,
         prefixStyle:
@@ -44,8 +49,11 @@ Widget TextFieldWithOutPrefix(
             horizontal:
                 // hinttext.toLowerCase()=="Description".toLowerCase()?20:
                 10),
-        labelStyle: TextStyle(color: Constant.blueColor, fontSize: 14),
-        // hintText: hinttext,
+        labelStyle: TextStyle(
+            color: Constant.blueColor, fontSize: 14,
+        ),
+        hintText: hinttext,
+        alignLabelWithHint: true,
         labelText: hinttext,
         filled: true,
         isDense: true,
@@ -95,7 +103,7 @@ Widget TextFieldWithSubmission(
       }
     },
     onChanged: onsub,
-    textAlignVertical: TextAlignVertical.center,
+    textAlignVertical: TextAlignVertical.top,
     maxLines: hinttext.toLowerCase() == "Description".toLowerCase() ||
             hinttext.toLowerCase() == "Comment".toLowerCase()
         ? 8
@@ -117,7 +125,10 @@ Widget TextFieldWithSubmission(
               // hinttext.toLowerCase()=="Description".toLowerCase()?20:
               10),
       labelStyle: TextStyle(color: Constant.blueColor, fontSize: 14),
-      // hintText: hinttext,
+      hintText: hinttext,
+      alignLabelWithHint: true,
+      // hintStyle:TextStyle(color: Constant.blueColor, fontSize: 14,al),
+      // ,
       labelText: hinttext,
       filled: true,
       isDense: true,

@@ -988,6 +988,7 @@ okhttp3.Cache$CacheRequestImpl$1
 com.google.android.gms.tasks.CancellationToken
 androidx.vectordrawable.R$dimen
 androidx.annotation.RawRes
+io.flutter.plugins.urllauncher.R$layout
 androidx.fragment.R$dimen
 androidx.lifecycle.Lifecycling:
     static androidx.lifecycle.GenericLifecycleObserver getCallback(java.lang.Object)
@@ -3592,6 +3593,7 @@ androidx.fragment.app.FragmentTabHost
 com.google.android.gms.tasks.zze:
     public final void cancel()
 kotlin.jvm.internal.Ref$FloatRef
+io.flutter.plugins.urllauncher.R$id
 io.flutter.embedding.engine.renderer.FlutterRenderer:
     public android.graphics.Bitmap getBitmap()
     public void setAccessibilityFeatures(int)
@@ -3656,6 +3658,7 @@ com.yalantis.ucrop.view.CropImageView:
     public static final float SOURCE_IMAGE_ASPECT_RATIO
     public static final float DEFAULT_ASPECT_RATIO
 okhttp3.internal.cache.DiskLruCache$Editor
+io.flutter.plugins.urllauncher.R
 io.flutter.embedding.engine.FlutterEngineConnectionRegistry$FlutterEngineContentProviderPluginBinding:
     void <init>(android.content.ContentProvider)
     public android.content.ContentProvider getContentProvider()
@@ -4040,6 +4043,7 @@ kotlin.collections.AbstractMap
 com.google.android.gms.common.internal.HideFirstParty
 kotlin.time.DurationUnitKt__DurationUnitKt
 kotlin.collections.CollectionsKt__CollectionsKt
+io.flutter.plugins.urllauncher.R$style
 androidx.cursoradapter.R
 androidx.appcompat.widget.ActivityChooserModel$ActivitySorter
 androidx.core.provider.FontsContractCompat:
@@ -4812,6 +4816,7 @@ androidx.transition.Transition$EpicenterCallback:
 com.google.android.gms.internal.firebase-auth-api.zzfj:
     static void <clinit>()
     static final synthetic int[] zza
+io.flutter.plugins.urllauncher.R$styleable
 androidx.webkit.internal.WebMessagePortImpl
 kotlin.sequences.SequencesKt__SequencesKt
 androidx.appcompat.view.ActionMode:
@@ -5319,6 +5324,7 @@ kotlin.ReplaceWith
 com.google.firebase.database.core.RepoManager$4
 com.google.firebase.installations.R$string
 io.flutter.plugins.firebase.auth.R$color
+io.flutter.plugins.urllauncher.R$string
 kotlin.coroutines.experimental.migration.ContinuationMigration
 kotlin.io.ByteStreamsKt$iterator$1
 kotlin.coroutines.jvm.internal.RunSuspend
@@ -5535,6 +5541,8 @@ androidx.core.location.LocationManagerCompat$GpsStatusTransport$1
 kotlin.jvm.internal.LocalVariableReference
 com.google.firebase.functions.R$string
 androidx.core.app.NotificationCompat$DecoratedCustomViewStyle
+io.flutter.plugins.urllauncher.UrlLauncher:
+    private static final java.lang.String TAG
 kotlin.internal.AccessibleLateinitPropertyLiteral
 kotlin.jvm.internal.ShortSpreadBuilder
 com.google.android.gms.common.R$string:
@@ -5606,6 +5614,7 @@ androidx.core.view.ViewConfigurationCompat:
     private void <init>()
     private static final java.lang.String TAG
 kotlin.reflect.KType
+io.flutter.plugins.urllauncher.R$drawable
 androidx.transition.Slide$1
 com.google.android.gms.common.images.Size
 com.google.firebase.database.tubesock.MessageBuilderFactory$TextBuilder:
@@ -6377,6 +6386,7 @@ com.google.android.gms.common.util.CrashUtils:
     public void <init>()
 com.google.android.gms.common.util.ProcessUtils:
     private void <init>()
+io.flutter.plugins.urllauncher.R$color
 com.google.android.gms.common.internal.safeparcel.SafeParcelable$Field
 io.flutter.plugins.flutter_plugin_android_lifecycle.R
 androidx.core.location.LocationManagerCompat$PreRGnssStatusTransport$2
@@ -7543,6 +7553,8 @@ com.google.firebase.components.Preconditions:
 kotlin.jvm.JvmOverloads
 androidx.swiperefreshlayout.widget.CircleImageView
 kotlin.ranges.UIntRange
+io.flutter.plugins.urllauncher.MethodCallHandlerImpl:
+    private static final java.lang.String TAG
 com.google.android.gms.common.data.DataBufferObserver$Observable
 kotlin.ranges.ClosedRange$DefaultImpls
 com.google.android.datatransport.runtime.dagger.multibindings.IntKey
@@ -9910,6 +9922,7 @@ com.google.android.gms.common.server.response.zak
 com.google.android.gms.internal.safetynet.zzd
 androidx.appcompat.widget.VectorEnabledTintResources:
     public static final int MAX_SDK_WHERE_REQUIRED
+io.flutter.plugins.urllauncher.R$integer
 com.google.firebase.heartbeatinfo.HeartBeatConsumerComponent$1
 kotlin.jvm.internal.markers.KMutableSet
 androidx.core.app.NotificationChannelGroupCompat$Builder
@@ -10501,6 +10514,7 @@ androidx.core.location.GnssStatusCompat
 androidx.lifecycle.ComputableLiveData$3
 androidx.core.graphics.drawable.RoundedBitmapDrawable21
 com.google.android.gms.auth.api.phone.SmsRetrieverStatusCodes
+io.flutter.plugins.urllauncher.R$attr
 io.flutter.plugins.imagepicker.ImagePickerPlugin:
     public static void registerWith(io.flutter.plugin.common.PluginRegistry$Registrar)
     void <init>(io.flutter.plugins.imagepicker.ImagePickerDelegate,android.app.Activity)
@@ -12214,6 +12228,7 @@ androidx.versionedparcelable.VersionedParcel:
 androidx.transition.ChangeTransform$1
 com.example.realestate.R$layout
 kotlin.io.AccessDeniedException
+io.flutter.plugins.urllauncher.BuildConfig
 com.google.firebase.installations.R$id
 com.google.firebase.BuildConfig
 androidx.browser.R$styleable
@@ -12548,6 +12563,9 @@ kotlin.ranges.ClosedDoubleRange
 kotlin.sequences.USequencesKt___USequencesKt
 com.google.firebase.database.R$drawable
 org.apache.commons.io.input.MessageDigestCalculatingInputStream$MessageDigestMaintainingObserver
+io.flutter.plugins.urllauncher.UrlLauncherPlugin:
+    public static void registerWith(io.flutter.plugin.common.PluginRegistry$Registrar)
+    private static final java.lang.String TAG
 androidx.asynclayoutinflater.R$string
 com.google.android.gms.actions.ReserveIntents
 androidx.viewpager.widget.ViewPager$LayoutParams
@@ -14031,6 +14049,7 @@ com.google.firebase.database.tubesock.WebSocketReceiver:
     boolean isRunning()
 androidx.core.text.TextDirectionHeuristicsCompat$AnyStrong
 org.intellij.lang.annotations.JdkConstants$TreeSelectionMode
+io.flutter.plugins.urllauncher.R$dimen
 com.google.firebase.auth.internal.zzac:
     public final com.google.android.gms.tasks.Task enroll(com.google.firebase.auth.MultiFactorAssertion,java.lang.String)
     public final com.google.android.gms.tasks.Task getSession()
@@ -16205,9 +16224,9 @@ androidx.webkit.internal.WebViewProviderFactoryAdapter:
     public org.chromium.support_lib_boundary.StaticsBoundaryInterface getStatics()
     public org.chromium.support_lib_boundary.ServiceWorkerControllerBoundaryInterface getServiceWorkerController()
 io.flutter.plugins.firebase.database.R$drawable
-com.google.firebase.functions.-$$Lambda$FirebaseContextProvider$qxwpW2MXdQeNzRquYTOSrwCOtMQ:
-    public final void onAppCheckTokenChanged(com.google.firebase.appcheck.AppCheckTokenResult)
 com.google.firebase.database.android.-$$Lambda$AndroidAppCheckTokenProvider$60vFfzkhuN4dN7asQDMFpqCxmE0:
+    public final void onAppCheckTokenChanged(com.google.firebase.appcheck.AppCheckTokenResult)
+com.google.firebase.functions.-$$Lambda$FirebaseContextProvider$qxwpW2MXdQeNzRquYTOSrwCOtMQ:
     public final void onAppCheckTokenChanged(com.google.firebase.appcheck.AppCheckTokenResult)
 org.apache.commons.io.IOUtils:
     public static final char DIR_SEPARATOR
@@ -16900,6 +16919,8 @@ com.google.android.gms.internal.firebase-auth-api.zzzp:
     private final java.lang.Class zzad
 com.google.firebase.database.core.SparseSnapshotTree$2:
     final synthetic com.google.firebase.database.core.SparseSnapshotTree this$0
+io.flutter.plugins.urllauncher.WebViewActivity$2:
+    final synthetic io.flutter.plugins.urllauncher.WebViewActivity this$0
 io.flutter.plugins.webviewflutter.DisplayListenerProxy$1:
     final synthetic io.flutter.plugins.webviewflutter.DisplayListenerProxy this$0
 okhttp3.internal.http1.Http1Codec$UnknownLengthSource:

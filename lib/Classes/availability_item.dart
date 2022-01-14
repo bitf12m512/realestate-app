@@ -1,13 +1,14 @@
 import 'package:realestate/Classes/property.dart';
 
 class AvailabilityItem{
-  String timeStamp,availabilityItemID,name,phoneNumber,userID,moveInTimeStamp;
+  String timeStamp,availabilityItemID,notes,name,phoneNumber,userID,moveInTimeStamp;
   Property property=new Property();
 bool furnitureMovingService;
   AvailabilityItem(
       {this.timeStamp,
       this.availabilityItemID,
       this.name,
+      this.notes,
       this.phoneNumber,
       this.moveInTimeStamp,
       this.furnitureMovingService,
@@ -19,6 +20,7 @@ bool furnitureMovingService;
       timeStamp: map['timeStamp'] as String,
       availabilityItemID: map['availabilityItemID'] as String,
       name: map['name'] as String,
+      notes: map['notes'] as String,
       phoneNumber: map['phoneNumber'] as String,
       moveInTimeStamp: map['moveInTimeStamp'] as String,
       userID: map['userID'] as String,
@@ -33,6 +35,7 @@ bool furnitureMovingService;
       'timeStamp': this.timeStamp,
       'availabilityItemID': this.availabilityItemID,
       'name': this.name,
+      'notes': this.notes,
       'phoneNumber': this.phoneNumber,
       'moveInTimeStamp': this.moveInTimeStamp,
       'userID': this.userID,

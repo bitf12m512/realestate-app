@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import 'package:provider/provider.dart';
 import 'package:realestate/Classes/availability_item.dart';
 import 'package:realestate/Classes/custom_text.dart';
@@ -32,11 +33,13 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
   CarouselController _carouselController = new CarouselController();
   List images = ["Assets/homes@3x.png", "Assets/sampleb@3x.png"];
   TextEditingController phone = new TextEditingController();
+  TextEditingController notes = new TextEditingController();
   TextEditingController name = new TextEditingController();
   AvailabilityItem availabilityItem = new AvailabilityItem();
   String dateOfAvailability = null;
   GlobalKey<FormState> key = new GlobalKey<FormState>();
   bool furnitureMovingService = false;
+  String phoneN="";
 
   @override
   void initState() {
@@ -309,7 +312,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                                             padding: const EdgeInsets.all(6.0),
                                             child: CustomText(
                                               text:
-                                                  "${widget.property.price}${'kwd'.tr()}",
+                                                  "${widget.property.price}${" "+'kwd'.tr()}",
                                               color: Colors.white,
                                               fontWeight: FontWeight.w600,
                                               size: 22,
@@ -650,282 +653,12 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                             .contains(widget.property.id))
                           Container()
                         else
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            child: Stack(
-                              children: [
-                                Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.1),
-                                        spreadRadius: 2,
-                                        blurRadius: 5,
-                                        offset: Offset(
-                                            0, 3), // changes position of shadow
-                                      ),
-                                    ],
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: Colors.white,
-                                          border: Border.all(
-                                              color: Constant.blueColor)),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15),
-                                        child: Form(
-                                          key: key,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  CustomText(
-                                                    text: "Move-in-Date".tr(),
-                                                    size: 14,
-                                                    color: Colors.black
-                                                        .withOpacity(0.7),
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      dateItem(
-                                                          dateOfAvailability !=
-                                                                  null
-                                                              ? dateOfAvailability
-                                                                  .substring(
-                                                                      0, 2)
-                                                              : "00"),
-                                                      dateItem(
-                                                          dateOfAvailability !=
-                                                                  null
-                                                              ? dateOfAvailability
-                                                                  .substring(
-                                                                      3, 5)
-                                                              : "00"),
-                                                      dateItem(
-                                                          dateOfAvailability !=
-                                                                  null
-                                                              ? dateOfAvailability
-                                                                  .substring(
-                                                                      8, 10)
-                                                              : "00"),
-                                                    ],
-                                                  ),
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      FocusScopeNode
-                                                          currentFocus =
-                                                          FocusScope.of(
-                                                              context);
-
-                                                      if (!currentFocus
-                                                          .hasPrimaryFocus) {
-                                                        currentFocus.unfocus();
-                                                      }
-                                                      DatePicker.showDatePicker(
-                                                          context,
-                                                          showTitleActions:
-                                                              true,
-                                                          onChanged: (date) {},
-                                                          onConfirm: (date) {
-                                                        availabilityItem
-                                                                .moveInTimeStamp =
-                                                            date
-                                                                .toUtc()
-                                                                .millisecondsSinceEpoch
-                                                                .toString();
-                                                        var inputDate =
-                                                            DateTime.parse(date
-                                                                .toString());
-                                                        var format = DateFormat(
-                                                            'dd/MM/yyyy hh:mm a');
-                                                        // print();
-                                                        dateOfAvailability =
-                                                            format.format(date);
-                                                      }, locale: LocaleType.en);
-                                                    },
-                                                    child: SvgPicture.asset(
-                                                      "Assets/calender.svg",
-                                                      height: 25,
-                                                      color: Colors.black
-                                                          .withOpacity(0.6),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              TextFieldWithOutPrefix(
-                                                  context,
-                                                  "",
-                                                  "name".tr(),
-                                                  true,
-                                                  name,
-                                                  TextInputType.text,
-                                                  30),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              TextFieldWithOutPrefix(
-                                                  context,
-                                                  "",
-                                                  "phoneNumber".tr(),
-                                                  true,
-                                                  phone,
-                                                  TextInputType.phone,
-                                                  14),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    furnitureMovingService =
-                                                        !furnitureMovingService;
-                                                  });
-                                                },
-                                                child: Row(
-                                                  children: [
-                                                    Icon(
-                                                      furnitureMovingService ==
-                                                              true
-                                                          ? Icons
-                                                              .check_box_outlined
-                                                          : Icons
-                                                              .check_box_outline_blank,
-                                                      size: 24,
-                                                      color: Colors.black
-                                                          .withOpacity(0.6),
-                                                    ),
-                                                    CustomText(
-                                                      text:
-                                                          "Furniture moving service".tr(),
-                                                      size: 14,
-                                                      color: Colors.black
-                                                          .withOpacity(0.7),
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              sendButton(context,() async {
-                                                if (dateOfAvailability !=
-                                                    null) {
-                                                  if (key.currentState
-                                                      .validate()) {
-                                                    try{
-                                                      availabilityItem.name =
-                                                          name.text.trim();
-                                                      availabilityItem.timeStamp=DateTime.now().toUtc().millisecondsSinceEpoch.toString();
-                                                      availabilityItem
-                                                          .phoneNumber =
-                                                          phone.text.trim();
-                                                      availabilityItem
-                                                          .furnitureMovingService =
-                                                          furnitureMovingService;
-                                                      String id = FirebaseDatabase
-                                                          .instance
-                                                          .reference()
-                                                          .child(
-                                                          "AvailabilityRequests")
-                                                          .push()
-                                                          .key;
-                                                      availabilityItem
-                                                          .availabilityItemID = id;
-                                                      availabilityItem.userID =
-                                                          provider.appuser.id;
-                                                      await FirebaseDatabase
-                                                          .instance
-                                                          .reference()
-                                                          .child(
-                                                          "AvailabilityRequests")
-                                                          .child(id)
-                                                          .set(availabilityItem
-                                                          .toMap());
-                                                      availabilityItem=new AvailabilityItem();
-                                                      availabilityItem.property=widget.property;
-                                                      dateOfAvailability=null;
-                                                      name.clear();
-                                                      phone.clear();
-                                                      setState(() {
-                                                      });
-                                                      Toast.show(
-                                                          "Your availability Request has been submitted.".tr(),
-                                                          context,
-                                                          duration: 4,
-                                                          gravity: Toast.TOP);
-                                                    }
-                                                    catch(e){
-                                                      Toast.show(
-                                                          "errorOccurred".tr(),
-                                                          context,
-                                                          duration: 4,
-                                                          gravity: Toast.TOP);
-                                                    }
-                                                  }
-                                                } else {
-                                                  Toast.show(
-                                                      "Please Select a Move-in-Date".tr(),
-                                                      context,
-                                                      duration: 4,
-                                                      gravity: Toast.TOP);
-                                                }
-                                              })
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 30.0),
-                                  child: Container(
-                                    height: 25,
-                                    width: 130,
-                                    color: Colors.white,
-                                    child: Center(
-                                      child: CustomText(
-                                        text: "Check Availability".tr(),
-                                        color:
-                                            Constant.darkblue.withOpacity(0.8),
-                                        size: 12,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
+                          widget.property.mainType.toLowerCase()=="recreational"||
+                          widget.property.mainType.toLowerCase()=="chalets"?
+                          ContactWidget():   avaiabilityWidget(),
                         SizedBox(
                           height: 15,
                         ),
-
                         // SizedBox(
                         //   height: 200,
                         // ),
@@ -1002,11 +735,475 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
   void setDataL() {
     var provider=Provider.of<RoleIdentifier>(context,listen: false);
     availabilityItem.property = widget.property;
+    print(widget.property.creatorId);
+    print("this is the creator id");
+    for(int i=0;i<provider.allUsers.length;i++){
+      print(provider.allUsers[i].toMap());
+      if(provider.allUsers[i].id==widget.property.creatorId){
+        print(provider.allUsers[i].phoneNumber);
+        phoneN=provider.allUsers[i].phoneNumber;
+        break;
+      }
+    }
     if(provider.appuser.lastName!=null){
       name.text="${provider.appuser.firstName} ${provider.appuser.lastName}";
     }  if(provider.appuser.phoneNumber!=null){
       phone.text=provider.appuser.phoneNumber;
     }
     setState(() {});
+  }
+
+  avaiabilityWidget() {
+   var provider=Provider.of<RoleIdentifier>(context,listen: false);
+    return
+      Container(
+      width: MediaQuery.of(context).size.width,
+      child: Stack(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: Offset(
+                      0, 3), // changes position of shadow
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    borderRadius:
+                    BorderRadius.circular(10),
+                    color: Colors.white,
+                    border: Border.all(
+                        color: Constant.blueColor)),
+                child: Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Form(
+                    key: key,
+                    child: Column(
+                      crossAxisAlignment:
+                      CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment
+                              .spaceBetween,
+                          children: [
+                            CustomText(
+                              text: "Move-in-Date".tr(),
+                              size: 14,
+                              color: Colors.black
+                                  .withOpacity(0.7),
+                              fontWeight: FontWeight.w400,
+                            ),
+                            Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment
+                                  .center,
+                              children: [
+                                dateItem(
+                                    dateOfAvailability !=
+                                        null
+                                        ? dateOfAvailability
+                                        .substring(
+                                        0, 2)
+                                        : "00"),
+                                dateItem(
+                                    dateOfAvailability !=
+                                        null
+                                        ? dateOfAvailability
+                                        .substring(
+                                        3, 5)
+                                        : "00"),
+                                dateItem(
+                                    dateOfAvailability !=
+                                        null
+                                        ? dateOfAvailability
+                                        .substring(
+                                        8, 10)
+                                        : "00"),
+                              ],
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                FocusScopeNode
+                                currentFocus =
+                                FocusScope.of(
+                                    context);
+
+                                if (!currentFocus
+                                    .hasPrimaryFocus) {
+                                  currentFocus.unfocus();
+                                }
+                                DatePicker.showDatePicker(
+                                    context,
+                                    showTitleActions:
+                                    true,
+                                    onChanged: (date) {},
+                                    onConfirm: (date) {
+                                      availabilityItem
+                                          .moveInTimeStamp =
+                                          date
+                                              .toUtc()
+                                              .millisecondsSinceEpoch
+                                              .toString();
+                                      var inputDate =
+                                      DateTime.parse(date
+                                          .toString());
+                                      var format = DateFormat(
+                                          'dd/MM/yyyy hh:mm a');
+                                      // print();
+                                      dateOfAvailability =
+                                          format.format(date);
+                                    }, locale: LocaleType.en);
+                              },
+                              child: SvgPicture.asset(
+                                "Assets/calender.svg",
+                                height: 25,
+                                color: Colors.black
+                                    .withOpacity(0.6),
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        TextFieldWithOutPrefix(
+                            context,
+                            "",
+                            "name".tr(),
+                            true,
+                            name,
+                            TextInputType.text,
+                            30),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        TextFieldWithOutPrefix(
+                            context,
+                            "",
+                            "phoneNumber".tr(),
+                            true,
+                            phone,
+                            TextInputType.phone,
+                            14),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        TextFieldWithOutPrefix(
+                            context,
+                            "",
+                            "Notes".tr(),
+                            true,
+                            notes,
+                            TextInputType.text,
+                            10000),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              furnitureMovingService =
+                              !furnitureMovingService;
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                furnitureMovingService ==
+                                    true
+                                    ? Icons
+                                    .check_box_outlined
+                                    : Icons
+                                    .check_box_outline_blank,
+                                size: 24,
+                                color: Colors.black
+                                    .withOpacity(0.6),
+                              ),
+                              CustomText(
+                                text:
+                                "Furniture moving service".tr(),
+                                size: 14,
+                                color: Colors.black
+                                    .withOpacity(0.7),
+                                fontWeight:
+                                FontWeight.w400,
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        sendButton(context,() async {
+                          if (dateOfAvailability !=
+                              null) {
+                            if (key.currentState
+                                .validate()) {
+                              try{
+                                availabilityItem.name =
+                                    name.text.trim();
+                                availabilityItem.timeStamp=DateTime.now().toUtc().millisecondsSinceEpoch.toString();
+                                availabilityItem
+                                    .phoneNumber =
+                                    phone.text.trim();
+                                availabilityItem
+                                    .furnitureMovingService =
+                                    furnitureMovingService;
+                                String id = FirebaseDatabase
+                                    .instance
+                                    .reference()
+                                    .child(
+                                    "AvailabilityRequests")
+                                    .push()
+                                    .key;
+                                availabilityItem
+                                    .availabilityItemID = id;
+                                availabilityItem.userID =
+                                    provider.appuser.id;
+                                availabilityItem.notes=notes.text;
+                                await FirebaseDatabase
+                                    .instance
+                                    .reference()
+                                    .child(
+                                    "AvailabilityRequests")
+                                    .child(id)
+                                    .set(availabilityItem
+                                    .toMap());
+                                availabilityItem=new AvailabilityItem();
+                                availabilityItem.property=widget.property;
+                                dateOfAvailability=null;
+                                name.clear();
+                                phone.clear();
+                                notes.clear();
+                                setState(() {
+                                });
+                                Toast.show(
+                                    "Your availability Request has been submitted.".tr(),
+                                    context,
+                                    duration: 4,
+                                    gravity: Toast.TOP);
+                              }
+                              catch(e){
+                                Toast.show(
+                                    "errorOccurred".tr(),
+                                    context,
+                                    duration: 4,
+                                    gravity: Toast.TOP);
+                              }
+                            }
+                          } else {
+                            Toast.show(
+                                "Please Select a Move-in-Date".tr(),
+                                context,
+                                duration: 4,
+                                gravity: Toast.TOP);
+                          }
+                        })
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 30.0),
+            child: Container(
+              height: 25,
+              width: 130,
+              color: Colors.white,
+              child: Center(
+                child: CustomText(
+                  text: "Check Availability".tr(),
+                  color:
+                  Constant.darkblue.withOpacity(0.8),
+                  size: 12,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+
+  }
+
+  ContactWidget() {
+
+    var provider=Provider.of<RoleIdentifier>(context,listen: false);
+
+
+    return
+      Container(
+        width: MediaQuery.of(context).size.width,
+        child: Stack(
+          children: [
+            InkWell(
+              onTap: (){
+                UrlLauncher.launch('tel:+$phoneN}');
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(
+                          0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                        borderRadius:
+                        BorderRadius.circular(10),
+                        color: Colors.white,
+                        border: Border.all(
+                            color: Constant.blueColor)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Form(
+                        key: key,
+                        child: Column(
+                          crossAxisAlignment:
+                          CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.call,
+                                  size: 20,
+                                  color: Constant.blueColor
+                                      .withOpacity(0.8),
+                                ),
+                                CustomText(
+                                  text:"  "+
+                                phoneN??"N/A"+"  ",
+                                  size: 12,
+                                  color: Colors.black
+                                      .withOpacity(0.7),
+                                  fontWeight: FontWeight.w500,
+                                )
+                              ],
+                            )
+                            // sendButton(context,() async {
+                            //   if (dateOfAvailability !=
+                            //       null) {
+                            //     if (key.currentState
+                            //         .validate()) {
+                            //       try{
+                            //         availabilityItem.name =
+                            //             name.text.trim();
+                            //         availabilityItem.timeStamp=DateTime.now().toUtc().millisecondsSinceEpoch.toString();
+                            //         availabilityItem
+                            //             .phoneNumber =
+                            //             phone.text.trim();
+                            //         availabilityItem
+                            //             .furnitureMovingService =
+                            //             furnitureMovingService;
+                            //         String id = FirebaseDatabase
+                            //             .instance
+                            //             .reference()
+                            //             .child(
+                            //             "AvailabilityRequests")
+                            //             .push()
+                            //             .key;
+                            //         availabilityItem
+                            //             .availabilityItemID = id;
+                            //         availabilityItem.userID =
+                            //             provider.appuser.id;
+                            //         await FirebaseDatabase
+                            //             .instance
+                            //             .reference()
+                            //             .child(
+                            //             "AvailabilityRequests")
+                            //             .child(id)
+                            //             .set(availabilityItem
+                            //             .toMap());
+                            //         availabilityItem=new AvailabilityItem();
+                            //         availabilityItem.property=widget.property;
+                            //         dateOfAvailability=null;
+                            //         name.clear();
+                            //         phone.clear();
+                            //         notes.clear();
+                            //         setState(() {
+                            //         });
+                            //         Toast.show(
+                            //             "Your availability Request has been submitted.".tr(),
+                            //             context,
+                            //             duration: 4,
+                            //             gravity: Toast.TOP);
+                            //       }
+                            //       catch(e){
+                            //         Toast.show(
+                            //             "errorOccurred".tr(),
+                            //             context,
+                            //             duration: 4,
+                            //             gravity: Toast.TOP);
+                            //       }
+                            //     }
+                            //   } else {
+                            //     Toast.show(
+                            //         "Please Select a Move-in-Date".tr(),
+                            //         context,
+                            //         duration: 4,
+                            //         gravity: Toast.TOP);
+                            //   }
+                            // }
+                            // )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 30.0),
+              child: Container(
+                height: 25,
+                width: 80,
+                color: Colors.white,
+                child: Center(
+                  child: CustomText(
+                    text: "Contact".tr(),
+                    color:
+                    Constant.darkblue.withOpacity(0.8),
+                    size: 12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      );
   }
 }

@@ -146,6 +146,11 @@
   "errorOccurred": "حدث خطأ. حاول مرة أخرى في وقت لاحق.",
   "availableFor": "متاح لى",
   "positionOd": "موقف الملكية:",
+  "Notes": "ملحوظات",
+  "Contact": "اتصل",
+
+  "From area can't be greater than to area": "من منطقة لا يمكن أن تكون أكبر من منطقة",
+  "From price can't be greater than to price": "من السعر لا يمكن أن يكون أكبر من السعر",
   "Check Availability": "التحقق من الصلاحية",
   "Move-in-Date": "الانتقال في التاريخ",
   "An account already exist on this number. Try Login :)": "حساب موجود بالفعل على هذا الرقم. حاول تسجيل الدخول :)",

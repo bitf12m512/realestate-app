@@ -185,6 +185,7 @@ Referenced Strings:
   ACTION_SHOW_ON_SCREEN
   ACTION_SHOW_TOOLTIP
   ACTION_UNKNOWN
+  ACTIVITY_NOT_FOUND
   ACTVAutoSizeHelper
   ADD
   ADDING
@@ -984,6 +985,7 @@ Referenced Strings:
   NONE
   NOT_FOUND
   NOT_GENERATED
+  NO_ACTIVITY
   NO_CURRENT_USER
   NO_ERROR
   NO_SUCH_PROVIDER
@@ -1577,6 +1579,8 @@ Referenced Strings:
   UnwrappedWakefulBroadcastReceiver
   Upgrade
   Uploader
+  UrlLauncher
+  UrlLauncherPlugin
   User
   UserComment
   V1
@@ -2054,6 +2058,7 @@ Referenced Strings:
   canGoBack
   canGoForward
   canHandleCodeInApp
+  canLaunch
   cancel
   category
   cause
@@ -2094,6 +2099,7 @@ Referenced Strings:
   clipboard
   cliv
   close
+  closeWebView
   closed
   cn.google
   code
@@ -2103,6 +2109,7 @@ Referenced Strings:
   collapse_key
   color
   com.android.browser.application_id
+  com.android.browser.headers
   com.android.externalstorage.documents
   com.android.internal.view.menu.MenuBu...
   com.android.org.conscrypt.SSLParamete...
@@ -2419,7 +2426,9 @@ Referenced Strings:
   emulator
   emulator/auth/handler
   en
+  enableDomStorage
   enableIMEPersonalizedLearning
+  enableJavaScript
   enableSuggestions
   enable_state_restoration
   enabled
@@ -3140,6 +3149,7 @@ Referenced Strings:
   plugins.flutter.io/firebase_messaging...
   plugins.flutter.io/image_picker
   plugins.flutter.io/shared_preferences
+  plugins.flutter.io/url_launcher
   plugins.flutter.io/webview
   plugins.flutter.io/webview_
   plugins.hunghd.vn/image_cropper
@@ -3596,6 +3606,7 @@ Referenced Strings:
   upgrade
   uptime_ms
   url
+  useWebView
   useWideViewPort
   user
   userAgent
@@ -4320,6 +4331,7 @@ Marking id:submenuarrow:2131230905 used because its prefix matches string pool c
 Marking id:submit_area:2131230906 used because its prefix matches string pool constant sub
 Marking attr:keylines:2130903198 used because its prefix matches string pool constant key
 Marking drawable:launch_background:2131165292 used because its prefix matches string pool constant launch
+Marking mipmap:launcher_icon:2131558401 used because its prefix matches string pool constant launch
 Marking attr:queryBackground:2130903247 used because its prefix matches string pool constant query
 Marking attr:queryHint:2130903248 used because its prefix matches string pool constant query
 Marking id:tag_accessibility_actions:2131230908 used because its prefix matches string pool constant tag
@@ -5426,7 +5438,7 @@ anim:fragment_fast_out_extra_slow_in:2130771992,
    layout:ucrop_controls:2131427371,
    layout:ucrop_view:2131427375,
    menu:ucrop_menu_activity:2131492864,
-   mipmap:ic_launcher:2131558400,
+   mipmap:launcher_icon:2131558401,
    string:abc_action_bar_up_description:2131623937,
    string:abc_menu_alt_shortcut_label:2131623944,
    string:abc_menu_ctrl_shortcut_label:2131623945,
@@ -5680,3 +5692,8 @@ Skipped unused resource res/layout/abc_activity_chooser_view_list_item.xml: 1304
 Skipped unused resource res/layout/browser_actions_context_menu_page.xml: 1660 bytes (replaced with small dummy file of size 104 bytes)
 Skipped unused resource res/layout/browser_actions_context_menu_row.xml: 1164 bytes (replaced with small dummy file of size 104 bytes)
 Skipped unused resource res/layout/ucrop_fragment_photobox.xml: 1368 bytes (replaced with small dummy file of size 104 bytes)
+Skipped unused resource res/mipmap-mdpi-v4/ic_launcher.png: 405 bytes (replaced with small dummy file of size 67 bytes)
+Skipped unused resource res/mipmap-hdpi-v4/ic_launcher.png: 507 bytes (replaced with small dummy file of size 67 bytes)
+Skipped unused resource res/mipmap-xhdpi-v4/ic_launcher.png: 684 bytes (replaced with small dummy file of size 67 bytes)
+Skipped unused resource res/mipmap-xxhdpi-v4/ic_launcher.png: 994 bytes (replaced with small dummy file of size 67 bytes)
+Skipped unused resource res/mipmap-xxxhdpi-v4/ic_launcher.png: 1406 bytes (replaced with small dummy file of size 67 bytes)

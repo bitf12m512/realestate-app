@@ -59,7 +59,8 @@ class _HomePageState extends State<HomePage> {
     "Assets/house.svg",
     "Assets/buy.svg",
     "Assets/exchange.svg",
-    "Assets/all.svg"
+    "Assets/all.svg",
+    "Assets/Farm.svg"
   ];
 
   int selectedView = 0;
@@ -308,14 +309,19 @@ class _HomePageState extends State<HomePage> {
                         // ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              typeItem(context, "all", avaiableIcons[3]),
-                              typeItem(context, "rent", avaiableIcons[0]),
-                              typeItem(context, "buy", avaiableIcons[1]),
-                              typeItem(context, "exchange", avaiableIcons[2]),
-                            ],
+                          child: Container(
+                            height: 30,
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                typeItem(context, "all", avaiableIcons[3]),
+                                typeItem(context, "rent", avaiableIcons[0]),
+                                typeItem(context, "buy", avaiableIcons[1]),
+                                typeItem(context, "exchange", avaiableIcons[2],),
+                                typeItem(context, "Recreational", avaiableIcons[4],)
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -422,21 +428,32 @@ class _HomePageState extends State<HomePage> {
       onTap: () {
         var provider = Provider.of<RoleIdentifier>(context, listen: false);
         provider.setPropertyList([]);
-        if (title == "All".toLowerCase()) {
+        if (title.toLowerCase() == "All".toLowerCase()) {
           for (int i = 0; i < provider.getPropertyBackList.length; i++) {
             // if (provider.getPropertyBackList[i].availableFor.toLowerCase() ==
             //     title.toLowerCase()) {
             provider.addTOProprertyList(provider.getPropertyBackList[i]);
             // }
           }
-        } else if (title == "buy".toLowerCase()) {
+        } else if (title.toLowerCase() == "buy".toLowerCase()) {
           for (int i = 0; i < provider.getPropertyBackList.length; i++) {
             if (provider.getPropertyBackList[i].availableFor.toLowerCase() ==
                 "sale") {
               provider.addTOProprertyList(provider.getPropertyBackList[i]);
             }
           }
-        } else {
+        }
+        else if(title.toLowerCase() == "recreational".toLowerCase()) {
+          for (int i = 0; i < provider.getPropertyBackList.length; i++) {
+            if (
+            provider.getPropertyBackList[i].mainType.toLowerCase()=="recreational"||
+            provider.getPropertyBackList[i].mainType.toLowerCase()=="chalets"||
+            provider.getPropertyBackList[i].mainType.toLowerCase()=="farms"
+            ) {
+              provider.addTOProprertyList(provider.getPropertyBackList[i]);
+            }
+          }
+        }else {
           for (int i = 0; i < provider.getPropertyBackList.length; i++) {
             if (provider.getPropertyBackList[i].availableFor.toLowerCase() ==
                 title.toLowerCase()) {
@@ -449,33 +466,36 @@ class _HomePageState extends State<HomePage> {
           selectedCategory = title;
         });
       },
-      child: Container(
-        // height: 25,
-        width: MediaQuery.of(context).size.width / 4.5,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(1000),
-            color: selectedCategory == title
-                ? Constant.darkblue
-                : Constant.blueColor),
-        child: Padding(
-          padding: const EdgeInsets.all(7.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                icon,
-                height: 16,
-                color: Colors.white,
-              ),
-              SizedBox(
-                width: 1,
-              ),
-              CustomText(
-                text: title.tr(),
-                color: Colors.white,
-                size: 10,
-              ),
-            ],
+      child: Padding(
+        padding: const EdgeInsets.only(right: 10.0),
+        child: Container(
+          // height: 25,
+          // width: MediaQuery.of(context).size.width / 4.5,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(1000),
+              color: selectedCategory == title
+                  ? Constant.darkblue
+                  : Constant.blueColor),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal:20.0,vertical: 7),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  icon,
+                  height: 16,
+                  color: Colors.white,
+                ),
+                SizedBox(
+                  width: 1,
+                ),
+                CustomText(
+                  text: title.tr(),
+                  color: Colors.white,
+                  size: 10,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -588,7 +608,8 @@ class _HomePageState extends State<HomePage> {
                           }
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => PropertyDetailPage(
-                                  provider.properties[index], false)));
+                                  provider.properties[index], false))
+                          );
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width,
@@ -781,7 +802,7 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                   CustomText(
                                                     text:
-                                                        "${provider.properties[index].price.length > 5 ? "${provider.properties[index].price.substring(0, 5)}..." : provider.properties[index].price}${"kwd".tr()}",
+                                                        " ${provider.properties[index].price.length > 5 ? "${provider.properties[index].price.substring(0, 5)}..." : provider.properties[index].price}${" "+"kwd".tr()}",
                                                     color: Constant.blueColor,
                                                     size: 17,
                                                     fontWeight: FontWeight.w500,
@@ -1169,7 +1190,7 @@ class _HomePageState extends State<HomePage> {
                                               ),
                                               CustomText(
                                                 text:
-                                                    "${provider.properties[index].price.length > 5 ? "${provider.properties[index].price.substring(0, 5)}..." : provider.properties[index].price}${'kwd'.tr()}",
+                                                    " ${provider.properties[index].price.length > 5 ? "${provider.properties[index].price.substring(0, 5)}..." : provider.properties[index].price}${" "+'kwd'.tr()}",
                                                 color: Constant.blueColor,
                                                 size: 9,
                                                 fontWeight: FontWeight.w500,
@@ -1311,134 +1332,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // Future<void> setFilter(Filter filter) async {
-  //   print(filter.priceStart);
-  //   print(filter.priceEnd);
-  //   print(filter.mainCategory.toLowerCase());
-  //   print(filter.availableFor.toLowerCase());
-  //   var provider = Provider.of<RoleIdentifier>(context, listen: false);
-  //   provider.setPropertyList([]);
-  //   for (int i = 0; i < provider.getPropertyBackList.length; i++) {
-  //     bool match = false;
-  //     if (provider.getPropertyBackList[i].availableFor.toLowerCase() ==
-  //             filter.availableFor.toLowerCase() ||
-  //         filter.availableFor.toLowerCase() == "all") {
-  //       if (provider.getPropertyBackList[i].mainType.toLowerCase() ==
-  //           filter.mainCategory.toLowerCase()) {
-  //         match = subfilter(filter, i, true);
-  //       } else if (filter.mainCategory.toLowerCase() == "all") {
-  //         match = subfilter(filter, i, true);
-  //       }
-  //     }
-  //     if (match == true) {
-  //       provider.addTOProprertyList(provider.getPropertyBackList[i]);
-  //     }
-  //   }
-  //   setState(() {
-  //     // if(provider.)
-  //     scrollController.animateTo(60,
-  //         duration: Duration(seconds: 2), curve: Curves.fastOutSlowIn);
-  //     // .
-  //   });
-  // }
-  //
-  // bool subfilter(Filter filter, int i, bool maching) {
-  //   var provider = Provider.of<RoleIdentifier>(context, listen: false);
-  //   bool match = maching;
-  //
-  //   if (filter.governorate != "") {
-  //     if (provider.getPropertyBackList[i].governorate == filter.governorate ||
-  //         filter.governorate == "All") {
-  //       match = true;
-  //     }
-  //   }
-  // if(filter.position!=""){
-  //   if(filter.position.toLowerCase()==provider.getPropertyBackList[i].position.toLowerCase()){
-  //     match=true;
-  //   }
-  // }
-  //   if (filter.governorate != "All" && filter.governorate != "") {
-  //     if (filter.district != "") {
-  //       if (provider.getPropertyBackList[i].district == filter.district ||
-  //           filter.district == "All") {
-  //         match = true;
-  //       }
-  //     }
-  //   }
-  //   if (filter.priceEnd != "") {
-  //     if (double.parse(provider.getPropertyBackList[i].price) <
-  //             double.parse(filter.priceEnd) &&
-  //         double.parse(provider.getPropertyBackList[i].price) >
-  //             double.parse(filter.priceStart)) {
-  //       match = true;
-  //     }
-  //   }
-  //   if (filter.areaEnd != "") {
-  //     if (double.parse(provider.getPropertyBackList[i].area) <
-  //             double.parse(filter.priceEnd) &&
-  //         double.parse(provider.getPropertyBackList[i].area) >
-  //             double.parse(filter.priceStart)) {
-  //       match = true;
-  //     }
-  //   }
-  //   if (filter.bedrooms != 0) {
-  //     if (filter.bedrooms == provider.getPropertyBackList[i].bedRooms) {
-  //       match = true;
-  //     } else {
-  //       match = false;
-  //     }
-  //   }
-  //   if (filter.masterRooms != 0) {
-  //     if (filter.masterRooms == provider.getPropertyBackList[i].masterBed) {
-  //       match = true;
-  //     } else {
-  //       match = false;
-  //     }
-  //   }
-  //   if (filter.bathRooms != 0) {
-  //     if (filter.bathRooms == provider.getPropertyBackList[i].bathRooms) {
-  //       match = true;
-  //     } else {
-  //       match = false;
-  //     }
-  //   }
-  //   if (filter.parkingSpots != 0) {
-  //     if (filter.parkingSpots == provider.getPropertyBackList[i].parkingSpots) {
-  //       match = true;
-  //     } else {
-  //       match = false;
-  //     }
-  //   }
-  //   if (filter.maidRoom == true) {
-  //     if (filter.maidRoom == provider.getPropertyBackList[i].maiRoom) {
-  //       match = true;
-  //     } else {
-  //       match = false;
-  //     }
-  //   }
-  //   if (filter.swimmingPool == true) {
-  //     if (filter.swimmingPool == provider.getPropertyBackList[i].swimmingPool) {
-  //       match = true;
-  //     } else {
-  //       match = false;
-  //     }
-  //   }
-  //   if (filter.centralAC == true) {
-  //     if (filter.centralAC == provider.getPropertyBackList[i].centralAc) {
-  //       match = true;
-  //     } else {
-  //       match = false;
-  //     }
-  //   }
-  //   if (filter.elevator == true) {
-  //     if (filter.elevator == provider.getPropertyBackList[i].elevator) {
-  //       match = true;
-  //     } else {
-  //       match = false;
-  //     }
-  //   }
-  //   return match;
-  // }
 
   readDataHere() {
     FirebaseDatabase.instance

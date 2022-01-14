@@ -303,11 +303,11 @@ class _MyAddsPageState extends State<MyAddsPage> {
                                                                   children: [
                                                                     Image.asset(
                                                                       "Assets/priceTag.png",
-                                                                      height: 16,
+                                                                      height: 14,
                                                                     ),
                                                                     CustomText(
                                                                       text:
-                                                                          "${provider.getMyPropertyList[index].price.length > 6 ? "${provider.getMyPropertyList[index].price.substring(0, 5)}.." : provider.getMyPropertyList[index].price}KWD",
+                                                                          " ${provider.getMyPropertyList[index].price.length > 6 ? "${provider.getMyPropertyList[index].price.substring(0, 5)}.." : provider.getMyPropertyList[index].price}${" "+'kwd'.tr()}",
                                                                       color: Constant
                                                                           .blueColor,
                                                                       size: 10,

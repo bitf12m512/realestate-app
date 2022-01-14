@@ -8,6 +8,7 @@ import 'package:realestate/Widgets/dop_down_movie.dart';
 import 'package:realestate/Widgets/drop_down_button.dart';
 import 'package:realestate/Widgets/filter_main_type.dart';
 import 'package:realestate/Widgets/send_button.dart';
+import 'package:toast/toast.dart';
 
 import '../../Classes/custom_text.dart';
 import '../../Constants/constants.dart';
@@ -41,10 +42,10 @@ class _FilterPageState extends State<FilterPage> {
   String positionval = "";
   List<int> propertyPropertiesQuantity = [0, 0, 0, 0];
   List headings = ["bedrooms".tr(), "materBedRoom".tr(), "bathrooms".tr(), "parkingSpots".tr()];
-  TextEditingController fromPrice = new TextEditingController();
-  TextEditingController fromArea = new TextEditingController();
-  TextEditingController toArea = new TextEditingController();
-  TextEditingController toPrice = new TextEditingController();
+  TextEditingController fromPrice = new TextEditingController(text: "0");
+  TextEditingController fromArea = new TextEditingController(text: "0");
+  TextEditingController toArea = new TextEditingController(text: "0");
+  TextEditingController toPrice = new TextEditingController(text: "0");
   List<DropdownMenuItem<String>> _popupItemSubCategories1 = [];
   List<DropdownMenuItem<String>> categories = [];
   List<DropdownMenuItem<String>> positions = [];
@@ -340,7 +341,9 @@ class _FilterPageState extends State<FilterPage> {
                               "${_currentRangeValues.end.round().toString()}${'kwd'.tr()}",
                             ),
                             onChanged: (RangeValues values) {
-                              setState(() {
+                              setState(
+                                      ()
+                              {
                                 fromPrice.text = values.start.toString();
                                 toPrice.text = values.end.toString();
                                 _currentRangeValues = values;
@@ -357,15 +360,33 @@ class _FilterPageState extends State<FilterPage> {
                                       context,
                                       "",
                                       "from".tr(),
-                                      false,
+                                      true,
                                       fromPrice,
                                       TextInputType.number,
                                       10, (val) {
                                 setState(() {
-                                  _currentRangeValues = RangeValues(
-                                    double.parse(val),
-                                    _currentRangeValues.end,
-                                  );
+                                  if(toPrice.text==""){
+                                    toPrice.text="0";
+                                  }
+                                  if(val!=''){
+                                    if(double.parse(val)>=double.parse(toPrice.text)){
+                                      if(double.parse(toPrice.text)>0){
+                                        fromPrice.text=
+                                            (double.parse(toPrice.text)-1).toString();
+                                      }else{
+                                        fromPrice.text="0";
+                                      }
+                                      Toast.show(
+                                          "From price can't be greater than to price".tr(),
+                                          context,
+                                          duration: 4,
+                                          gravity: Toast.TOP);
+                                      // _currentRangeValues = RangeValues(
+                                      //   double.parse(toPrice.text),
+                                      //   _currentRangeValues.end,
+                                      // );
+                                    }
+                                  }
                                 });
                               })),
                               Padding(
@@ -381,11 +402,43 @@ class _FilterPageState extends State<FilterPage> {
                                       toPrice,
                                       TextInputType.number,
                                       10, (val) {
-                                _currentRangeValues = RangeValues(
-                                  _currentRangeValues.start,
-                                  double.parse(val),
-                                );
-                              })),
+                                        if(val==""){
+                                          fromPrice.text="0";
+                                        }
+                                        if(fromPrice.text==""){
+                                          fromPrice.text="0";
+                                        }
+                                    if(val!=''){
+                                      if(double.parse(val)<=200000){
+                                        // _currentRangeValues = RangeValues(
+                                        //   _currentRangeValues.start,
+                                        //   double.parse(val),
+                                        // );
+                                        if(double.parse(val)<=double.parse(fromPrice.text)){
+                                          if(double.parse(val)>0){
+                                            fromPrice.text=
+                                                (double.parse(val)-1).toString();
+                                          }else{
+                                            fromPrice.text="0";
+                                          }
+                                          // _currentRangeValues = RangeValues(
+                                          //   double.parse(toPrice.text),
+                                          //   _currentRangeValues.end,
+                                          // );
+                                        }
+                                      }
+                                      else{
+                                        toPrice.text="200000";
+                                        // _currentRangeValues = RangeValues(
+                                        //   _currentRangeValues.start,
+                                        //   200000,
+                                        // );
+                                      }
+                                    }
+                                    setState((){
+                                    });
+                              }
+                              )),
                             ],
                           ),
                           SizedBox(
@@ -408,16 +461,40 @@ class _FilterPageState extends State<FilterPage> {
                                       context,
                                       "",
                                       "from".tr(),
-                                      false,
+                                      true,
                                       fromArea,
                                       TextInputType.number,
                                       10, (val) {
-                                setState(() {
-                                  _currentAreaValues = RangeValues(
-                                    double.parse(val),
-                                    _currentAreaValues.end,
-                                  );
-                                });
+                                    setState(() {
+                                      if(toArea.text==""){
+                                        toArea.text="0";
+                                      }
+                                      if(val!=''){
+                                        if(double.parse(val)>=double.parse(toArea.text)){
+                                          if(double.parse(toArea.text)>0){
+                                            fromArea.text=
+                                                (double.parse(toArea.text)-1).toString();
+                                          }else{
+                                            fromArea.text="0";
+                                          }
+                                          Toast.show(
+                                              "From area can't be greater than to area".tr(),
+                                              context,
+                                              duration: 4,
+                                              gravity: Toast.TOP);
+                                          // _currentRangeValues = RangeValues(
+                                          //   double.parse(toPrice.text),
+                                          //   _currentRangeValues.end,
+                                          // );
+                                        }
+                                      }
+                                    });
+                                // setState(() {
+                                //   _currentAreaValues = RangeValues(
+                                //     double.parse(val),
+                                //     _currentAreaValues.end,
+                                //   );
+                                // });
                               })),
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 30),
@@ -432,17 +509,65 @@ class _FilterPageState extends State<FilterPage> {
                                       toArea,
                                       TextInputType.number,
                                       10, (val) {
+                                    if(val==""){
+                                      fromArea.text="0";
+                                    }
+                                    if(fromArea.text==""){
+                                      fromArea.text="0";
+                                    }
+                                    if(val!=''){
+                                      if(double.parse(val)<=200000){
+                                        // _currentRangeValues = RangeValues(
+                                        //   _currentRangeValues.start,
+                                        //   double.parse(val),
+                                        // );
+                                        if(double.parse(val)<=double.parse(fromArea.text)){
+                                          if(double.parse(val)>0){
+                                            fromArea.text=
+                                                (double.parse(val)-1).toString();
+                                          }else{
+                                            fromArea.text="0";
+                                          }
+                                          // _currentRangeValues = RangeValues(
+                                          //   double.parse(toPrice.text),
+                                          //   _currentRangeValues.end,
+                                          // );
+                                        }
+                                      }
+                                      else{
+                                        toArea.text="200000";
+                                        // _currentRangeValues = RangeValues(
+                                        //   _currentRangeValues.start,
+                                        //   200000,
+                                        // );
+                                      }
+                                    }
+                                    setState((){
+                                    });
+                                    // if(double.parse(val)<=200000){
+                                    //   // _currentRangeValues = RangeValues(
+                                    //   //   _currentRangeValues.start,
+                                    //   //   double.parse(val),
+                                    //   // );
+                                    // }else{
+                                    //   toArea.text="199999";
+                                    //   // _currentRangeValues = RangeValues(
+                                    //   //   _currentRangeValues.start,
+                                    //   //   200000,
+                                    //   // );
+                                    // }
                                 // _currentRangeValues = RangeValues(
                                 //   _currentRangeValues.start,
                                 //
                                 //   double.parse(val),
                                 // );
-                                _currentAreaValues = RangeValues(
-                                  _currentAreaValues.start,
-                                  double.parse(val),
-                                  // set
-                                );
-                              })),
+                                // _currentAreaValues = RangeValues(
+                                //   _currentAreaValues.start,
+                                //   double.parse(val),
+                                //   // set
+                                // );
+                              }
+                              )),
                             ],
                           ),
                           RangeSlider(
@@ -503,10 +628,10 @@ class _FilterPageState extends State<FilterPage> {
                                     // mainType = title.toLowerCase();
                                     mainCat = 0;
                                     subCat = 0;
-                                    fromPrice.clear();
-                                    toPrice.clear();
-                                    fromArea.clear();
-                                    toArea.clear();
+                                    fromPrice.text="0";
+                                    toPrice.text="0";
+                                    fromArea.text="0";
+                                    toArea.text="0";
                                     propertyPropertiesQuantity[0] = 0;
                                     propertyPropertiesQuantity[1] = 0;
                                     propertyPropertiesQuantity[2] = 0;
@@ -535,9 +660,18 @@ class _FilterPageState extends State<FilterPage> {
                                 filter.availableFor = mainType;
                                 filter.mainCategory = cats2[mainCat];
                                 filter.priceStart = fromPrice.text;
-                                filter.priceEnd = toPrice.text;
+                                if(toPrice.text=="0"){
+                                  filter.priceEnd = "";
+                                }else{
+                                  filter.priceEnd = toPrice.text;
+                                }
                                 filter.areaStart = fromArea.text;
-                                filter.areaEnd = toArea.text;
+
+                                if(toArea.text=="0"){
+                                  filter.areaEnd = "";
+                                }else{
+                                  filter.areaEnd = toArea.text;
+                                }
                                 filter.bedrooms = propertyPropertiesQuantity[0];
                                 filter.masterRooms =
                                     propertyPropertiesQuantity[1];
